@@ -4,6 +4,12 @@
 
 ---
 
+## Humans
+
+Prompts I use to set up a new project: "Morning Claude, see /docs/setup.txt"
+
+---
+
 ## Summary
 
 **anthropicprinciple.ai** is a kinetic clock art piece inspired by Humans Since 1982's "A million times" installation. 84 mini analogue clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). A companion page (`/clock-controls.html`) lets visitors set a timezone offset or run a countdown timer, with settings persisted in `localStorage`.

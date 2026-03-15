@@ -1,0 +1,118 @@
+/* ===== CLOCK COLOR TOKENS ===== */
+:root {
+  --clk-bg:        #050505;                    /* page background          */
+  --clk-face:      #0e0e0e;                    /* clock face fill          */
+  --clk-border:    rgba(255, 255, 255, 0.04);  /* clock circle border      */
+  --clk-hand:      #FF1B0E;                    /* hand colour              */
+  --clk-zero-hand: #FF1B0E;                    /* hand colour at zero      */
+  --clk-zero-glow: rgba(255, 27, 14, 0.65);   /* glow at zero             */
+}
+
+/* ===== LAYOUT ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--clk-bg);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== 6×14 CLOCK GRID (7:3 aspect ratio) ===== */
+/* Columns: [3 digit][3 digit][2 colon][3 digit][3 digit] */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  width: min(90dvw, calc(90dvh * (14/6)), 900px);
+  aspect-ratio: 14 / 6;
+}
+
+@media (min-width: 540px) {
+  .grid {
+    width: min(75dvw, calc(90dvh * (14/6)), 900px);
+  }
+}
+
+/* Landscape small screens (e.g. iPhone in landscape) */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .grid {
+    width: min(95dvw, calc(85dvh * (14/6)), 900px);
+  }
+}
+
+/* ===== MINI CLOCK CELL ===== */
+.mc {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+/* Clock face circle */
+.mc::before {
+  content: '';
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: var(--clk-face);
+  border: 1px solid var(--clk-border);
+}
+
+/* ===== CLOCK HANDS ===== */
+/* Each hand = half-diameter: pivots from centre, extends to near-edge.
+   Two hands per clock. When same angle → overlap = one half-line.
+   When 180° apart → full diameter line. When 90° apart → corner ┘┌ etc. */
+.hand {
+  position: absolute;
+  bottom: 50%;          /* pivot at clock centre */
+  left: 50%;
+  width: 7%;            /* thin line */
+  height: 46%;          /* half-diameter: centre to near-edge */
+  margin-left: -3.5%;
+  background: var(--clk-hand);
+  border-radius: 1px;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+/* ===== COUNTDOWN ZERO — hands pulse red ("danger time") ===== */
+@keyframes danger-pulse {
+  0%, 100% {
+    background: var(--clk-zero-hand);
+    box-shadow:
+      0 0 6px  var(--clk-zero-glow),
+      0 0 20px var(--clk-zero-glow),
+      0 0 40px rgba(255, 27, 14, 0.35);
+  }
+  50% {
+    background: #ff5c50;
+    box-shadow:
+      0 0 10px var(--clk-zero-glow),
+      0 0 40px var(--clk-zero-glow),
+      0 0 80px rgba(255, 27, 14, 0.45),
+      0 0 130px rgba(255, 27, 14, 0.2);
+  }
+}
+
+/* Screen-level ambient glow on countdown zero */
+@keyframes body-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+body.countdown-zero .hand {
+  animation: danger-pulse 1.2s ease-in-out infinite;
+}
+
+body.countdown-zero::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center,
+    transparent 35%,
+    rgba(255, 27, 14, 0.14) 75%,
+    rgba(255, 27, 14, 0.26) 100%
+  );
+  pointer-events: none;
+  animation: body-pulse 1.2s ease-in-out infinite;
+  z-index: 999;
+}

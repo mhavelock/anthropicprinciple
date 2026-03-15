@@ -1,0 +1,68 @@
+This is a new project in a git enabled repo. I've added a claude.md to the folder. the folder structure is not built yet and the claude.md needs updating to produce an example of the best most simple and well organised claude.md file for a simple html & css only (potentially some javascript, but favour using css for UI and other functionality where possible) website, built as an example of the best, most simple website, adhearing to all web standards and w3c core requirements for english site. there should be a big focus on performance, fast loading, 100% pagespeed score, fast image loading retina images served to retina devices. light/dark mode styles. a separate css file - all styles are critical. Fonts in em and dimentions in rem. Use clean css for modern browsers and use variables for things like colours. all the global styles needed for great ux, well organised standard practices for typography, forms, buttons, hover / active states, tooltips, modal windows, alerts, svg icons. A advanced and modern approach to mobile first responsiveness. Accessibility needs and keyboard access should be catered for. keep presentation, functionality and content as separate as possible. Ensure all features needed for mobile device usage such as orientation settings. UX should be fun and easy but clean and minimal - keep text, buttons and form fields large and color scheme simple. For use with Github. 
+
+Purpose of site: 84 mini-clocks pre-rendered: 6 rows × 14 cols to create a beautiful flowing pattern, until the piece resolves to display a digital time at regular intervals. Can also be configured & show a countdown at clock-controls.html
+
+Technical functionality: Utilises HTML, CSS & JS 
+
+Global layout & styles:
+
+Browser default text size = 16px
+12 grid layout with 1rem gutter
+Elements able to collapse width in small devices - minimum width of element = 288px
+Max width = 1440px
+
+LM = Light Mode | DM = Dark mode
+
+Text: Arial
+Titles: Verdana
+LM text: #1d1f24
+DM text: #a1b1ca
+LM Primary Button: #a1b1ca
+DM Primary Button: #1d1f24
+LM Primary Button text: #a1b1ca
+DM Primary Button text: #1d1f24
+LM Secondary Button: #3e3b1b
+DM Secondary Button: #ebe6b7
+LM Secondary Button text: #a1b1ca
+DM Secondary Button text: #1d1f24
+
+Cursor pointer on all buttons & button styled links.
+
+Custom styles elements, which differ from the standard global brand styles (above) should be added on a separate css stylesheet and extend the global styles.
+
+Logo, favicon and other assets added to /assets
+Documentation to /docs
+Requirements in Claude.md and /context
+Tasklist & Handoff summaries to /context/summaries
+
+Please create.
+Use frontend-standards skill
+Use git-commit-messaging when committing to Git
+Plugins like this can be used:
+/plugin marketplace add anthropics/claude-code                         
+/plugin install frontend-design@claude-code-plugins
+
+Create a logging system where values logged and the logging functionality is kept separate from the main code (in a single js file. This will store where  logs any activities during site build. This is useful for keeping a record of change details in case of issues without having to keep it in context. Keep it generic and add a test log to show - localStorage, sessionStorage, loading time of the hero image, and loading time of scripts.
+
+We will add test checklists - one for each of us and create a test-program.md for this: based around "Taking into account the best practices docs in the project docs folder, please run a code review on what we have. Look for better organisation of code, clean code review, performance improvements, browser memory usage issues and a security check. update the md docs and memory file then add & commit to git. Suggest any additional best practice improvements and anything important I may have forgotten. Check changes didnt break completed task functionality."
+
+Use flex layout for the main layout. Only use grid layouts for components where they’re more suitable than flex. 
+Set responsive line height. 
+Use scrset to display different sized imgs at different breakpoints
+Add Schemas
+Separate out styles for component functionality and presentation. Use chained classes.
+Hover, focus & active states - no visited state. 
+Check images aren’t positioned so they cannot shrink to fit inside it’s container at lower viewport widths. 
+
+Add a section to Claude.md to document the following sections:
+Technical development approach
+UX goals
+SEO features
+Performance features
+Content summary.
+
+Assets to follow.
+Organise assets folder: audio, bgs, components, graphics,  icons, photos
+Organise css files: badges, components, custom, global, grid, theme, utilities
+
+- let’s stop & check between each task - can you show me a git diff when the task is finished.
