@@ -21,3 +21,7 @@ min-width 320
 ---
 
 Great. plz add 0.33rem gap between each
+
+---
+
+great. plz ensure em is used everywehre for typograpgy and rem for distance
