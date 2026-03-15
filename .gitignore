@@ -4,5 +4,4 @@ logs/
 .env
 coverage/
 node_modules/
-/assets
 .vscode/
