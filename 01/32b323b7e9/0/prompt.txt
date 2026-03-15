@@ -17,3 +17,7 @@ min-width 320
 20px X padding 
 60px top padding 
 40px bottom padding.
+
+---
+
+Great. plz add 0.33rem gap between each
