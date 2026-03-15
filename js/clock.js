@@ -115,12 +115,31 @@
     return from + (d > 180 ? d - 360 : d) * p;
   }
 
+  // Cache of last-written angles (flat: even = h1, odd = h2).
+  // Skipping DOM writes for unchanged values avoids unnecessary style
+  // invalidations and reduces GC pressure from template literal allocation.
+  const _lastAngles = new Float64Array(N * 2).fill(NaN);
+
   function apply(angles) {
     for (let i = 0; i < N; i++) {
-      hands[i].h1.style.transform = `rotate(${angles[i][0]}deg)`;
-      hands[i].h2.style.transform = `rotate(${angles[i][1]}deg)`;
+      // Round to 2 dp — sub-hundredth-degree precision is invisible but
+      // generates unique strings each frame, increasing GC load.
+      const a1 = Math.round(angles[i][0] * 100) / 100;
+      const a2 = Math.round(angles[i][1] * 100) / 100;
+      const j  = i * 2;
+      if (a1 !== _lastAngles[j]) {
+        _lastAngles[j] = a1;
+        hands[i].h1.style.transform = `rotate(${a1}deg)`;
+      }
+      if (a2 !== _lastAngles[j + 1]) {
+        _lastAngles[j + 1] = a2;
+        hands[i].h2.style.transform = `rotate(${a2}deg)`;
+      }
     }
   }
+
+  // Pre-allocated output buffer for timeAngles()
+  const _bufTime = Array.from({length: N}, () => [0, 0]);
 
   // ── Time / Countdown display ───────────────────────────────────────────────
   function timeAngles() {
@@ -148,63 +167,57 @@
 
     document.body.classList.toggle('countdown-zero', isZero);
 
-    const ds = [d0, d1, d2, d3].map(n => DIGIT_ANGLES[n]);
-    const out = [];
+    const d0a = DIGIT_ANGLES[d0], d1a = DIGIT_ANGLES[d1];
+    const d2a = DIGIT_ANGLES[d2], d3a = DIGIT_ANGLES[d3];
+    // Column layout: [0-2]=d0 [3-5]=d1 [6-7]=colon [8-10]=d2 [11-13]=d3
+    let i = 0;
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        if (c <= 5) {
-          out.push(ds[Math.floor(c / 3)][r * 3 + c % 3]);
-        } else if (c <= 7) {
-          out.push(COLON[r][c - 6]);
-        } else {
-          out.push(ds[2 + Math.floor((c - 8) / 3)][r * 3 + (c - 8) % 3]);
+        let pair;
+        if      (c <= 2)  pair = d0a[r * 3 + c];
+        else if (c <= 5)  pair = d1a[r * 3 + c - 3];
+        else if (c <= 7)  pair = COLON[r][c - 6];
+        else if (c <= 10) pair = d2a[r * 3 + c - 8];
+        else              pair = d3a[r * 3 + c - 11];
+        _bufTime[i][0] = pair[0]; _bufTime[i][1] = pair[1]; i++;
+      }
+    }
+    return _bufTime;
+  }
+
+  // Pre-allocated reusable angle buffers — avoids creating 84+ new [h1,h2]
+  // sub-arrays every frame (252+ allocations/frame during blend windows).
+  // Each buffer is an Array of N 2-element arrays, mutated in place.
+  const _bufOut    = Array.from({length: N}, () => [0, 0]);
+  const _bufFrom   = Array.from({length: N}, () => [0, 0]);
+  const _bufTo     = Array.from({length: N}, () => [0, 0]);
+  const _bufInterp = Array.from({length: N}, () => [0, 0]); // ease-in/out phase
+
+  // Inlined version of clockAngles — writes directly into buf[i] to avoid
+  // creating a temporary [a, b] array for each of the 84 cells per call.
+  function patternAngles(t, pidx, buf) {
+    let i = 0;
+    for (let r = 0; r < ROWS; r++) {
+      const dr = r - 2.5;
+      for (let c = 0; c < COLS; c++) {
+        const dc = c - 6.5;
+        let base, spread;
+        switch (pidx) {
+          case 0: base = Math.atan2(dr * 2.2, dc) * (180 / Math.PI) + 90 + t * 14; spread = 44; break;
+          case 1: base = t * 26 + dc * 9 + dr * 4; spread = 0; break;
+          case 2: base = Math.atan2(dr, dc) * (180 / Math.PI) + t * 20; spread = 72 + Math.sin(t * 0.65) * 24; break;
+          default: {
+            const dist = Math.sqrt(dr * dr + dc * dc * 0.3) + 0.1;
+            base = Math.atan2(dr, dc) * (180 / Math.PI) + t * 28 + dist * 18;
+            spread = 55 + Math.sin(t * 0.4 + dist) * 20;
+          }
         }
+        buf[i][0] = spread ? base - spread / 2 : base;
+        buf[i][1] = spread ? base + spread / 2 : base + 180;
+        i++;
       }
     }
-    return out;
-  }
-
-  // ── Patterns: 4 choreographies ────────────────────────────────────────────
-  function clockAngles(r, c, t, pidx) {
-    const dr = r - 2.5;
-    const dc = c - 6.5;
-    let base, spread;
-
-    switch (pidx) {
-      case 0: {
-        base   = Math.atan2(dr * 2.2, dc) * (180 / Math.PI) + 90 + t * 14;
-        spread = 44;
-        break;
-      }
-      case 1: {
-        base   = t * 26 + dc * 9 + dr * 4;
-        spread = 0;
-        break;
-      }
-      case 2: {
-        base   = Math.atan2(dr, dc) * (180 / Math.PI) + t * 20;
-        spread = 72 + Math.sin(t * 0.65) * 24;
-        break;
-      }
-      case 3: {
-        const dist = Math.sqrt(dr * dr + dc * dc * 0.3) + 0.1;
-        base   = Math.atan2(dr, dc) * (180 / Math.PI) + t * 28 + dist * 18;
-        spread = 55 + Math.sin(t * 0.4 + dist) * 20;
-        break;
-      }
-    }
-
-    return spread
-      ? [base - spread / 2, base + spread / 2]
-      : [base, base + 180];
-  }
-
-  function patternAngles(t, pidx) {
-    const out = [];
-    for (let r = 0; r < ROWS; r++)
-      for (let c = 0; c < COLS; c++)
-        out.push(clockAngles(r, c, t, pidx));
-    return out;
+    return buf;
   }
 
   // ── Blended pattern angles — crossfades between adjacent patterns ─────────
@@ -220,16 +233,19 @@
     const blendFrac = 1 - BLEND_MS / PATTERN_DUR;
 
     if (pidx >= 3 || phase < blendFrac) {
-      return patternAngles(t, pidx);
+      return patternAngles(t, pidx, _bufOut);
     }
 
-    const p    = ease((phase - blendFrac) / (1 - blendFrac));
-    const from = patternAngles(t, pidx    ).map(([a, b]) => [norm(a), norm(b)]);
-    const to   = patternAngles(t, pidx + 1).map(([a, b]) => [norm(a), norm(b)]);
-    return from.map(([f1, f2], i) => [
-      lerpA(f1, to[i][0], p),
-      lerpA(f2, to[i][1], p),
-    ]);
+    const p = ease((phase - blendFrac) / (1 - blendFrac));
+    patternAngles(t, pidx,     _bufFrom);
+    patternAngles(t, pidx + 1, _bufTo);
+    for (let i = 0; i < N; i++) {
+      const f1 = norm(_bufFrom[i][0]), f2 = norm(_bufFrom[i][1]);
+      const t1 = norm(_bufTo[i][0]),   t2 = norm(_bufTo[i][1]);
+      _bufOut[i][0] = lerpA(f1, t1, p);
+      _bufOut[i][1] = lerpA(f2, t2, p);
+    }
+    return _bufOut;
   }
 
   // ── Main loop ─────────────────────────────────────────────────────────────
@@ -256,15 +272,20 @@
     const t             = (wallNow - t0) / 1000;
 
     if (pos < TRANS_DUR) {
-      // Reverse ease: time display angles → live pattern (60 fps — short 2 s window)
-      if (!timeSnap) timeSnap = timeAngles().map(([a, b]) => [norm(a), norm(b)]);
+      // Reverse ease: time display → live pattern (60 fps — short 2 s window)
+      if (!timeSnap) {
+        // Deep copy _bufTime so it isn't clobbered by future timeAngles() calls
+        const src = timeAngles();
+        if (!timeSnap) timeSnap = Array.from({length: N}, (_, i) => [norm(src[i][0]), norm(src[i][1])]);
+      }
       transFrom = null;
       const p      = ease(pos / TRANS_DUR);
       const target = blendedPatternAngles(t, pos);
-      apply(timeSnap.map(([f1, f2], i) => [
-        lerpA(f1, target[i][0], p),
-        lerpA(f2, target[i][1], p),
-      ]));
+      for (let i = 0; i < N; i++) {
+        _bufInterp[i][0] = lerpA(timeSnap[i][0], target[i][0], p);
+        _bufInterp[i][1] = lerpA(timeSnap[i][1], target[i][1], p);
+      }
+      apply(_bufInterp);
 
     } else if (pos < TRANS_START) {
       // Pure pattern display — throttle to ~30 fps (trig per cell is expensive)
@@ -278,14 +299,17 @@
       // Forward ease: pattern → time display (60 fps — short 2 s window)
       timeSnap = null;
       if (!transFrom) {
-        transFrom = blendedPatternAngles(t, TRANS_START - 1).map(([a, b]) => [norm(a), norm(b)]);
+        // Deep copy _bufOut so it isn't clobbered by future pattern calls
+        const src = blendedPatternAngles(t, TRANS_START - 1);
+        transFrom = Array.from({length: N}, (_, i) => [norm(src[i][0]), norm(src[i][1])]);
       }
       const p      = ease((pos - TRANS_START) / TRANS_DUR);
       const target = timeAngles();
-      apply(transFrom.map(([f1, f2], i) => [
-        lerpA(f1, target[i][0], p),
-        lerpA(f2, target[i][1], p),
-      ]));
+      for (let i = 0; i < N; i++) {
+        _bufInterp[i][0] = lerpA(transFrom[i][0], target[i][0], p);
+        _bufInterp[i][1] = lerpA(transFrom[i][1], target[i][1], p);
+      }
+      apply(_bufInterp);
 
     } else {
       // Static time display — re-render once per second only

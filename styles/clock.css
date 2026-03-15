@@ -43,8 +43,11 @@ body {
 
 /* ===== MINI CLOCK CELL ===== */
 .mc {
-  position: relative;
   aspect-ratio: 1;
+  /* Scope layout/style/paint to each cell — prevents a style write on any
+     hand from triggering recalculation across the whole document */
+  contain: layout style paint;
+  position: relative;
 }
 
 /* Clock face circle */
@@ -71,6 +74,9 @@ body {
   background: var(--clk-hand);
   border-radius: 1px;
   transform-origin: bottom center;
+  /* Promote each hand to its own compositor layer so JS-driven rotate()
+     updates are applied by the GPU thread, not the main thread */
+  will-change: transform;
   z-index: 2;
 }
 
