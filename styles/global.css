@@ -26,12 +26,16 @@ html {
 }
 
 body {
+    align-items: center;
     background-color: var(--color-bg);
     color: var(--color-text);
+    display: flex;
     font-family: var(--font-family-body, Arial, Helvetica, sans-serif);
     font-size: var(--font-size-body, 1em);
+    justify-content: center;
     line-height: 1.5;
     min-height: 100%;
+    position: relative;
 }
 
 /* Responsive line height: slightly looser on larger screens */

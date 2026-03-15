@@ -1,0 +1,132 @@
+/**
+ * home.css — homepage-specific styles
+ * ==========================================
+ * Accreditation aside, social links, Bluesky flutter animation.
+ *
+ * Load order: page-specific CSS.
+ */
+
+/* ===== ASIDE (rotated attribution) ===== */
+aside.side {
+    background-color: #292b31;
+    display: block;
+    height: auto;
+    padding: 0.2rem 0.3rem;
+    position: absolute;
+    right: calc(-50vw + 1.25rem);
+    top: -17rem;
+    transform: rotate(-90deg);
+    width: 100%;
+}
+
+.side p {
+    align-items: center;
+    color: #727786;
+    display: flex;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    gap: 0.4em;
+    text-transform: uppercase;
+}
+
+.side a {
+    align-items: center;
+    color: #5c6b94;
+    display: inline-flex;
+    text-decoration: none;
+}
+
+.side a:hover,
+.side a:focus,
+.side a:active {
+    color: #4d5f8c;
+}
+
+/* Claude icon in aside — size to match text cap-height */
+.side-icon {
+    display: block;
+    height: 1em;
+    width: auto;
+}
+
+/* ===== SOCIAL LINKS LIST ===== */
+ul.links {
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    position: fixed;
+    right: 20px;
+}
+
+ul.links li {
+    display: block;
+}
+
+ul.links a {
+    align-items: center;
+    display: flex;
+}
+
+/* Icon sizing */
+.links-icon {
+    display: block;
+    height: 2rem;
+    width: 2rem;
+}
+
+/* ===== BLUESKY FLUTTER ANIMATION ===== */
+/* Adapted from https://github.com/nicholasgasior/bluesky-flutterby (MIT) */
+.bsky-flutter {
+    color: #0085ff;
+    display: block;
+    height: 2rem;
+    transition: transform 200ms;
+    width: 2rem;
+}
+
+.bsky-flutter .left {
+    transform-origin: center;
+}
+
+.bsky-flutter .right {
+    transform: scale(-1, 1);
+    transform-origin: center;
+}
+
+.bsky-flutter:hover,
+.bsky-flutter:focus {
+    transform: rotate(-5deg);
+    transition: transform 500ms;
+}
+
+.bsky-flutter:hover .left,
+.bsky-flutter:focus .left {
+    animation: bsky-flutter 430ms ease-in-out;
+    --flip: 1;
+}
+
+.bsky-flutter:hover .right,
+.bsky-flutter:focus .right {
+    animation: bsky-flutter 500ms ease-in-out;
+    --flip: -1;
+}
+
+@keyframes bsky-flutter {
+    10%  { transform: scale(calc(var(--flip) * 1), 0.9); }
+    20%  { transform: scale(calc(var(--flip) * 0.5), 1); }
+    40%  { transform: scale(calc(var(--flip) * 0.9), 0.95); }
+    60%  { transform: scale(calc(var(--flip) * 0.3), 1); }
+    80%  { transform: scale(calc(var(--flip) * 0.9), 0.95); }
+    100% { transform: scale(calc(var(--flip) * 1), 1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bsky-flutter:hover .left,
+    .bsky-flutter:focus .left,
+    .bsky-flutter:hover .right,
+    .bsky-flutter:focus .right {
+        animation: none;
+    }
+}

@@ -11,17 +11,14 @@
 /* ===== LAYOUT ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
+body.clock {
   background: var(--clk-bg);
   min-height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* ===== 6×14 CLOCK GRID (7:3 aspect ratio) ===== */
 /* Columns: [3 digit][3 digit][2 colon][3 digit][3 digit] */
-.grid {
+.grid-14x6 {
   display: grid;
   grid-template-columns: repeat(14, 1fr);
   width: min(90dvw, calc(90dvh * (14/6)), 900px);
@@ -29,14 +26,14 @@ body {
 }
 
 @media (min-width: 540px) {
-  .grid {
+  .grid-14x6 {
     width: min(75dvw, calc(90dvh * (14/6)), 900px);
   }
 }
 
 /* Landscape small screens (e.g. iPhone in landscape) */
 @media screen and (orientation: landscape) and (max-height: 500px) {
-  .grid {
+  .grid-14x6 {
     width: min(95dvw, calc(85dvh * (14/6)), 900px);
   }
 }
