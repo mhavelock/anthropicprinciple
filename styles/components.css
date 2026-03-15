@@ -62,4 +62,16 @@ main {
     min-height: calc(100vh - 6rem); /* approximate header clearance */
     padding: var(--space-xl) 0;
     width: 100%;
+    position: relative;
+}
+
+aside.side {
+    position: absolute;
+    transform: rotateX(-90deg);
+    right: 0;
+    top: 200px;
+}
+
+aside.side p {
+    display: inline-block;
 }
