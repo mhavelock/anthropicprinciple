@@ -10,17 +10,22 @@ anthropicprinciple.ai is a kinetic clock art piece. The page presents 84 analogu
 
 ```
 index.html
-├── styles/clock.css          (stylesheet)
+├── styles/colors.css         (design tokens)
+├── styles/global.css         (base styles, flex centring)
+├── styles/clock.css          (clock tokens, grid, hand animations)
+├── styles/utilities.css      (u-* helper classes)
+├── styles/home.css           (aside, social links, hover animations)
 ├── js/favicon-animator.js    (defer)
 └── js/clock.js               (defer)
 
 clock-controls.html
 ├── styles/controls.css       (stylesheet)
 ├── js/favicon-animator.js    (defer)
-└── [inline IIFE script]      form state, localStorage writes
+└── js/controls.js            (defer) — form state, localStorage writes
 
 play.html
-└── (additional page)
+├── styles/play.css           (stylesheet)
+└── (no scripts)
 ```
 
 ---
@@ -29,7 +34,13 @@ play.html
 
 ### Clock page
 
-index.html loads only `styles/clock.css`. This file is entirely self-contained: it includes its own reset (`*, *::before, *::after`), all `--clk-*` design tokens, the 6×14 CSS grid, `.mc` cell containment, `.hand` compositor setup, and the `danger-pulse` / `body-pulse` keyframes for countdown-zero state. No other CSS file is loaded on the clock page.
+index.html loads five stylesheets in order:
+
+1. `colors.css` — design tokens (loaded here so `--clk-bg` and global tokens are both available)
+2. `global.css` — body flex centring and base resets shared with other pages
+3. `clock.css` — self-contained clock tokens (`--clk-*`), the 6×14 grid (`.grid-14x6`), `.mc` cell containment, `.hand` compositor hints, and countdown-zero keyframes; body clock-specific overrides are scoped to `body.clock`
+4. `utilities.css` — `u-*` helper classes
+5. `home.css` — aside attribution, social link layout, Bluesky flutter animation, Claude/SoundCloud hover effects
 
 ### Non-clock pages
 
@@ -117,7 +128,7 @@ An IIFE module (`FaviconAnimator`) initialises on `DOMContentLoaded`. It creates
 
 ## Control Panel (clock-controls.html)
 
-The page loads `styles/controls.css`, which defines a fixed dark terminal theme using `--ctrl-*` custom properties. This theme is intentionally not system-preference responsive — the panel always renders dark. An inline IIFE script (no external file) handles all control panel behaviour: restoring saved values from localStorage on load, toggling section visibility via `.is-hidden` / `.is-active` classes when the mode radio changes, writing to localStorage on every input event, and computing a countdown end timestamp (`Date.now() + totalMs`) when the Start / Reset button is clicked.
+The page loads `styles/controls.css`, which defines a fixed dark terminal theme using `--ctrl-*` custom properties. This theme is intentionally not system-preference responsive — the panel always renders dark. `js/controls.js` (deferred) handles all control panel behaviour: restoring saved values from localStorage on load, toggling section visibility via `.is-hidden` / `.is-active` classes when the mode radio changes, writing to localStorage on every input event, and computing a countdown end timestamp (`Date.now() + totalMs`) when the Start / Reset button is clicked.
 
 localStorage keys read by clock.js:
 
