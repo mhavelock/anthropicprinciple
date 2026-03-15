@@ -86,3 +86,32 @@ ARIA landmarks and labelling on clock-controls.html: `<nav aria-label>`, `<secti
 `context/summaries/` directory created per project specification for task lists and handoff summaries.
 
 `docs/` populated with architecture reference, file manifest, improvements log, and refactoring summary. `docs/digit-reference.md` documents the hand-angle pair notation used in the digit tables in clock.js.
+
+---
+
+## Code Review — 2026-03-15
+
+Full code review conducted against best-practices docs. Overall verdict: A/A+ across all categories. Specific fixes applied:
+
+**Security**
+- Added `noreferrer` to all `rel="noopener"` attributes on `target="_blank"` links in `index.html` — prevents Referer header leakage to external domains (Humans Since 1982, Bluesky, SoundCloud, Claude).
+
+**HTML / SEO**
+- Meta description on `index.html` expanded from 19 characters ("Anthropic Principles") to a descriptive 130-character summary for search engine snippets.
+- `og:image` meta tag added to `index.html` pointing to `web-app-manifest-512x512.png`.
+- `og:description` updated to match the new meta description.
+- `<meta name="theme-color">` added to `clock-controls.html` (`#0a0d14` matches the dark panel theme).
+- `<link rel="canonical">` added to `clock-controls.html`.
+
+**Separation of Concerns**
+- Inline `<script>` block removed from `clock-controls.html` and extracted to `js/controls.js` (deferred). Eliminates the only violation of the "no inline scripts" standard across the codebase. Behaviour is identical; the script now loads non-blocking with `defer`.
+
+**Documentation**
+- `docs/ARCHITECTURE.md` updated: page/script dependency diagram reflects the five stylesheets now loaded by `index.html` and the new `js/controls.js`; clock-page CSS architecture section corrected; controls-page description updated.
+- `docs/summaries/REFACTORING_SUMMARY.md` JS summary table updated to include `controls.js`.
+
+**Items verified as correct (no action needed)**
+- Both `clock-controls.html` and `play.html` already carry `lang="en"` — agent false-positive.
+- `critical.css` is referenced only in docs/README (not in any HTML page) — no 404 risk; kept as documentation placeholder.
+- Hard-coded colours in `home.css` aside section are intentional — the aside has a fixed dark presentation independent of the design token system.
+- Inline IIFE script in `clock-controls.html` was the sole exception to separation-of-concerns; now resolved.

@@ -27,6 +27,7 @@ anthropicprinciple.ai is a browser-based kinetic clock art piece. 84 analogue mi
 | File | Purpose | Loaded on |
 |---|---|---|
 | clock.js | Clock engine — rAF loop, pattern generation, angle application | index.html |
+| controls.js | Controls panel — localStorage read/write, section visibility toggling | clock-controls.html |
 | favicon-animator.js | Animated canvas favicon at ~10fps | All pages |
 | logger.js | Dev logger — in-memory buffer, flush on unload | Opt-in (not loaded by default) |
 | main.js | Reserved entry point | Not currently loaded |

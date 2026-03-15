@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Configure the anthropicprinciple.ai clock — set timezone offset or run a countdown timer.">
     <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#0a0d14">
+    <link rel="canonical" href="https://anthropicprinciple.ai/clock-controls.html">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
@@ -72,69 +74,7 @@
 
     </main>
 
-    <script>
-        (function () {
-            'use strict';
-
-            const ls = { get: k => localStorage.getItem(k), set: (k, v) => localStorage.setItem(k, v) };
-
-            // ── Restore saved values ────────────────────────────────────────────
-            const rawMode    = ls.get('clk_mode');
-            const savedMode  = (rawMode === 'clock' || rawMode === 'countdown') ? rawMode : 'clock';
-            const savedHours = ls.get('clk_hours')           || '0';
-            const savedTime  = ls.get('clk_countdown_time')  || '05:00';
-
-            document.querySelector(`input[value="${savedMode}"]`).checked = true;
-            document.getElementById('hours').value          = savedHours;
-            document.getElementById('countdown-time').value = savedTime;
-
-            // ── Section visibility ──────────────────────────────────────────────
-            function updateSections() {
-                const mode = document.querySelector('input[name="mode"]:checked').value;
-                document.getElementById('section-clock').classList.toggle('is-hidden', mode !== 'clock');
-                document.getElementById('section-countdown').classList.toggle('is-hidden', mode !== 'countdown');
-                document.getElementById('lbl-clock').classList.toggle('is-active', mode === 'clock');
-                document.getElementById('lbl-countdown').classList.toggle('is-active', mode === 'countdown');
-            }
-            updateSections();
-
-            // ── Event listeners ─────────────────────────────────────────────────
-            document.querySelectorAll('input[name="mode"]').forEach(r => {
-                r.addEventListener('change', () => {
-                    ls.set('clk_mode', r.value);
-                    updateSections();
-                });
-            });
-
-            document.getElementById('hours').addEventListener('input', e => {
-                ls.set('clk_hours', e.target.value);
-            });
-
-            document.getElementById('countdown-time').addEventListener('input', e => {
-                ls.set('clk_countdown_time', e.target.value);
-            });
-
-            // ── Start / Reset countdown ──────────────────────────────────────────
-            document.getElementById('start-btn').addEventListener('click', () => {
-                const raw   = document.getElementById('countdown-time').value.trim() || '05:00';
-                const parts = raw.split(':');
-                const mm    = Math.min(99, parseInt(parts[0], 10) || 0);
-                const ss    = Math.min(59, parseInt(parts[1], 10) || 0);
-                const totalMs = (mm * 60 + ss) * 1000;
-
-                ls.set('clk_countdown_time', `${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`);
-                ls.set('clk_countdown_end', Date.now() + totalMs);
-                ls.set('clk_mode', 'countdown');
-
-                document.querySelector('input[value="countdown"]').checked = true;
-                updateSections();
-
-                const endTime = new Date(Date.now() + totalMs);
-                document.getElementById('status').textContent =
-                    `Started — ends at ${endTime.toLocaleTimeString()}`;
-            });
-        }());
-    </script>
+    <script src="js/controls.js" defer></script>
 
 </body>
 </html>
