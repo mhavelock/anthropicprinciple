@@ -1,131 +1,56 @@
-# File Manifest
+# File Manifest — anthropicprinciple.ai
 
 ## Core HTML
 
-### `index.html`
-Main page. Loads `colors.css` then `clock.css`. Renders a 6×14 kinetic grid clock via `clock.js`.
-Viewport meta includes `viewport-fit=cover` and `interactive-widget=resizes-content` for iOS orientation support.
+**index.html** — Full-screen kinetic clock. Loads `styles/clock.css` as the sole stylesheet. Scripts `js/favicon-animator.js` and `js/clock.js` are both loaded with `defer`. Contains the pre-rendered 84 `.mc` cells (6 rows × 14 columns), Open Graph meta, canonical link, theme-color meta, and a JSON-LD `WebApplication` schema block.
 
-### `clock-controls.html`
-Standalone control panel (self-contained inline styles, no external CSS dependency).
-Settings are persisted to `localStorage` and picked up by `clock.js` on the clock page.
+**clock-controls.html** — Settings panel for configuring clock mode and countdown. Loads `styles/controls.css`. An inline IIFE script handles form state restoration from localStorage, section visibility toggling via `.is-hidden` / `.is-active` classes, localStorage writes on every input event, and countdown end-time calculation on button click. The status element uses `role="status"` and `aria-live="polite"`. `robots` meta is set to `noindex`.
 
-**Controls:**
-- Mode toggle: Clock ↔ Countdown
-- UTC offset (hours) for clock mode
-- MM:SS duration + Start/Reset for countdown mode
+**play.html** — Additional page.
 
 ---
 
 ## Styles
 
-### `styles/colors.css` — Design System
-The single source of truth for all design tokens. Loaded by `index.html`.
+**clock.css** — Self-contained stylesheet loaded exclusively by index.html. Includes its own `*` reset, all `--clk-*` design tokens (background, face, border, hand colour, zero glow), the 6×14 `display: grid` layout with fluid `min()` width, `.mc` cell with `contain: layout style paint`, `.hand` elements with `will-change: transform` and `transform-origin: bottom center`, and the `danger-pulse` / `body-pulse` keyframes for countdown-zero state. Also contains landscape orientation media query for small-screen layout.
 
-**Light/dark mode** via `prefers-color-scheme`, overridable with `[data-theme="light"|"dark"]` on `<html>`.
+**colors.css** — Design token source of truth for all non-clock pages. `:root` declares light mode defaults: surface colours (`--color-bg`, `--color-bg-alt`, `--color-bg-raised`), text colours, border colours, primary and secondary button colours, link colours, form input colours, focus ring colour, and accent colours. Font sizes use `em` (`--font-size-h1` through `--font-size-xs`). Spacing uses `rem` (`--space-xs` through `--space-3xl`). Also declares `--font-family-*`, `--border-*`, `--transition-*`, and `--ease-*` tokens. Dark mode overrides applied via `@media (prefers-color-scheme: dark)`. Manual overrides available via `[data-theme="light"]` and `[data-theme="dark"]` on `<html>`.
 
-**Key variables:**
+**fonts.css** — Font-family declarations only. Verdana (headings), Arial (body), Courier New (mono). All system fonts — no external font requests are made.
 
-| Group | Variables |
-|---|---|
-| Surfaces | `--color-bg`, `--color-bg-alt`, `--color-bg-raised` |
-| Text | `--color-text`, `--color-text-muted`, `--color-text-on-btn` |
-| Borders | `--color-border`, `--color-border-subtle` |
-| Primary button | `--color-btn-primary`, `-hover`, `-active`, `--color-text-on-btn-primary` |
-| Secondary button | `--color-btn-secondary`, `-hover`, `-active`, `--color-text-on-btn-secondary` |
-| Links | `--color-link`, `--color-link-hover` |
-| Forms | `--color-input-bg`, `--color-input-border`, `--color-input-text`, etc. |
-| Grid | `--grid-cols`, `--gutter`, `--gutter-sm`, `--container-max` |
-| Typography | `--font-size-h1` → `--font-size-xs` (based on 1rem = 16px) |
-| Spacing | `--space-xs` → `--space-3xl` |
-| Transitions | `--transition-fast/normal/slow`, `--ease-*` |
+**global.css** — Box-model reset, base element defaults (`html`, `body`, `h1`–`h3`, `p`, `img`, `video`, `canvas`), link styles (`color: inherit`; hover and focus-visible states; no visited state), base `button` reset, `.btn` / `.btn-primary` / `.btn-secondary` component classes with 44px minimum touch targets, full form element styles for text inputs, textarea, select, and custom-styled checkbox and radio inputs using `appearance: none`. 12-column grid system (`.container`, `.row`, `.col-1` through `.col-12`) — mobile-first with `min-width` breakpoints at 480px and 768px. Orientation landscape media query for small devices. `prefers-reduced-motion` block that collapses all animation and transition durations.
 
-Light mode colours: bg `#ffffff`, text `#141211`, border `#262c30`, primary btn `#052842`, secondary btn `#074020`.
-Dark mode colours: bg `#141211`, text `#e6ecf0`, border `#f2f9ff`, primary btn `#415e70`, secondary btn `#417055`.
+**components.css** — Header (flex, border-bottom, focus-visible ring), `.logo` with responsive height breakpoints, `main` layout defaults for non-clock pages. Tooltip: `.tooltip` with `data-tip` attribute — CSS-only, visible on hover and `:focus-visible`. Alert: `.alert` with `.mod-info`, `.mod-success`, `.mod-warning`, `.mod-danger` modifiers using left-border colour coding. Modal: `.modal-backdrop`, `.modal`, `.modal-close`, `.modal-title`, `.modal-body` — ARIA usage (`role="dialog"`, `aria-modal`, `aria-labelledby`) and keyboard requirements (Tab focus trap, Escape close, backdrop click close) documented in comments. `.is-hidden` toggles display.
 
-### `styles/clock.css`
-Clock-specific tokens and layout. Loaded by `index.html` after `colors.css`.
+**controls.css** — Page-specific stylesheet for clock-controls.html. Fixed dark terminal theme using `--ctrl-*` custom property namespace — not system-preference responsive. Defines: `.panel`, `.panel-nav`, `.panel-nav-link`, `.panel-nav-id`, `.panel-title`, `.section-title`, `.ctrl-section`, `.ctrl-radio-label` (with `.is-active` state), `.ctrl-field`, `.ctrl-field-label`, text and number input overrides, `.ctrl-btn` (hover and active states), `.ctrl-note`, `.ctrl-status`. State class `.is-hidden` hides inactive sections. `prefers-reduced-motion` block disables transitions.
 
-**Tokens:**
+**utilities.css** — Single-purpose helper classes with `u-` prefix. Display utilities: `.u-flex`, `.u-flex-center`, `.u-flex-col`, `.u-block`, `.u-inline`, `.u-inline-flex`, `.u-hidden`. Spacing utilities: `.u-m-0`, `.u-p-0`, `.u-mt-auto`, `.u-ml-auto`, `.u-mr-auto`. Text utilities: `.u-text-center`, `.u-text-left`, `.u-text-right`, `.u-text-muted`, `.u-text-sm`, `.u-text-xs`. State classes: `.is-hidden`, `.is-visible`. Screen-reader utility: `.u-sr-only` (visually hidden via `clip` and 1px dimensions) with `:focus-visible` reveal for skip-to-content links.
 
-| Variable | Value | Purpose |
-|---|---|---|
-| `--clk-bg` | `#050505` | Page background |
-| `--clk-face` | `#0e0e0e` | Clock dial fill |
-| `--clk-hand` | `#FF1B0E` | Hand colour |
-| `--clk-zero-hand` | `#FF1B0E` | Hand colour at countdown zero |
-| `--clk-zero-glow` | `rgba(255,27,14,0.65)` | Glow strength at zero |
+**banner.css** — `.banner` container and `.banner-title` with `clamp()` fluid typography in `em`. Mobile-first breakpoints. `prefers-contrast` and `prefers-reduced-motion` blocks.
 
-**Grid:** `display: grid; grid-template-columns: repeat(14, 1fr)` — 6 rows × 14 cols = 84 mini-clocks.
-Width uses `dvw`/`dvh` (dynamic viewport units) for correct sizing on iPhone orientation change.
-
-**Countdown zero effect:** `danger-pulse` keyframes animate hands through a 4-layer box-shadow glow (up to 130px spread). A full-screen `body::after` vignette pulses in sync.
-
-### `styles/global.css`
-Reusable styles, safe to defer. Not currently linked by either page directly — available for future pages.
-
-**Contains:**
-- Typography (`p`, `h1–h3`) using `--font-size-*` vars
-- Link styles via `--color-link` / `--color-link-hover`
-- `.btn`, `.btn-primary`, `.btn-secondary` classes
-- Form element styles (`input`, `textarea`, `select`) — focus rings, placeholders, disabled state
-- **12-column grid**: `.container`, `.row`, `.col-1` – `.col-12` with responsive collapse at 768px and 480px
-
-### `styles/critical.css`
-Core reset and layout. Not currently linked by either page — available for future pages.
-
-**Contains:**
-- `* { box-sizing: border-box }` reset
-- `body` using `--color-bg` / `--color-text` (respects dark mode)
-- `main` as flex centering container
-- `button` base: `cursor: pointer`, no border, inherits font
-- Responsive images, hidden canvas
-
-Font size: browser default `1rem = 16px` (62.5% hack removed).
-
-### `styles/components.css`
-Component interaction states. Not currently linked by either page — available for future pages.
-
-**Contains:**
-- `button`, `[role="button"]`: cursor pointer, hover/active opacity
-- `header` and `.logo` styles
-
-### `styles/utilities.css`
-Helper classes (margin, padding, flex, `sr-only`).
-
-### `styles/fonts.css`
-Google Fonts imports: Roboto Bold, Open Sans Regular.
-
-### `styles/banner.css`
-Banner section with fluid typography and gradient background.
-
-### `styles/border-effect.css`
-Animated rotating conic-gradient border effect.
+**border-effect.css** — `.border-effect` component with animated conic-gradient border. `prefers-reduced-motion` disables the rotation animation.
 
 ---
 
 ## JavaScript
 
-### `js/clock.js`
-The kinetic grid clock engine (~300 lines). Reads config from `localStorage`, drives all 84 mini-clocks at 60fps via `requestAnimationFrame`.
+**clock.js** — Kinetic grid engine. Reads configuration from localStorage via `loadConfig()` on initialisation and on `storage` events. Computes hand angles for clock mode (HH:MM with UTC offset) and countdown mode (MM:SS with zero state). Pre-allocated angle buffers (`_bufOut`, `_bufFrom`, `_bufTo`, `_bufTime`, `_bufInterp`) eliminate per-frame heap allocations. `Float64Array` angle cache in `apply()` skips DOM writes for unchanged values. Pattern trig phase throttled to ~30fps; ease phases run at 60fps; static display at 1fps. rAF loop pauses via `visibilitychange`.
 
-**Modes:**
-- **Clock** — displays HH:MM with configurable UTC offset
-- **Countdown** — displays MM:SS, adds `body.countdown-zero` class when time expires
+**favicon-animator.js** — IIFE module (`FaviconAnimator`). Initialises on `DOMContentLoaded`. Creates an off-screen 32×32 canvas with a linear gradient stroke. rAF loop throttled to ~10fps draws a progressive square outline edge-by-edge each cycle, then writes the result to `favicon.href` via `canvas.toDataURL()`. Pauses when tab is hidden; resumes on visibility restore.
 
-**30-second cycle:**
-- 0–2s: ease from time display → animated pattern
-- 2–23s: 4 blended kinetic patterns (radial wave, linear, sinusoidal, spiral)
-- 23–25s: ease back to time display
-- 25–30s: static time (re-renders once per second)
+**logger.js** — Development logger. Buffered in memory (`_buf` array) — no storage I/O on `log()` calls. Flushes to `sessionStorage` (`ap_dev_log`) on `beforeunload`; writes a persistent summary to `localStorage` (`ap_dev_log_summary`). Self-tests localStorage and sessionStorage availability on init. Public API: `log(section, message, data)`, `time(name)`, `timeEnd(name)`, `flush()`, `dump()`, `clear()`.
 
-**Config keys (localStorage):** `clk_mode`, `clk_hours`, `clk_countdown_time`, `clk_countdown_end`
+**main.js** — Reserved entry point. Not loaded by any current page.
 
-### `js/main.js`
-Entry point. Initialises `FaviconAnimator` on `DOMContentLoaded`.
+---
 
-### `js/favicon-animator.js`
-Draws a progressive square outline on a 32×32 canvas and pushes frames to `favicon.href` on button hover.
+## Assets
+
+**assets/icons/** — SVG icons: `bluesky-icon.svg`, `claude-ai-icon.svg`, `soundcloud.svg`.
+
+**assets/audio/, assets/bgs/, assets/components/, assets/graphics/, assets/photos/** — Directory structure scaffolded for future use; no files currently placed.
+
+**Images** — Where used, `<img>` elements include `alt`, `width`, and `height` attributes. `srcset` provides 250w and 500w resolution variants; `sizes` attribute reflects layout breakpoints. `loading="lazy"` on below-fold images; `loading="eager"` on the first visible image.
 
 ---
 
@@ -133,20 +58,21 @@ Draws a progressive square outline on a 32×32 canvas and pushes frames to `favi
 
 ```
 index.html
-├── styles/colors.css    Design system tokens
-└── styles/clock.css     Clock layout + animation
-    └── js/clock.js      Clock engine (defer)
+├── styles/clock.css          Clock tokens, grid, hand styles, keyframes
+├── js/favicon-animator.js    Animated canvas favicon (defer)
+└── js/clock.js               Clock engine — reads localStorage (defer)
 
-clock-controls.html      Self-contained (inline styles + script)
-    └── localStorage     Shared with clock.js
+clock-controls.html
+├── styles/controls.css       Fixed dark panel styles
+├── js/favicon-animator.js    Animated canvas favicon (defer)
+└── [inline script]           Form state, localStorage writes
+    └── localStorage          Read by clock.js on load + storage event
+
+Additional pages (non-clock)
+├── styles/colors.css         Design tokens
+├── styles/fonts.css          Font stacks
+├── styles/global.css         Base elements + 12-col grid
+├── styles/components.css     UI components
+├── styles/[page].css         Page-specific overrides
+└── styles/utilities.css      Helper classes
 ```
-
----
-
-## Assets
-
-| File | Purpose |
-|---|---|
-| `favicon.ico` | Default favicon (replaced at runtime by favicon-animator.js) |
-| `assets/eruditorum.webp` | Preview image |
-| `CNAME` | GitHub Pages custom domain |

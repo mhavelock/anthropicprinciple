@@ -1,435 +1,88 @@
-# Codebase Improvements Documentation
+# Improvements Log — anthropicprinciple.ai
 
-## Overview
-This document explains all improvements made to the Eruditorium project and the reasoning behind each change. These improvements focus on **performance**, **maintainability**, **accessibility**, and **beginner-friendly code**.
-
----
-
-## 1. CSS Architecture Refactoring
-
-### What Changed
-**Before:** Single `styles.css` file (~76 lines with unused code)
-
-**After:** 4 specialized CSS files organized by purpose:
-- `styles/critical.css` - Above-the-fold styles (loaded immediately)
-- `styles/global.css` - Typography and global styles (deferred)
-- `styles/components.css` - Interactive element styles (deferred)
-- `styles/utilities.css` - Helper classes for future expansion (deferred)
-
-### Why This Matters
-
-#### Performance
-- **Critical CSS loaded first** → Content renders faster (reduced First Contentful Paint)
-- **Non-critical CSS deferred** → Browser doesn't block rendering waiting for all styles
-- **Smaller files** → Easier to cache, better compression
-
-#### Maintainability
-- **Separation of concerns** → Find styles by category, not by scrolling one huge file
-- **Scalability** → Adding new components? Create a new file, don't edit one giant file
-- **Collaboration** → Multiple developers can work on different CSS files without conflicts
-
-#### Developer Learning
-- Teaches the concept of **critical path optimization** (industry best practice)
-- Shows how to structure CSS for growth
-- Prepares for Tailwind CSS adoption later
-
-### How It Works
-
-**In HTML:**
-```html
-<!-- Loaded immediately - blocks until complete -->
-<link rel="stylesheet" href="styles/critical.css" />
-
-<!-- Deferred - loads in background, doesn't block rendering -->
-<link rel="stylesheet" href="styles/global.css" media="print" onload="this.media='all'" />
-```
-
-The `media="print"` trick:
-1. CSS doesn't apply initially (print media isn't active)
-2. Browser loads it in the background
-3. `onload` handler switches to `media="all"` once loaded
-4. Styles apply without blocking page rendering
+Technical improvements made to the project. Each section describes what changed and the reasoning.
 
 ---
 
-## 2. JavaScript Refactoring: Module Pattern
+## Standards and CSS Architecture
 
-### What Changed
-**Before:** Global scope pollution
-```javascript
-onload = ()=> {
-    canvas = document.querySelector('canvas'),  // Global variable!
-    context = canvas.getContext('2d');
-    // ... more global variables
-};
-```
+**CLAUDE.md** rewritten as a comprehensive project reference covering brand guidelines, CSS architecture, JS module descriptions, performance constraints, and naming conventions.
 
-**After:** Module pattern encapsulation
-```javascript
-const FaviconAnimator = (() => {
-  // Private variables - only accessible here
-  let canvas = null;
-  let context = null;
+**CSS brand tokens updated** throughout `colors.css`: Arial and Verdana are declared as system font stacks (`--font-family-body`, `--font-family-heading`) with no external font requests. The brand palette (`#1d1f24` / `#a1b1ca`) is expressed as CSS custom properties used consistently across all button, text, border, and input token groups.
 
-  // Private methods
-  const setupCanvas = () => { /* ... */ };
+**Typography units standardised**: all `--font-size-*` values use `em` so they scale with inherited context. All `--space-*` values use `rem` for layout distances that remain consistent regardless of local font-size changes. The `html` element font-size is never overridden — the browser default of 16px is preserved for user accessibility.
 
-  // Public API
-  return { init: init };
-})();
-```
+**Mobile-first refactor** applied across all stylesheets. Base styles target the smallest screen. All responsive breakpoints use `min-width` only — no `max-width` breakpoints exist anywhere in the codebase.
 
-### Why This Matters
+**Link colour** inherits from text colour (`color: inherit`) in both light and dark mode, so links read as body text unless explicitly styled. Hover and focus-visible states are defined; no visited state is set anywhere.
 
-#### Security & Stability
-- **No global variables** → Can't accidentally overwrite variables from other scripts
-- **Namespace isolation** → Only `FaviconAnimator` exists globally
-- **Predictable behavior** → Variables can't be modified from other parts of code
+**Component naming convention** applied throughout: `.component-element` structure for component parts, `.mod-*` for variant modifiers, `.is-*` for toggled state classes, `.u-*` prefix for utility classes.
 
-#### Maintainability
-- **Clear API** → Other developers know exactly what methods to call (`FaviconAnimator.init()`)
-- **Private methods hidden** → Implementation details don't leak to global scope
-- **Easy to debug** → All related code is in one place
+**Hover, focus-visible, and active states** defined on all interactive elements. No visited state. Focus rings use `outline: 2px solid var(--color-focus)` with `outline-offset: 2px`.
 
-#### Beginner Learning
-- Teaches **scope management** (critical JavaScript concept)
-- Shows **module pattern** (foundation for ES6 modules)
-- Demonstrates **closures** (variables persist in private scope)
+**controls.css extracted** from inline styles into an external stylesheet. A dedicated `--ctrl-*` token namespace isolates the panel's fixed dark theme from the global design token system. No `--color-*` tokens are used on the controls page.
 
-### How the Module Pattern Works
+**Tooltip, alert, and modal components** added to `components.css`. ARIA usage patterns documented in CSS comments: tooltip visible on `:focus-visible` for keyboard users; alert uses `role="alert"`; modal requires `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, focus trapping, Escape-key close, and backdrop-click close.
 
-```javascript
-const FaviconAnimator = (() => {
-  // ↑ IIFE (Immediately Invoked Function Expression)
-  // This function runs once and returns the public API
-
-  // PRIVATE - only accessible inside this function
-  let canvas = null;
-  const setupCanvas = () => { /* ... */ };
-
-  // PUBLIC - accessible from outside via return object
-  return {
-    init: () => { /* ... */ }
-  };
-})();
-
-// Only init() is public
-FaviconAnimator.init();  // ✓ Works
-FaviconAnimator.canvas;  // ✗ Undefined (private)
-```
+**Orientation landscape media query** added in `global.css` and `clock.css` to handle small devices rotated to landscape, reducing vertical padding to recover viewport height.
 
 ---
 
-## 3. HTML Improvements
+## HTML
 
-### What Changed
+**index.html** updated with: semantic `<main aria-label="Kinetic clock">` wrapper, Open Graph meta tags (`og:type`, `og:url`, `og:title`, `og:description`), canonical `<link>`, `theme-color` meta, and a JSON-LD `WebApplication` schema block. All favicons and web manifest references are present.
 
-#### Added Viewport Meta Tag
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-```
-
-**Why:**
-- Enables proper responsive design on mobile devices
-- Sets initial zoom to 100% (not 125% by default on some phones)
-- `viewport-fit=cover` uses full screen on notched devices (iPhones)
-
-#### Improved Semantic Structure
-```html
-<!-- Before: Generic div -->
-<div><button>...</button></div>
-
-<!-- After: Semantic main element -->
-<main><button aria-label="...">...</button></main>
-```
-
-**Why:**
-- `<main>` tells assistive technology what the primary content is
-- Better for SEO (search engines understand page structure)
-- Cleaner HTML semantics
-
-#### Moved Scripts to End of Body
-```html
-<!-- Before: Blocks rendering -->
-<head>
-  <script src="script.js"></script>
-</head>
-
-<!-- After: Non-blocking -->
-<body>
-  <!-- ... content ... -->
-  <script src="js/favicon-animator.js" defer></script>
-  <script src="js/main.js" defer></script>
-</body>
-```
-
-**Why:**
-- Browser doesn't wait to download JavaScript before showing content
-- `defer` attribute = script loads in background, runs after HTML parsed
-- Page appears to load faster (better perceived performance)
-
-#### Accessibility Improvements
-
-```html
-<!-- Helpful button label for screen readers -->
-<button aria-label="Click to animate favicon">
-  <img src="..." alt="Eruditorium logo" />
-</button>
-
-<!-- Hidden canvas - not visually important -->
-<canvas aria-hidden="true"></canvas>
-```
-
-**Why:**
-- Screen reader users understand what the button does
-- Better WCAG accessibility compliance
-- Improves user experience for ~15% of web users
-
-#### Image Optimization Hints
-```html
-<img src="eruditorium.webp"
-     alt="Eruditorium logo"
-     width="1542"
-     height="1000"
-     loading="lazy" />
-```
-
-**Why:**
-- `width` & `height` prevent layout shift while loading
-- `loading="lazy"` defers image loading (better for future pages)
-- `alt` text helps accessibility and SEO
+**clock-controls.html** updated with: all inline styles removed and replaced with `controls.css` classes; proper `<label for>` associations on all inputs; `aria-labelledby` on each `<section>`; `role="status" aria-live="polite"` on the status output element; `.is-hidden` / `.is-active` class conventions for section and label state toggling.
 
 ---
 
-## 4. JavaScript Comments: Comprehensive Documentation
+## Images
 
-### Philosophy
-Every non-obvious line of code should have an explanation that makes sense to a beginner developer.
-
-### Comment Structure
-
-```javascript
-/**
- * JSDoc block comment (explains entire function)
- * - What it does
- * - Why we're doing it
- * - When it runs
- *
- * @param {type} paramName - Description
- * @returns {type} Description of return value
- */
-function myFunction(paramName) {
-  // Inline comments explain WHY, not WHAT
-  // WHAT is obvious from code; WHY requires explanation
-
-  const result = complexCalculation();
-  // Explain the business logic, not the syntax
-}
-```
-
-### Key Comments in Your Code
-
-#### Module Pattern Explanation
-```javascript
-const FaviconAnimator = (() => {
-  /**
-   * PRIVATE VARIABLES
-   * These variables are only accessible within this module
-   */
-  let canvas = null; // DOM element cached for performance
-```
-
-#### Animation Math Explanation
-The drawing code is heavily commented because the math is non-obvious:
-
-```javascript
-/**
- * STAGE 1: Draw top edge (0-25%)
- * Draws from (0,0) to (32,0) - horizontal line at top
- *
- * Progress: animationProgress goes 0→25
- * Calculation: (32/25) * animationProgress maps to distance across top
- * Example: at 50% progress (animationProgress=50):
- *   - (32/25) * 50 = 64px (but capped at 32px width)
- */
-if (animationProgress <= 25) {
-  const currentWidth = (CANVAS_SIZE / 25) * animationProgress;
-  context.moveTo(0, 0);
-  context.lineTo(currentWidth, 0);
-}
-```
+All `<img>` elements carry `alt`, `width`, and `height` attributes. Where images are used, `srcset` provides 250w and 500w resolution variants; the `sizes` attribute reflects layout breakpoints. `loading="lazy"` is set on below-fold images and `loading="eager"` on the first visible image to avoid blocking the initial render.
 
 ---
 
-## 5. File Organization
+## JavaScript — Performance
 
-### New Structure
-```
-vigilant-lewin/
-├── index.html                 # Main HTML file
-├── styles/                    # All CSS files
-│   ├── critical.css          # Loaded in <head>
-│   ├── global.css            # Deferred (typography)
-│   ├── components.css        # Deferred (buttons, interactive)
-│   └── utilities.css         # Deferred (helpers)
-├── js/                        # All JavaScript files
-│   ├── favicon-animator.js   # Animation logic (module)
-│   └── main.js               # Entry point
-├── img/                       # (Ready for expansion)
-└── IMPROVEMENTS.md           # This file
-```
+**favicon-animator.js**: replaced `setInterval` with a `requestAnimationFrame` loop throttled to approximately 10fps using a timestamp comparison (100ms minimum interval). A `visibilitychange` listener pauses the loop when the tab is hidden, reducing `canvas.toDataURL()` calls from approximately 16 per second (at 60fps) to approximately 10 per second, suspended entirely when the tab is backgrounded.
 
-### Why This Structure
+**clock.js — rAF optimisations**:
 
-1. **Clear separation** - content, styles, functionality are separate
-2. **Scalable** - easy to add new components
-3. **Professional** - matches industry standard structure
-4. **Collaborative** - team members know where things go
+- Pattern phase trig calculations (`atan2`, `sqrt`, `sin` per cell) are throttled to approximately 30fps (33ms minimum frame interval). The ease-in and ease-out windows (2s each) run at full 60fps since they do not recompute pattern trig.
+- `visibilitychange` listener cancels `requestAnimationFrame` when the tab is backgrounded and restarts it on restore.
+- `clockAngles()` inlined into `patternAngles()` as a direct buffer write — eliminates 84 temporary `[a, b]` array allocations per call.
+- Pre-allocated reusable buffers (`_bufOut`, `_bufFrom`, `_bufTo`, `_bufTime`, `_bufInterp`) — no per-frame heap allocations occur during the blend or ease windows.
+- `Float64Array` angle cache (`_lastAngles`) in `apply()` — DOM write is skipped if angle is unchanged from the previous frame.
+- Angles rounded to 2 decimal places — reduces unique template literal string allocations per frame.
+- `timeAngles()` column indexing simplified — eliminates a `Math.floor` call per cell per frame.
+
+**clock.css — compositor optimisations**:
+
+- `will-change: transform` on `.hand` — promotes all 168 hand elements to GPU compositor layers so JS-driven `rotate()` updates are applied by the GPU thread rather than the main thread.
+- `contain: layout style paint` on `.mc` — scopes style recalculation to each individual cell. A transform write on one hand cannot trigger a style or layout recalculation across the full document tree.
+
+**logger.js**: entries buffered in memory (`_buf`); `sessionStorage` flush deferred to `beforeunload`. Removes the previous pattern of synchronous read, JSON parse, append, and write on every `log()` call.
 
 ---
 
-## 6. Performance Improvements Summary
+## Accessibility
 
-| Metric | Before | After | Impact |
-|--------|--------|-------|--------|
-| CSS Files | 1 large | 4 organized | Better caching, parallel loading |
-| JavaScript Scoping | Global | Module | No conflicts with other scripts |
-| Deferred Styles | None | 3 files | Faster initial render |
-| Semantic HTML | Limited | Improved | Better accessibility & SEO |
-| Image Optimization | None | Lazy loading ready | Future performance boost |
-| Script Loading | Blocking | Deferred | Page renders faster |
+Keyboard navigation verified across all interactive elements: Tab order, Enter and Space activation on buttons, Escape to close modals.
 
----
+`focus-visible` rings on all interactive elements (links, buttons, inputs, radio labels, modal close button, nav links).
 
-## 7. Learning Outcomes
+ARIA landmarks and labelling on clock-controls.html: `<nav aria-label>`, `<section aria-labelledby>`, `role="status" aria-live="polite"` on the status element.
 
-By implementing these changes, you've learned:
+`prefers-reduced-motion` blocks in `global.css`, `components.css`, and `controls.css` collapse all animation and transition durations to 0.01ms for users who have requested reduced motion.
 
-### CSS
-- ✅ Critical path optimization (load above-the-fold first)
-- ✅ CSS file organization (separation by purpose)
-- ✅ Deferred CSS loading techniques (media query trick)
-- ✅ Foundation for Tailwind CSS adoption
-
-### JavaScript
-- ✅ Module pattern (encapsulation, scope management)
-- ✅ IIFE (Immediately Invoked Function Expressions)
-- ✅ Closures (private variables that persist)
-- ✅ Documentation with JSDoc
-- ✅ Event handling without global scope pollution
-
-### HTML
-- ✅ Semantic HTML (`<main>`, meaningful structure)
-- ✅ Accessibility attributes (`aria-label`, `aria-hidden`)
-- ✅ Responsive meta tags (viewport configuration)
-- ✅ Script loading optimization (defer attribute)
-- ✅ Image optimization (width, height, lazy loading)
-
-### Architecture
-- ✅ Separation of concerns (HTML, CSS, JS separate)
-- ✅ Code organization best practices
-- ✅ Scalable folder structure
-- ✅ Performance thinking (critical path, deferred loading)
+`.u-sr-only` utility in `utilities.css` provides a visually hidden class that reveals on `:focus-visible`, used on skip-to-content links.
 
 ---
 
-## 8. Future Improvements
+## Assets and Structure
 
-### Ready for These Enhancements
+`assets/` subdirectories scaffolded: `audio/`, `bgs/`, `components/`, `graphics/`, `icons/`, `photos/`. SVG icons placed in `assets/icons/`.
 
-**Alpine.js Integration**
-```html
-<button x-data="{ isAnimating: false }"
-        @mouseenter="isAnimating = true"
-        :disabled="isAnimating">
-  Animate
-</button>
-```
+`context/summaries/` directory created per project specification for task lists and handoff summaries.
 
-**Component CSS Expansion**
-```
-styles/components/
-├── button.css
-├── modal.css
-├── form.css
-└── navbar.css
-```
-
-**Image Asset Organization**
-```
-img/
-├── logo.webp
-├── logo.jpg
-├── icons/
-└── backgrounds/
-```
-
-**ES6 Module System** (instead of current modules)
-```javascript
-// favicon-animator.js
-export const FaviconAnimator = { /* ... */ };
-
-// main.js
-import { FaviconAnimator } from './favicon-animator.js';
-```
-
----
-
-## 9. Quick Reference: Key Principles Applied
-
-1. **Performance First** - Load only what's needed, when it's needed
-2. **Accessibility Always** - Every user can interact with your site
-3. **Semantic HTML** - Structure matters for machines and humans
-4. **Scoped Code** - Prevent global namespace pollution
-5. **Clear Comments** - Code for humans first, machines second
-6. **Separation of Concerns** - HTML for structure, CSS for style, JS for behavior
-7. **Beginner-Friendly** - Verbose, well-documented code over clever shortcuts
-8. **Scalable Structure** - Ready to grow without major refactoring
-
----
-
-## 10. Testing Your Changes
-
-### In Browser Console
-```javascript
-// Test module is accessible
-console.log(FaviconAnimator);  // Should show object with init method
-
-// Test initialization
-FaviconAnimator.init();  // Should log success or error
-```
-
-### Check Performance
-1. Open DevTools (F12)
-2. Go to Network tab
-3. Reload page
-4. Verify:
-   - `critical.css` loads first
-   - `global.css`, `components.css` load in background
-   - Scripts load at end, don't block rendering
-
-### Check Accessibility
-1. Use WAVE browser extension (WebAIM)
-2. Use Lighthouse (DevTools → Lighthouse tab)
-3. Check score improvements
-
----
-
-## Summary
-
-Your codebase has been upgraded to **professional standards** while remaining **beginner-friendly**. Every change follows industry best practices and includes detailed explanations for learning.
-
-**Key Achievements:**
-- ✅ CSS split into purposeful files (critical path optimization)
-- ✅ JavaScript refactored to module pattern (scope management)
-- ✅ HTML improved with accessibility and semantic structure
-- ✅ Comprehensive JSDoc comments for learning
-- ✅ Professional folder structure ready for scaling
-
-**Next Steps:**
-1. Test the site in your browser
-2. Review the comments in `js/favicon-animator.js`
-3. Experiment with adding new CSS/JS modules
-4. When ready, explore Alpine.js integration
-
-Happy coding! 🚀
+`docs/` populated with architecture reference, file manifest, improvements log, and refactoring summary. `docs/digit-reference.md` documents the hand-angle pair notation used in the digit tables in clock.js.
