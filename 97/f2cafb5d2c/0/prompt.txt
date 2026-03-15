@@ -1,0 +1,39 @@
+Please create a new page: play.html
+
+Could you visit website:
+https://soundcloud.com/you/sets
+
+This is a Soundcloud playlist page in my logged in account.
+Each playlist has a Title (with link) and a thumbnail image.
+Could you download the images to an /assets/soundcloud folder
+Create a grid layout and add the thumbnail linked to the correct playlist url and the playlist tile. the playlist title is positioned on top of the thumbnail - top left corner with 10px padding.
+Use black background, rgb(153, 153, 153) for text links (no underline - change to white on hover, focus, active. #4c505a for visited. 
+
+I have saved the web page in /docs/discovery - so you should just need to scrape the images.
+
+No title or additional text - show two per column on mobile and six for desktop.
+max width 1240
+min-width 320
+20px X padding 
+60px top padding 
+40px bottom padding.
+
+---
+
+Great. plz add 0.33rem gap between each
+
+---
+
+great. plz ensure em is used everywehre for typograpgy and rem for distance
+
+---
+
+cool. are the other standards in /docs/summaries/setup.txt adhered to?
+
+---
+
+yes plz
+
+---
+
+great. The javascript on the home page is slowing the chrome browser down - dev tools are slow to use. can you look into processes, memory use, and anything that might make it lighter in the browser.
