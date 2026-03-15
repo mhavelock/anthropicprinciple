@@ -1,0 +1,124 @@
+/**
+ * border-effect.css — Animated Conic Gradient Border
+ * =====================================================
+ * Creates a rotating conic-gradient border effect using CSS animations.
+ * Uses CSS custom properties for easy customisation.
+ *
+ * Usage:
+ *   <div class="border-effect-wrap">
+ *     <div class="border-effect" aria-hidden="true"></div>
+ *     <button class="border-effect-btn">Label</button>
+ *   </div>
+ *
+ * The .border-effect element is purely decorative (aria-hidden).
+ * The adjacent button sits above it via z-index.
+ */
+
+/* ===== WRAPPER ===== */
+.border-effect-wrap {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+/* ===== SHARED: glow layer + button ===== */
+.border-effect,
+.border-effect-btn {
+    border-radius: var(--border-radius);
+    height: 100%;
+    max-height: 7.5rem;     /* 120px */
+    max-width: 8.75rem;     /* 140px */
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+
+/* ===== GLOW LAYER ===== */
+/* Blurred version — creates the outer glow effect */
+.border-effect {
+    filter: blur(var(--border-blur));
+    z-index: 0;
+}
+
+/* Rotating conic gradient — shared by glow and clean border layers */
+.border-effect::before,
+.border-effect-btn::before {
+    animation: border-effect-rotate var(--animation-duration) linear infinite;
+    background-image: conic-gradient(
+        rgb(0 0 0 / 0),
+        var(--color-btn-primary),
+        rgb(0 0 0 / 0) 25%
+    );
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    content: '';
+    height: 99999px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 99999px;
+    z-index: -2;
+}
+
+/* Inner fill — hides the gradient inside the button boundary */
+.border-effect::after {
+    background: transparent;
+    border-radius: calc(var(--border-radius) - 2px);
+    content: '';
+    height: calc(100% - 2 * var(--border-width));
+    left: var(--border-width);
+    position: absolute;
+    top: var(--border-width);
+    width: calc(100% - 2 * var(--border-width));
+    z-index: -1;
+}
+
+/* ===== BUTTON (sits above glow layer) ===== */
+.border-effect-btn {
+    cursor: pointer;
+    max-height: 7.5rem;
+    max-width: 8.75rem;
+    position: relative;
+    z-index: 1;
+}
+
+.border-effect-btn:hover  { opacity: 0.95; }
+.border-effect-btn:active { opacity: 0.85; }
+
+.border-effect-btn:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes border-effect-rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(1turn); }
+}
+
+/* ===== BREAKPOINTS ===== */
+@media (min-width: 480px) {
+    .border-effect,
+    .border-effect-btn {
+        max-height: 9.375rem;    /* 150px */
+        max-width: 11.25rem;     /* 180px */
+    }
+}
+
+@media (min-width: 768px) {
+    .border-effect,
+    .border-effect-btn {
+        max-height: 12.5rem;     /* 200px */
+        max-width: 15.625rem;    /* 250px */
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    .border-effect::before,
+    .border-effect-btn::before {
+        animation: none;
+    }
+}

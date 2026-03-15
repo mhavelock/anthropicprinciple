@@ -1,0 +1,208 @@
+/**
+ * colors.css — Design System Tokens
+ * ===================================
+ * Single source of truth for all CSS custom properties.
+ * Colours, spacing, typography scale, borders, transitions.
+ *
+ * Light mode is the default.
+ * Dark mode via @media (prefers-color-scheme: dark) and [data-theme="dark"].
+ * Manual override via [data-theme="light"] or [data-theme="dark"] on <html>.
+ *
+ * Load order: first stylesheet on non-clock pages.
+ */
+
+/* ===== LIGHT MODE (default) ===== */
+:root {
+    /* ── Surfaces ── */
+    --color-bg:           #f5f6f7;
+    --color-bg-alt:       #ebeef0;
+    --color-bg-raised:    #ffffff;
+
+    /* ── Text ── */
+    --color-text:         #1d1f24;
+    --color-text-muted:   #555e64;
+
+    /* ── Borders ── */
+    --color-border:       #1d1f24;
+    --color-border-subtle: rgb(29 31 36 / 0.2);
+
+    /* ── Primary button ── */
+    --color-btn-primary:         #a1b1ca;
+    --color-btn-primary-hover:   #8fa2be;
+    --color-btn-primary-active:  #7d93b2;
+    --color-text-on-btn-primary: #1d1f24;
+
+    /* ── Secondary button ── */
+    --color-btn-secondary:         #3e3b1b;
+    --color-btn-secondary-hover:   #524f24;
+    --color-btn-secondary-active:  #2a2812;
+    --color-text-on-btn-secondary: #a1b1ca;
+
+    /* ── Links ── */
+    --color-link:       #1d1f24;
+    --color-link-hover: #3d4147;
+
+    /* ── Forms ── */
+    --color-input-bg:            #ffffff;
+    --color-input-bg-disabled:   #eceef0;
+    --color-input-border:        #1d1f24;
+    --color-input-border-focus:  #a1b1ca;
+    --color-input-text:          #1d1f24;
+    --color-input-placeholder:   #7a8590;
+
+    /* ── Focus ring ── */
+    --color-focus: #1d1f24;
+
+    /* ── Accent / highlight ── */
+    --color-accent:       rgb(161 177 202 / 0.15);
+    --color-accent-hover: rgb(161 177 202 / 0.25);
+
+    /* ===== TYPOGRAPHY ===== */
+    /* Browser default: 1rem = 16px. Do NOT override font-size on html or body. */
+    --font-size-h1:   2rem;       /* 32px */
+    --font-size-h2:   1.5rem;     /* 24px */
+    --font-size-h3:   1.25rem;    /* 20px */
+    --font-size-body: 1rem;       /* 16px */
+    --font-size-sm:   0.875rem;   /* 14px */
+    --font-size-xs:   0.75rem;    /* 12px */
+
+    /* System fonts — zero external font requests */
+    --font-family-heading: Verdana, Geneva, sans-serif;
+    --font-family-body:    Arial, Helvetica, sans-serif;
+    --font-family-mono:    'Courier New', Courier, monospace;
+
+    /* ===== SPACING (rem) ===== */
+    --space-xs:  0.25rem;   /*  4px */
+    --space-sm:  0.5rem;    /*  8px */
+    --space-md:  1rem;      /* 16px */
+    --space-lg:  1.5rem;    /* 24px */
+    --space-xl:  2rem;      /* 32px */
+    --space-2xl: 3rem;      /* 48px */
+    --space-3xl: 4rem;      /* 64px */
+
+    /* ===== BORDERS ===== */
+    --border-width:     2px;
+    --border-radius-sm: 4px;
+    --border-radius:    8px;
+    --border-radius-lg: 16px;
+    --border-blur:      20px;
+
+    /* ===== 12-COLUMN GRID ===== */
+    --grid-cols:     12;
+    --gutter:        2rem;    /* column gap — desktop */
+    --gutter-sm:     1rem;    /* column gap — mobile */
+    --container-max: 1440px;
+    --container-min: 288px;   /* minimum element width */
+
+    /* ===== TRANSITIONS ===== */
+    --transition-fast:   0.2s;
+    --transition-normal: 0.4s;
+    --transition-slow:   0.6s;
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+    --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+
+    /* ===== ANIMATION ===== */
+    --animation-duration: 4s;
+}
+
+/* ===== DARK MODE (system preference) ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg:           #0e0f12;
+        --color-bg-alt:       #1a1c20;
+        --color-bg-raised:    #22252c;
+
+        --color-text:         #a1b1ca;
+        --color-text-muted:   #7a8896;
+
+        --color-border:       #a1b1ca;
+        --color-border-subtle: rgb(161 177 202 / 0.2);
+
+        --color-btn-primary:         #1d1f24;
+        --color-btn-primary-hover:   #2c2f36;
+        --color-btn-primary-active:  #141618;
+        --color-text-on-btn-primary: #a1b1ca;
+
+        --color-btn-secondary:         #ebe6b7;
+        --color-btn-secondary-hover:   #f5f1d0;
+        --color-btn-secondary-active:  #d4cfA3;
+        --color-text-on-btn-secondary: #1d1f24;
+
+        --color-link:       #a1b1ca;
+        --color-link-hover: #c4d0de;
+
+        --color-input-bg:            #1a1c20;
+        --color-input-bg-disabled:   #2a2d34;
+        --color-input-border:        #a1b1ca;
+        --color-input-border-focus:  #c4d0de;
+        --color-input-text:          #a1b1ca;
+        --color-input-placeholder:   #556068;
+
+        --color-focus: #a1b1ca;
+
+        --color-accent:       rgb(29 31 36 / 0.4);
+        --color-accent-hover: rgb(29 31 36 / 0.6);
+    }
+}
+
+/* ===== MANUAL THEME OVERRIDES ===== */
+/* Apply [data-theme="light"] or [data-theme="dark"] to <html> to force a theme */
+
+[data-theme="light"] {
+    --color-bg:           #f5f6f7;
+    --color-bg-alt:       #ebeef0;
+    --color-bg-raised:    #ffffff;
+    --color-text:         #1d1f24;
+    --color-text-muted:   #555e64;
+    --color-border:       #1d1f24;
+    --color-border-subtle: rgb(29 31 36 / 0.2);
+    --color-btn-primary:         #a1b1ca;
+    --color-btn-primary-hover:   #8fa2be;
+    --color-btn-primary-active:  #7d93b2;
+    --color-text-on-btn-primary: #1d1f24;
+    --color-btn-secondary:         #3e3b1b;
+    --color-btn-secondary-hover:   #524f24;
+    --color-btn-secondary-active:  #2a2812;
+    --color-text-on-btn-secondary: #a1b1ca;
+    --color-link:       #1d1f24;
+    --color-link-hover: #3d4147;
+    --color-input-bg:           #ffffff;
+    --color-input-bg-disabled:  #eceef0;
+    --color-input-border:       #1d1f24;
+    --color-input-border-focus: #a1b1ca;
+    --color-input-text:         #1d1f24;
+    --color-input-placeholder:  #7a8590;
+    --color-focus: #1d1f24;
+    --color-accent:       rgb(161 177 202 / 0.15);
+    --color-accent-hover: rgb(161 177 202 / 0.25);
+}
+
+[data-theme="dark"] {
+    --color-bg:           #0e0f12;
+    --color-bg-alt:       #1a1c20;
+    --color-bg-raised:    #22252c;
+    --color-text:         #a1b1ca;
+    --color-text-muted:   #7a8896;
+    --color-border:       #a1b1ca;
+    --color-border-subtle: rgb(161 177 202 / 0.2);
+    --color-btn-primary:         #1d1f24;
+    --color-btn-primary-hover:   #2c2f36;
+    --color-btn-primary-active:  #141618;
+    --color-text-on-btn-primary: #a1b1ca;
+    --color-btn-secondary:         #ebe6b7;
+    --color-btn-secondary-hover:   #f5f1d0;
+    --color-btn-secondary-active:  #d4cfa3;
+    --color-text-on-btn-secondary: #1d1f24;
+    --color-link:       #a1b1ca;
+    --color-link-hover: #c4d0de;
+    --color-input-bg:           #1a1c20;
+    --color-input-bg-disabled:  #2a2d34;
+    --color-input-border:       #a1b1ca;
+    --color-input-border-focus: #c4d0de;
+    --color-input-text:         #a1b1ca;
+    --color-input-placeholder:  #556068;
+    --color-focus: #a1b1ca;
+    --color-accent:       rgb(29 31 36 / 0.4);
+    --color-accent-hover: rgb(29 31 36 / 0.6);
+}

@@ -1,0 +1,367 @@
+/**
+ * global.css — Base Element Defaults
+ * =====================================
+ * Reusable styles: reset, typography, links, buttons, forms, 12-column grid.
+ * Mobile-first: base styles target smallest screen; min-width queries add complexity upward.
+ *
+ * Load order: after fonts.css, before components.css.
+ */
+
+@charset "UTF-8";
+
+/* ===== BOX MODEL RESET ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== HTML & BODY ===== */
+html {
+    /* Do not override font-size — preserve browser default (1rem = 16px).
+       Users who change their browser font size deserve that choice. */
+    height: 100%;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-family-body, Arial, Helvetica, sans-serif);
+    font-size: var(--font-size-body, 1rem);
+    line-height: 1.5;
+    min-height: 100%;
+}
+
+/* Responsive line height: slightly looser on larger screens */
+@media (min-width: 768px) {
+    body {
+        line-height: 1.7;
+    }
+}
+
+/* ===== IMAGES ===== */
+/* Prevent images from overflowing their containers */
+img,
+video {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+/* ===== CANVAS ===== */
+/* Hidden canvas used by favicon-animator.js */
+canvas {
+    height: 32px;
+    position: absolute;
+    visibility: hidden;
+    width: 32px;
+}
+
+/* ===== BASE TYPOGRAPHY ===== */
+h1 { font-size: var(--font-size-h1, 2rem); }
+h2 { font-size: var(--font-size-h2, 1.5rem); }
+h3 { font-size: var(--font-size-h3, 1.25rem); }
+
+p {
+    font-size: var(--font-size-body, 1rem);
+    line-height: inherit;
+    margin-bottom: var(--space-md);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== LINKS ===== */
+a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color var(--transition-fast) ease;
+}
+
+a:hover {
+    color: var(--color-link-hover);
+}
+
+a:focus-visible {
+    color: var(--color-link-hover);
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* Button-like links — never underline */
+a[class*="btn"],
+a[role="button"] {
+    text-decoration: none;
+}
+
+/* ===== BUTTONS ===== */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: none;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* .btn — base button component class */
+.btn {
+    align-items: center;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: var(--font-size-body);
+    font-weight: bold;
+    justify-content: center;
+    line-height: 1;
+    min-height: 2.75rem;    /* 44px minimum touch target */
+    padding: var(--space-sm) var(--space-lg);
+    text-decoration: none;
+    transition:
+        background-color var(--transition-fast) ease,
+        color var(--transition-fast) ease,
+        opacity var(--transition-fast) ease;
+}
+
+.btn-primary {
+    background: var(--color-btn-primary);
+    color: var(--color-text-on-btn-primary);
+}
+
+.btn-primary:hover  { background: var(--color-btn-primary-hover); color: var(--color-text-on-btn-primary); }
+.btn-primary:active { background: var(--color-btn-primary-active); }
+
+.btn-secondary {
+    background: var(--color-btn-secondary);
+    color: var(--color-text-on-btn-secondary);
+}
+
+.btn-secondary:hover  { background: var(--color-btn-secondary-hover); color: var(--color-text-on-btn-secondary); }
+.btn-secondary:active { background: var(--color-btn-secondary-active); }
+
+.btn:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* ===== FORMS ===== */
+label {
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: block;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-xs);
+}
+
+/* Text-like inputs */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
+textarea,
+select {
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-input-text);
+    font-family: inherit;
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+    padding: var(--space-sm) var(--space-md);
+    transition:
+        border-color var(--transition-fast) ease,
+        box-shadow var(--transition-fast) ease;
+    width: 100%;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-input-border-focus);
+    box-shadow: 0 0 0 3px var(--color-accent);
+    outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-input-placeholder);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background: var(--color-input-bg-disabled);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ===== CHECKBOXES & RADIOS ===== */
+input[type="checkbox"],
+input[type="radio"] {
+    appearance: none;
+    background-color: var(--color-input-bg);
+    border: var(--border-width) solid var(--color-input-border);
+    cursor: pointer;
+    display: inline-grid;
+    flex-shrink: 0;
+    height: 1.125rem;
+    margin: 0;
+    place-content: center;
+    transition:
+        background-color var(--transition-fast) ease,
+        border-color var(--transition-fast) ease,
+        box-shadow var(--transition-fast) ease;
+    width: 1.125rem;
+}
+
+input[type="checkbox"] { border-radius: var(--border-radius-sm); }
+input[type="radio"]    { border-radius: 50%; }
+
+input[type="checkbox"]::before,
+input[type="radio"]::before {
+    content: "";
+    transform: scale(0);
+    transition: transform var(--transition-fast) var(--ease-in-out);
+}
+
+input[type="checkbox"]::before {
+    background-color: var(--color-text-on-btn-primary);
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    height: 0.625rem;
+    width: 0.625rem;
+}
+
+input[type="radio"]::before {
+    background-color: var(--color-text-on-btn-primary);
+    border-radius: 50%;
+    height: 0.4375rem;
+    width: 0.4375rem;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: var(--color-btn-primary);
+    border-color: var(--color-btn-primary);
+}
+
+input[type="checkbox"]:checked::before,
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+    border-color: var(--color-input-border-focus);
+    box-shadow: 0 0 0 3px var(--color-accent);
+    outline: none;
+}
+
+input[type="checkbox"]:disabled,
+input[type="radio"]:disabled {
+    background-color: var(--color-input-bg-disabled);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* .form-check — inline label + checkbox/radio pair */
+.form-check {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    gap: var(--space-sm);
+}
+
+.form-check-label {
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.form-check:has(input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ===== 12-COLUMN PAGE GRID ===== */
+/* Mobile-first: all columns full-width by default, expand at breakpoints.
+   The clock homepage bypasses this — use .container/.row/.col-* on other pages only. */
+
+.container {
+    margin-inline: auto;
+    max-width: var(--container-max, 1440px);
+    min-width: var(--container-min, 288px);
+    padding-inline: var(--gutter-sm);
+    width: 100%;
+}
+
+.row {
+    display: grid;
+    gap: var(--gutter-sm);
+    grid-template-columns: repeat(var(--grid-cols, 12), 1fr);
+}
+
+/* Mobile base: every column spans all 12 — stack vertically */
+.col-1, .col-2, .col-3, .col-4,
+.col-5, .col-6, .col-7, .col-8,
+.col-9, .col-10, .col-11, .col-12 {
+    grid-column: span 12;
+}
+
+/* Tablet (480px+): narrow columns go half-width */
+@media (min-width: 480px) {
+    .container { padding-inline: var(--gutter-sm); }
+    .row       { gap: var(--gutter-sm); }
+
+    .col-1,
+    .col-2,
+    .col-3,
+    .col-4 { grid-column: span 6; }
+
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8 { grid-column: span 8; }
+}
+
+/* Desktop (768px+): full 12-column grid */
+@media (min-width: 768px) {
+    .container { padding-inline: var(--gutter); }
+    .row       { gap: var(--gutter); }
+
+    .col-1  { grid-column: span 1; }
+    .col-2  { grid-column: span 2; }
+    .col-3  { grid-column: span 3; }
+    .col-4  { grid-column: span 4; }
+    .col-5  { grid-column: span 5; }
+    .col-6  { grid-column: span 6; }
+    .col-7  { grid-column: span 7; }
+    .col-8  { grid-column: span 8; }
+    .col-9  { grid-column: span 9; }
+    .col-10 { grid-column: span 10; }
+    .col-11 { grid-column: span 11; }
+    .col-12 { grid-column: span 12; }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

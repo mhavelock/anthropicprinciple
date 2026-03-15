@@ -1,0 +1,62 @@
+/**
+ * utilities.css — Helper Classes
+ * ================================
+ * Small, single-purpose utility classes.
+ * Prefix: u- (utility)
+ * Load order: last — utilities override component styles.
+ */
+
+/* ===== SCREEN READER ONLY ===== */
+/* Visually hidden but accessible to screen readers and keyboard focus */
+.u-sr-only {
+    border-width: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* Reveal on focus (useful for skip-to-content links) */
+.u-sr-only:focus-visible {
+    background: var(--color-bg-raised);
+    clip: auto;
+    color: var(--color-text);
+    height: auto;
+    margin: 0;
+    outline: 2px solid var(--color-focus);
+    padding: var(--space-sm) var(--space-md);
+    width: auto;
+    z-index: 9999;
+}
+
+/* ===== DISPLAY ===== */
+.u-flex         { display: flex; }
+.u-flex-center  { align-items: center; display: flex; justify-content: center; }
+.u-flex-col     { display: flex; flex-direction: column; }
+.u-block        { display: block; }
+.u-inline       { display: inline; }
+.u-inline-flex  { display: inline-flex; }
+.u-hidden       { display: none; }
+
+/* ===== SPACING ===== */
+.u-m-0  { margin: 0; }
+.u-p-0  { padding: 0; }
+.u-mt-auto { margin-top: auto; }
+.u-ml-auto { margin-left: auto; }
+.u-mr-auto { margin-right: auto; }
+
+/* ===== TEXT ===== */
+.u-text-center  { text-align: center; }
+.u-text-left    { text-align: left; }
+.u-text-right   { text-align: right; }
+.u-text-muted   { color: var(--color-text-muted); }
+.u-text-sm      { font-size: var(--font-size-sm); }
+.u-text-xs      { font-size: var(--font-size-xs); }
+
+/* ===== STATE ===== */
+.is-hidden  { display: none; }
+.is-visible { visibility: visible; }

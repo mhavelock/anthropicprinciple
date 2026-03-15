@@ -1,0 +1,62 @@
+/**
+ * banner.css — Banner Section Component
+ * ========================================
+ * Full-width gradient banner with fluid heading typography.
+ * Mobile-first: base styles for smallest screen; min-width queries upward.
+ *
+ * Usage: <div class="banner"><h2 class="banner-title">…</h2></div>
+ */
+
+/* ===== BANNER CONTAINER ===== */
+/* Mobile base */
+.banner {
+    align-items: center;
+    background: linear-gradient(
+        135deg,
+        var(--color-btn-primary) 0%,
+        var(--color-btn-secondary) 100%
+    );
+    display: flex;
+    justify-content: center;
+    min-height: 12.5rem;    /* 200px */
+    position: relative;
+    width: 100%;
+}
+
+/* ===== BANNER HEADING ===== */
+/* Fluid typography: scales smoothly from min to max via viewport width */
+.banner-title {
+    color: #ffffff; /* forced white — always readable on dark gradient */
+    font-family: var(--font-family-heading);
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+    padding: var(--space-md) var(--space-sm);
+    text-align: center;
+    transition: font-size var(--transition-normal) var(--ease-in-out);
+}
+
+/* ===== BREAKPOINTS ===== */
+@media (min-width: 480px) {
+    .banner      { min-height: 15.625rem; }  /* 250px */
+    .banner-title { font-size: clamp(1.8rem, 4vw, 3rem); padding: 1.5rem var(--space-md); }
+}
+
+@media (min-width: 768px) {
+    .banner      { min-height: 18.75rem; }   /* 300px */
+    .banner-title { font-size: clamp(2rem, 5vw, 4rem); padding: var(--space-md) var(--space-xl); }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-contrast: more) {
+    .banner-title {
+        text-shadow: 0 2px 4px rgb(0 0 0 / 0.4);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banner-title {
+        transition: none;
+    }
+}

@@ -1,0 +1,46 @@
+/**
+ * fonts.css — Typography
+ * =======================
+ * Font family declarations and heading / body assignments.
+ * System fonts only — zero external font requests, instant rendering.
+ *
+ * Font families are also defined as custom properties in colors.css.
+ * This file applies those tokens to HTML elements.
+ *
+ * Load order: after colors.css, before global.css.
+ */
+
+/* ===== APPLY FONTS TO ELEMENTS ===== */
+
+/* Heading font — Verdana (geometric sans, distinct from body) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family-heading, Verdana, Geneva, sans-serif);
+    font-weight: bold;
+}
+
+/* Body font — Arial (legible, widely available, renders cleanly at all sizes) */
+body,
+p,
+a,
+li,
+label,
+input,
+select,
+textarea,
+button {
+    font-family: var(--font-family-body, Arial, Helvetica, sans-serif);
+    font-weight: normal;
+}
+
+/* Monospace — code blocks, pre-formatted text */
+code,
+pre,
+kbd,
+samp {
+    font-family: var(--font-family-mono, 'Courier New', Courier, monospace);
+}

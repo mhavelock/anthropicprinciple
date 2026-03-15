@@ -1,0 +1,17 @@
+/**
+ * critical.css
+ * =============
+ * NOTE: This file is a legacy placeholder from the project fork.
+ * It is NOT loaded by index.html (the clock page uses clock.css exclusively).
+ *
+ * For non-clock pages, load stylesheets in this order:
+ *   1. colors.css   — design tokens
+ *   2. fonts.css    — font families
+ *   3. global.css   — base element defaults, forms, grid
+ *   4. components.css — reusable UI components
+ *   5. [page].css   — page-specific styles (e.g. controls.css)
+ *   6. utilities.css — helper overrides
+ *
+ * This file is kept to avoid 404s from any legacy references.
+ * Safe to delete if no page links to it.
+ */
