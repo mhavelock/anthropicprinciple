@@ -5,6 +5,10 @@
  * Entirely separate from application code — safe to include or exclude
  * without affecting any clock or UI functionality.
  *
+ * Entries are buffered in memory and flushed to sessionStorage only on
+ * beforeunload (or manually via Logger.flush()), avoiding synchronous
+ * storage I/O on every log call.
+ *
  * Storage:
  *   - Active session logs → sessionStorage (cleared on tab close)
  *   - Summary snapshot    → localStorage (persists, written on beforeunload)
@@ -13,8 +17,9 @@
  *   Logger.log('section', 'message', { optional: 'data' });
  *   Logger.time('hero-image');
  *   Logger.timeEnd('hero-image');
- *   Logger.dump();
- *   Logger.clear();
+ *   Logger.flush();   // write buffer to sessionStorage now
+ *   Logger.dump();    // print all entries to console
+ *   Logger.clear();   // wipe buffer + sessionStorage
  */
 
 const Logger = (() => {
@@ -23,28 +28,14 @@ const Logger = (() => {
     const SESSION_KEY = 'ap_dev_log';
     const PERSIST_KEY = 'ap_dev_log_summary';
 
-    const timers = {};
+    // In-memory buffer — flushed to sessionStorage only on unload
+    const _buf = [];
+    const _timers = {};
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     function timestamp() {
         return new Date().toISOString();
-    }
-
-    function readSession() {
-        try {
-            return JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]');
-        } catch {
-            return [];
-        }
-    }
-
-    function writeSession(entries) {
-        try {
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify(entries));
-        } catch (e) {
-            console.warn('[Logger] sessionStorage write failed:', e.message);
-        }
     }
 
     // ── Public API ─────────────────────────────────────────────────────────────
@@ -53,17 +44,13 @@ const Logger = (() => {
      * Log a named event with an optional data payload.
      * @param {string} section - Logical category (e.g. 'init', 'clock', 'storage')
      * @param {string} message - Human-readable description
-     * @param {*} [data]       - Optional structured data
+     * @param {*}      [data]  - Optional structured data
      */
     function log(section, message, data) {
         const entry = { ts: timestamp(), section, message };
         if (data !== undefined) entry.data = data;
-
-        const entries = readSession();
-        entries.push(entry);
-        writeSession(entries);
-
-        console.info(`[Logger:${section}] ${message}`, data !== undefined ? data : '');
+        _buf.push(entry);
+        // No synchronous storage write here — see flush()
     }
 
     /**
@@ -71,7 +58,7 @@ const Logger = (() => {
      * @param {string} name - Timer identifier
      */
     function time(name) {
-        timers[name] = performance.now();
+        _timers[name] = performance.now();
         log('timer', `start: ${name}`);
     }
 
@@ -81,55 +68,67 @@ const Logger = (() => {
      * @returns {number|null} Elapsed ms, or null if timer was not started
      */
     function timeEnd(name) {
-        if (!(name in timers)) {
+        if (!(name in _timers)) {
             console.warn(`[Logger] timeEnd called for unknown timer: "${name}"`);
             return null;
         }
-
-        const elapsed = +(performance.now() - timers[name]).toFixed(2);
-        delete timers[name];
+        const elapsed = +(performance.now() - _timers[name]).toFixed(2);
+        delete _timers[name];
         log('timer', `end: ${name}`, { elapsed_ms: elapsed });
         return elapsed;
     }
 
     /**
-     * Print all session log entries to the browser console.
+     * Flush in-memory buffer to sessionStorage.
+     * Called automatically on beforeunload; call manually if needed.
      */
-    function dump() {
-        const entries = readSession();
-        console.group('[Logger] Session log dump');
-        entries.forEach(e => console.log(`[${e.ts}] [${e.section}] ${e.message}`, e.data || ''));
-        console.groupEnd();
-        return entries;
+    function flush() {
+        try {
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(_buf));
+        } catch (e) {
+            console.warn('[Logger] sessionStorage flush failed:', e.message);
+        }
     }
 
     /**
-     * Clear the session log store.
+     * Print all buffered log entries to the browser console.
+     * @returns {Array} The full entry array
      */
-    function clear() {
-        try { sessionStorage.removeItem(SESSION_KEY); } catch { /* noop */ }
-        log('logger', 'session log cleared');
+    function dump() {
+        console.group('[Logger] Session log dump');
+        _buf.forEach(e => console.log(`[${e.ts}] [${e.section}] ${e.message}`, e.data || ''));
+        console.groupEnd();
+        return _buf;
     }
 
-    // ── Persist summary on page unload ────────────────────────────────────────
+    /**
+     * Clear the in-memory buffer and sessionStorage.
+     */
+    function clear() {
+        _buf.length = 0;
+        try { sessionStorage.removeItem(SESSION_KEY); } catch { /* noop */ }
+    }
+
+    // ── Flush on unload ────────────────────────────────────────────────────────
+
     window.addEventListener('beforeunload', () => {
+        flush();
         try {
-            const entries = readSession();
             const summary = {
                 saved_at: timestamp(),
-                url: location.href,
-                count: entries.length,
-                entries,
+                url:      location.href,
+                count:    _buf.length,
+                entries:  _buf,
             };
             localStorage.setItem(PERSIST_KEY, JSON.stringify(summary));
         } catch { /* noop — storage may be full or restricted */ }
     });
 
-    // ── Test log on init ──────────────────────────────────────────────────────
-    (function selfTest() {
-        log('logger', 'Logger initialised', { storage: { session: 'sessionStorage', persist: 'localStorage' } });
+    // ── Self-test on init (buffered, zero storage I/O) ────────────────────────
 
-        // localStorage availability
+    (function selfTest() {
+        log('logger', 'Logger initialised', { mode: 'buffered' });
+
         try {
             localStorage.setItem('_ap_test', '1');
             localStorage.removeItem('_ap_test');
@@ -138,7 +137,6 @@ const Logger = (() => {
             log('storage', 'localStorage: unavailable or blocked');
         }
 
-        // sessionStorage availability
         try {
             sessionStorage.setItem('_ap_test', '1');
             sessionStorage.removeItem('_ap_test');
@@ -147,22 +145,16 @@ const Logger = (() => {
             log('storage', 'sessionStorage: unavailable or blocked');
         }
 
-        // Script load time (time from navigation start to this script executing)
         const navEntry = performance.getEntriesByType('navigation')[0];
         if (navEntry) {
-            log('perf', 'page navigation timing', {
+            log('perf', 'navigation timing', {
                 domContentLoaded_ms: +navEntry.domContentLoadedEventEnd.toFixed(2),
-                load_ms: +navEntry.loadEventEnd.toFixed(2),
+                load_ms:             +navEntry.loadEventEnd.toFixed(2),
+                ttfb_ms:             +(navEntry.responseStart - navEntry.requestStart).toFixed(2),
             });
-        }
-
-        // Time to first byte
-        const [nav] = performance.getEntriesByType('navigation');
-        if (nav) {
-            log('perf', 'TTFB', { ttfb_ms: +(nav.responseStart - nav.requestStart).toFixed(2) });
         }
     }());
 
-    return { log, time, timeEnd, dump, clear };
+    return { log, time, timeEnd, flush, dump, clear };
 
 })();
