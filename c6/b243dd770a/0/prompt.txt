@@ -75,3 +75,7 @@ when you hover over the soundcloud icon it has an affect - something like orange
 
 perfect. Taking into account the best practices docs in the project docs folder, please run a code review on what we have. Look for better organisation of code, clean code review, performance improvements, browser memory usage issues and a security check.
 update the md docs and memory file then add & commit to git.
+
+---
+
+plz resume
