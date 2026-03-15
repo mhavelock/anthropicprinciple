@@ -101,17 +101,22 @@ const FaviconAnimator = (() => {
     // ── Init ──────────────────────────────────────────────────────────────────
 
     function init() {
-        favicon = document.querySelector('link[rel*="icon"]');
-        if (!favicon) {
-            console.error('FaviconAnimator: favicon link element not found');
-            return false;
-        }
-
         canvas        = document.createElement('canvas');
         canvas.width  = CANVAS_SIZE;
         canvas.height = CANVAS_SIZE;
         ctx           = canvas.getContext('2d');
         if (!ctx) return false;
+
+        // Remove all static favicon links so no competing icon can override
+        // the animated one. Browsers (especially Chrome) give ICO/SVG declared
+        // in HTML priority over a mutated href — injecting a fresh element is
+        // the only reliable way to take control of the tab icon.
+        document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]').forEach(el => el.remove());
+
+        favicon      = document.createElement('link');
+        favicon.rel  = 'icon';
+        favicon.type = 'image/png';
+        document.head.appendChild(favicon);
 
         const gradient = ctx.createLinearGradient(0, 0, CANVAS_SIZE, CANVAS_SIZE);
         gradient.addColorStop(0, GRADIENT_START);
@@ -130,4 +135,5 @@ const FaviconAnimator = (() => {
     return { init };
 })();
 
-document.addEventListener('DOMContentLoaded', () => FaviconAnimator.init());
+// defer guarantees the DOM is parsed — no DOMContentLoaded listener needed.
+FaviconAnimator.init();
