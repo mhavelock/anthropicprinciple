@@ -84,7 +84,7 @@ body {
 /* ===== TITLE OVERLAY ===== */
 .playlist-card-title {
     color: rgb(153, 153, 153);
-    font-size: 0.7rem;
+    font-size: 0.7em;
     font-weight: normal;
     left: 10px;
     line-height: 1.3;
