@@ -119,3 +119,46 @@ body.countdown-zero::after {
   animation: body-pulse 1.2s ease-in-out infinite;
   z-index: 999;
 }
+
+/* ===== PAGE LOADER ===== */
+.loader {
+  align-items: center;
+  background: var(--clk-bg);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 0.5s ease;
+  z-index: 2000;
+}
+
+.loader.is-hidden {
+  opacity: 0;
+}
+
+/* Loader clock face — sized larger than grid cells for visibility */
+.loader-clock {
+  width: min(18vw, 18vh, 96px);
+}
+
+/* Hours hand: one slow revolution */
+.loader-clock .hand:first-child {
+  animation: loader-spin 6s linear infinite;
+}
+
+/* Minutes hand: one fast revolution */
+.loader-clock .hand:last-child {
+  animation: loader-spin 1s linear infinite;
+}
+
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-clock .hand {
+    animation-duration: 8s;
+  }
+}

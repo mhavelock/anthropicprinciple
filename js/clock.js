@@ -330,5 +330,15 @@
     }
   });
 
+  // Dismiss loader after first two rAF callbacks — guarantees the clock grid
+  // has been painted before the overlay fades, preventing a flash of unstyled hands.
+  const _loader = document.getElementById('loader');
+  if (_loader) {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      _loader.classList.add('is-hidden');
+      _loader.addEventListener('transitionend', () => _loader.remove(), { once: true });
+    }));
+  }
+
   rafId = requestAnimationFrame(tick);
 })();
