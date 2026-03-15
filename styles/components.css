@@ -65,6 +65,122 @@ main {
     position: relative;
 }
 
+/* ===== TOOLTIP ===== */
+/* Usage: <span class="tooltip" data-tip="Label text">…</span> */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    background: var(--color-bg-raised);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text);
+    content: attr(data-tip);
+    font-size: 0.8em;
+    left: 50%;
+    line-height: 1.4;
+    max-width: 16rem;
+    opacity: 0;
+    padding: var(--space-xs) var(--space-sm);
+    pointer-events: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    transform: translateX(-50%);
+    transition: opacity var(--transition-fast) ease;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.tooltip:hover::after,
+.tooltip:focus-visible::after {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tooltip::after { transition: none; }
+}
+
+/* ===== ALERT ===== */
+/* Usage: <div class="alert mod-info" role="alert">…</div> */
+.alert {
+    border-left: 4px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text);
+    font-size: var(--font-size-sm, 0.875em);
+    padding: var(--space-sm) var(--space-md);
+}
+
+.alert.mod-info    { background: var(--color-accent);       border-color: var(--color-btn-primary); }
+.alert.mod-success { background: rgb(0 128 64 / 0.1);       border-color: #008040; color: #008040; }
+.alert.mod-warning { background: rgb(200 120 0 / 0.1);      border-color: #c87800; color: #c87800; }
+.alert.mod-danger  { background: rgb(180 0 0 / 0.1);        border-color: #b40000; color: #b40000; }
+
+/* ===== MODAL ===== */
+/* Usage:
+   <div class="modal-backdrop is-hidden" id="my-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+     <div class="modal">
+       <button class="modal-close" aria-label="Close">×</button>
+       <h2 class="modal-title" id="modal-title">Title</h2>
+       <div class="modal-body">…</div>
+     </div>
+   </div>
+   JS: toggle .is-hidden; trap focus; close on Escape + backdrop click.
+*/
+.modal-backdrop {
+    align-items: center;
+    background: rgb(0 0 0 / 0.6);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    padding: var(--space-md);
+    position: fixed;
+    z-index: 200;
+}
+
+.modal-backdrop.is-hidden { display: none; }
+
+.modal {
+    background: var(--color-bg-raised);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--border-radius);
+    max-height: 90vh;
+    max-width: 36rem;
+    overflow-y: auto;
+    padding: var(--space-xl);
+    position: relative;
+    width: 100%;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 1.5em;
+    line-height: 1;
+    padding: var(--space-xs);
+    position: absolute;
+    right: var(--space-md);
+    top: var(--space-md);
+}
+
+.modal-close:hover         { color: var(--color-text); }
+.modal-close:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.modal-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h3, 1.25em);
+    margin-bottom: var(--space-md);
+}
+
+.modal-body {
+    color: var(--color-text);
+    font-size: var(--font-size-body, 1em);
+    line-height: 1.6;
+}
+
+/* ===== ASIDE (rotated attribution) ===== */
 aside.side {
     position: absolute;
     transform: rotateX(-90deg);

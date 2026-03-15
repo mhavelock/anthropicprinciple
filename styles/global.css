@@ -355,6 +355,14 @@ input[type="radio"]:disabled {
     .col-12 { grid-column: span 12; }
 }
 
+/* ===== ORIENTATION ===== */
+/* Landscape on small devices: reduce vertical padding to recover viewport height */
+@media (orientation: landscape) and (max-height: 500px) {
+    body {
+        padding-block: var(--space-sm);
+    }
+}
+
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
     *,
