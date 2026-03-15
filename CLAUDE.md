@@ -90,9 +90,9 @@ anthropicprinciple/
 
 | File | Why protected |
 |------|--------------|
-| `styles/clock.css` | Contains the grid layout and hand animation tokens. Changing it breaks the clock. |
-| `js/clock.js` | The animation engine — hand-angle tables, patterns, timing loop. |
-| `js/favicon-animator.js` | Works correctly. No changes needed. |
+| `styles/clock.css` | Clock grid layout, hand animation, keyframes. May be modified for **performance only** (e.g. compositor hints). Never change visual behaviour or timing values. |
+| `js/clock.js` | The animation engine — hand-angle tables, patterns, timing loop. May be modified for **performance only**. Never change the 30-second cycle, digit shapes, or pattern logic. |
+| `js/favicon-animator.js` | Working correctly. Do not modify unless a performance or bug fix is required. |
 
 ---
 
@@ -105,7 +105,7 @@ anthropicprinciple/
 - **Modular JS.** Each JS file is a self-contained IIFE or module. No globals. No shared mutable state across files.
 - **CSS custom properties.** All colours, spacing, and timing values are defined as `--custom-properties` in `colors.css`. Never hard-code values in component CSS.
 - **Mobile-first CSS.** Base styles target the smallest screen. Use `min-width` media queries to layer on complexity for larger screens. Never use `max-width` for responsive breakpoints.
-- **`requestAnimationFrame` loop.** `clock.js` uses `rAF` for smooth 60fps animation — no `setInterval` for the render loop.
+- **`requestAnimationFrame` loop.** `clock.js` and `favicon-animator.js` use `rAF` — no `setInterval`. Both pause via `visibilitychange` when the tab is hidden.
 - **`localStorage` persistence.** Clock settings (mode, UTC offset, countdown end time) survive page reloads.
 - **Flex for layout, Grid for components.** Use Flexbox for page-level flow. CSS Grid for components where a two-dimensional structure is semantically correct (e.g. the clock grid, the 12-column page grid).
 - **Chained classes.** Separate structural and presentational concerns using chained classes where it improves clarity.
@@ -146,13 +146,20 @@ anthropicprinciple/
 - Critical CSS (`clock.css`) loaded as a single `<link>` in `<head>`.
 - System fonts only — zero font-loading requests on the main clock page.
 - All `<img>` elements have `width`, `height`, `alt`; below-fold images use `loading="lazy"`.
-- `srcset` for responsive images at 1× and 2× density (retina) descriptors.
-- `<link rel="preconnect">` for any external domains.
+- `srcset` with `250w` and `500w` resolution variants; `sizes` reflects layout breakpoints.
 - Explicit image dimensions prevent Cumulative Layout Shift (CLS).
 - `defer` attribute on all `<script>` tags.
 - `requestAnimationFrame` for the clock render loop — no layout-triggering properties animated.
 - CSS animations use `transform` and `opacity` only.
 - `aspect-ratio` on the clock grid prevents CLS on load.
+- `will-change: transform` on `.hand` — promotes all 168 hand elements to GPU compositor layers; JS-driven `rotate()` updates are applied by the compositor thread, not the main thread.
+- `contain: layout style paint` on `.mc` — scopes style recalculation to each clock cell; a transform write on one hand cannot cascade across the document.
+- Pre-allocated angle buffers in `clock.js` (`_bufOut`, `_bufFrom`, `_bufTo`, `_bufTime`, `_bufInterp`) — eliminates per-frame heap allocations.
+- `Float64Array` angle cache in `apply()` — skips DOM write if the value hasn't changed.
+- Pattern phase throttled to ~30fps; ease-in/out windows at 60fps; static display at 1fps.
+- `visibilitychange` listener pauses `rAF` loops in both `clock.js` and `favicon-animator.js` when the tab is hidden.
+- `favicon-animator.js` throttled to ~10fps (was continuous `setInterval`); `canvas.toDataURL()` suspended when tab is not visible.
+- `logger.js` buffers log entries in memory — no synchronous `sessionStorage` I/O on every call.
 - **Target: Google PageSpeed ≥ 95 on both mobile and desktop.**
 
 ---
@@ -184,7 +191,7 @@ anthropicprinciple/
 | Monospace / code | `'Courier New', Courier, monospace` | normal |
 
 - Base: `1rem = 16px` (browser default — do not override `font-size` on `html` or `body`).
-- All font sizes in `rem`. All spacing in `rem` (or `em` for component-relative values).
+- All font sizes in `em`. All spacing distances in `rem`.
 - Responsive line height: `1.5` base; `1.7` at ≥ 768px.
 
 ### Colour Palette
@@ -367,7 +374,8 @@ Logger.dump();                   // print all session logs to console
 Logger.clear();                  // clear sessionStorage log store
 ```
 
-- Logs stored in `sessionStorage` (cleared on tab close).
-- On `beforeunload`, a summary snapshot is written to `localStorage`.
+- Entries buffered in memory — no synchronous storage I/O on `log()` calls.
+- On `beforeunload`, buffer is flushed to `sessionStorage` and a summary snapshot written to `localStorage`.
 - Logger is passive: it never throws, never blocks execution.
+- `Logger.flush()` — write buffer to sessionStorage immediately (e.g. before an expected crash).
 - Remove `<script src="js/logger.js">` from HTML before production deployment if not needed.
