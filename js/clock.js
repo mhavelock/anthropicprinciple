@@ -242,15 +242,21 @@
   let transFrom  = null;  // pattern snapshot for pattern→time ease
   let timeSnap   = null;  // time snapshot for time→pattern reverse ease
   let lastSec    = -1;    // throttle static display to once per second
+  let lastFrame  = 0;     // throttle pattern phase to ~30 fps
+  let rafId      = null;
 
-  function tick() {
-    const now           = Date.now();
-    const countdownDone = cfg.mode === 'countdown' && cfg.countdownEnd > 0 && now >= cfg.countdownEnd;
-    const pos           = (DEBUG_DIGITS || countdownDone) ? PATTERN_END : (now - t0) % CYCLE;
-    const t             = (now - t0) / 1000;
+  const PATTERN_FRAME_MS = 33; // ~30 fps for the trig-heavy pattern phase
+
+  function tick(now) {
+    rafId = requestAnimationFrame(tick);
+
+    const wallNow       = Date.now();
+    const countdownDone = cfg.mode === 'countdown' && cfg.countdownEnd > 0 && wallNow >= cfg.countdownEnd;
+    const pos           = (DEBUG_DIGITS || countdownDone) ? PATTERN_END : (wallNow - t0) % CYCLE;
+    const t             = (wallNow - t0) / 1000;
 
     if (pos < TRANS_DUR) {
-      // Reverse ease: time display angles → live pattern
+      // Reverse ease: time display angles → live pattern (60 fps — short 2 s window)
       if (!timeSnap) timeSnap = timeAngles().map(([a, b]) => [norm(a), norm(b)]);
       transFrom = null;
       const p      = ease(pos / TRANS_DUR);
@@ -261,13 +267,15 @@
       ]));
 
     } else if (pos < TRANS_START) {
-      // Pure pattern display
+      // Pure pattern display — throttle to ~30 fps (trig per cell is expensive)
+      if (now - lastFrame < PATTERN_FRAME_MS) return;
+      lastFrame = now;
       timeSnap  = null;
       transFrom = null;
       apply(blendedPatternAngles(t, pos));
 
     } else if (pos < PATTERN_END) {
-      // Forward ease: pattern → time display
+      // Forward ease: pattern → time display (60 fps — short 2 s window)
       timeSnap = null;
       if (!transFrom) {
         transFrom = blendedPatternAngles(t, TRANS_START - 1).map(([a, b]) => [norm(a), norm(b)]);
@@ -283,12 +291,20 @@
       // Static time display — re-render once per second only
       timeSnap  = null;
       transFrom = null;
-      const sec = Math.floor(now / 1000);
+      const sec = Math.floor(wallNow / 1000);
       if (sec !== lastSec) { lastSec = sec; apply(timeAngles()); }
     }
-
-    requestAnimationFrame(tick);
   }
 
-  tick();
+  // Pause rAF when tab is hidden; resume when visible again
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    } else if (rafId === null) {
+      rafId = requestAnimationFrame(tick);
+    }
+  });
+
+  rafId = requestAnimationFrame(tick);
 })();

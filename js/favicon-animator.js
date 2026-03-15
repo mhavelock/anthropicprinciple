@@ -1,102 +1,133 @@
 /**
  * Favicon Animator Module
  * ========================
- * Continuously animates the favicon by drawing a square outline
- * frame-by-frame on a canvas, looping indefinitely.
+ * Animates the favicon by drawing a square outline frame-by-frame on a
+ * canvas. Uses requestAnimationFrame (pauses automatically when the tab is
+ * hidden) throttled to ~10 fps — plenty of resolution for a 32 px icon and
+ * far cheaper than the previous setInterval approach.
  *
- * Stages (0-100% each cycle):
- * 0-25%:   Top edge (0,0) → (32,0)
- * 25-50%:  Right edge (32,0) → (32,32)
- * 50-75%:  Bottom edge (32,32) → (0,32)
- * 75-100%: Left edge (0,32) → (0,0)
+ * Stages (0–100 % each cycle):
+ * 0–25 %:   Top edge    (0,0) → (32,0)
+ * 25–50 %:  Right edge  (32,0) → (32,32)
+ * 50–75 %:  Bottom edge (32,32) → (0,32)
+ * 75–100 %: Left edge   (0,32) → (0,0)
  */
 
 const FaviconAnimator = (() => {
-  let canvas = null;
-  let context = null;
-  let favicon = null;
+    'use strict';
 
-  let animationProgress = 0;
+    const CANVAS_SIZE        = 32;
+    const ANIMATION_DURATION = 100;   // total progress units per cycle
+    const FRAME_INTERVAL_MS  = 100;   // ~10 fps — imperceptible on a 32px icon
 
-  const CANVAS_SIZE = 32;
-  const ANIMATION_DURATION = 100;
-  const ANIMATION_SPEED = 60; // ms per frame
-  const GRADIENT_START_COLOR = "#c7f0fe";
-  const GRADIENT_END_COLOR = "#56d3c9";
+    const GRADIENT_START = '#c7f0fe';
+    const GRADIENT_END   = '#56d3c9';
 
-  const setupCanvas = () => {
-    if (!canvas) return false;
-    context = canvas.getContext("2d");
-    if (!context) return false;
+    let canvas   = null;
+    let ctx      = null;
+    let favicon  = null;
+    let rafId    = null;
 
-    const gradient = context.createLinearGradient(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    gradient.addColorStop(0, GRADIENT_START_COLOR);
-    gradient.addColorStop(1, GRADIENT_END_COLOR);
-    context.strokeStyle = gradient;
-    context.lineWidth = 16;
+    let progress  = 0;
+    let lastTick  = 0;  // timestamp of the last rendered frame
 
-    return true;
-  };
+    // ── Draw one frame ─────────────────────────────────────────────────────────
 
-  const animateFrame = () => {
-    context.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    context.beginPath();
+    function drawFrame() {
+        ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+        ctx.beginPath();
 
-    if (animationProgress <= 25) {
-      const w = (CANVAS_SIZE / 25) * animationProgress;
-      context.moveTo(0, 0);
-      context.lineTo(w, 0);
-    } else if (animationProgress <= 50) {
-      context.moveTo(0, 0);
-      context.lineTo(CANVAS_SIZE, 0);
-      const h = (CANVAS_SIZE / 25) * (animationProgress - 25);
-      context.moveTo(CANVAS_SIZE, 0);
-      context.lineTo(CANVAS_SIZE, h);
-    } else if (animationProgress <= 75) {
-      context.moveTo(0, 0);
-      context.lineTo(CANVAS_SIZE, 0);
-      context.moveTo(CANVAS_SIZE, 0);
-      context.lineTo(CANVAS_SIZE, CANVAS_SIZE);
-      const w = -((CANVAS_SIZE / 25) * (animationProgress - 75));
-      context.moveTo(CANVAS_SIZE, CANVAS_SIZE);
-      context.lineTo(w, CANVAS_SIZE);
-    } else {
-      context.moveTo(0, 0);
-      context.lineTo(CANVAS_SIZE, 0);
-      context.moveTo(CANVAS_SIZE, 0);
-      context.lineTo(CANVAS_SIZE, CANVAS_SIZE);
-      context.moveTo(CANVAS_SIZE, CANVAS_SIZE);
-      context.lineTo(0, CANVAS_SIZE);
-      const h = -((CANVAS_SIZE / 25) * (animationProgress - ANIMATION_DURATION));
-      context.moveTo(0, CANVAS_SIZE);
-      context.lineTo(0, h);
+        if (progress <= 25) {
+            const w = (CANVAS_SIZE / 25) * progress;
+            ctx.moveTo(0, 0);
+            ctx.lineTo(w, 0);
+        } else if (progress <= 50) {
+            ctx.moveTo(0, 0);
+            ctx.lineTo(CANVAS_SIZE, 0);
+            const h = (CANVAS_SIZE / 25) * (progress - 25);
+            ctx.moveTo(CANVAS_SIZE, 0);
+            ctx.lineTo(CANVAS_SIZE, h);
+        } else if (progress <= 75) {
+            ctx.moveTo(0, 0);
+            ctx.lineTo(CANVAS_SIZE, 0);
+            ctx.moveTo(CANVAS_SIZE, 0);
+            ctx.lineTo(CANVAS_SIZE, CANVAS_SIZE);
+            const w = -((CANVAS_SIZE / 25) * (progress - 75));
+            ctx.moveTo(CANVAS_SIZE, CANVAS_SIZE);
+            ctx.lineTo(w, CANVAS_SIZE);
+        } else {
+            ctx.moveTo(0, 0);
+            ctx.lineTo(CANVAS_SIZE, 0);
+            ctx.moveTo(CANVAS_SIZE, 0);
+            ctx.lineTo(CANVAS_SIZE, CANVAS_SIZE);
+            ctx.moveTo(CANVAS_SIZE, CANVAS_SIZE);
+            ctx.lineTo(0, CANVAS_SIZE);
+            const h = -((CANVAS_SIZE / 25) * (progress - ANIMATION_DURATION));
+            ctx.moveTo(0, CANVAS_SIZE);
+            ctx.lineTo(0, h);
+        }
+
+        ctx.stroke();
+        favicon.href = canvas.toDataURL('image/png');
+
+        progress = progress >= ANIMATION_DURATION ? 0 : progress + 1;
     }
 
-    context.stroke();
-    favicon.href = canvas.toDataURL("image/png");
+    // ── rAF loop — throttled to FRAME_INTERVAL_MS ─────────────────────────────
 
-    animationProgress = animationProgress >= ANIMATION_DURATION ? 0 : animationProgress + 1;
-  };
-
-  const init = () => {
-    favicon = document.querySelector('link[rel*="icon"]');
-
-    if (!favicon) {
-      console.error("FaviconAnimator: favicon link element not found");
-      return false;
+    function loop(now) {
+        rafId = requestAnimationFrame(loop);
+        if (now - lastTick < FRAME_INTERVAL_MS) return;
+        lastTick = now;
+        drawFrame();
     }
 
-    canvas = document.createElement("canvas");
-    canvas.width = CANVAS_SIZE;
-    canvas.height = CANVAS_SIZE;
+    // ── Pause / resume on tab visibility ──────────────────────────────────────
 
-    if (!setupCanvas()) return false;
+    function pause() {
+        if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+    }
 
-    setInterval(animateFrame, ANIMATION_SPEED);
-    return true;
-  };
+    function resume() {
+        if (rafId === null) {
+            lastTick = 0; // let first frame fire immediately
+            rafId = requestAnimationFrame(loop);
+        }
+    }
 
-  return { init };
+    // ── Init ──────────────────────────────────────────────────────────────────
+
+    function init() {
+        favicon = document.querySelector('link[rel*="icon"]');
+        if (!favicon) {
+            console.error('FaviconAnimator: favicon link element not found');
+            return false;
+        }
+
+        canvas        = document.createElement('canvas');
+        canvas.width  = CANVAS_SIZE;
+        canvas.height = CANVAS_SIZE;
+        ctx           = canvas.getContext('2d');
+        if (!ctx) return false;
+
+        const gradient = ctx.createLinearGradient(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+        gradient.addColorStop(0, GRADIENT_START);
+        gradient.addColorStop(1, GRADIENT_END);
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth   = 16;
+
+        document.addEventListener('visibilitychange', () => {
+            document.hidden ? pause() : resume();
+        });
+
+        resume();
+        return true;
+    }
+
+    return { init };
 })();
 
-document.addEventListener("DOMContentLoaded", () => FaviconAnimator.init());
+document.addEventListener('DOMContentLoaded', () => FaviconAnimator.init());
