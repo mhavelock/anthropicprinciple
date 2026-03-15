@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "90a7add6df06",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "js/clock.js",
+    "styles/clock.css"
+  ],
+  "sessions": [
+    {
+      "metadata": "/90/a7add6df06/0/metadata.json",
+      "transcript": "/90/a7add6df06/0/full.jsonl",
+      "content_hash": "/90/a7add6df06/0/content_hash.txt",
+      "prompt": "/90/a7add6df06/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 273,
+    "cache_creation_tokens": 1844696,
+    "cache_read_tokens": 20646209,
+    "output_tokens": 183971,
+    "api_call_count": 230
+  }
+}
