@@ -1,6 +1,6 @@
 # anthropicprinciple.ai - Test Site
 
-FE test site
+Prompts I use to set up a new project: "Morning Claude, see /docs/setup.txt"
 
 ## 🎯 Project Goals
 
