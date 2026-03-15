@@ -17,8 +17,9 @@
     <link rel="canonical" href="https://anthropicprinciple.ai/">
 
     <!-- Favicons -->
+    <!-- SVG favicon in noscript only: when JS runs, favicon-animator.js controls the PNG -->
+    <noscript><link rel="icon" type="image/svg+xml" href="/favicon.svg"></noscript>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="AP">
@@ -54,6 +55,14 @@
     </script>
 </head>
 <body class="clock">
+
+    <!-- Loading screen: shown until clock.js renders its first frame -->
+    <div class="loader" id="loader" aria-hidden="true">
+        <div class="mc loader-clock">
+            <div class="hand"></div>
+            <div class="hand"></div>
+        </div>
+    </div>
 
     <main aria-label="Kinetic clock">
 
