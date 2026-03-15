@@ -45,3 +45,22 @@ excellent - that's better. there's still some slowdown on devtools and general b
 ---
 
 That's much better. plz update the docs. would you remove refernce to the work on /play.html - you can refer to changes made in general - 'eg on images' but leave out reference to that section of the site except very basic terms such as site file structure.
+
+---
+
+can you move body styles to global.css except 
+  background: var(--clk-bg);
+  min-height: 100dvh - which remain in clock.css - add these styles to body by attaching class .clock to body tag on index and use .clock
+
+change .grid to .grid-14x6 
+
+Could you add /assets/icons/claude-ai-icon.svg to <a class="u-sr-only" href="https://www.humanssince1982.com/" target="_blank" rel="noopener">
+          Claude
+        </a> so it aligns central with the paragraph it's in.
+
+
+Can you put <ul aria-label="Links"> in fixed position 20px away from bottom & right. This list will display two icons - Bluesky & Soundcloud. Presented vertically, one above the other, with 10px space between the two icons.
+
+For the bluesky icon - can you reproduce whats been done in docs/dicovery/bluesky-flutterby-main - but just the icon, no email text. 
+
+For soundcloud use /assets/icons/soundcloud.svg
