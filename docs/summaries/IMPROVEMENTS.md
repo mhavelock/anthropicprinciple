@@ -89,6 +89,41 @@ ARIA landmarks and labelling on clock-controls.html: `<nav aria-label>`, `<secti
 
 ---
 
+## Code Review — 2026-03-20 (Iteration 1)
+
+Full review against CLAUDE.md conventions, ARCHITECTURE.md, and best-practices docs. Gemini MCP consulted for independent second opinion.
+
+**Deleted**
+- `styles/critical.css` — legacy placeholder, never loaded by any HTML page. Dead code confirmed.
+
+**JS — Clean Code**
+- `main.js`: `var` → `const/let` (CLAUDE.md convention). rAF throttle added to `resize` listener (`rafPending` flag) — prevents layout thrashing during continuous scroll/resize on mobile. Removed stale `DOMContentLoaded` wrapper (redundant with `defer`). Removed duplicate `FaviconAnimator.init()` call (favicon-animator.js already self-inits at load time).
+- `main.js` added to `clock-controls.html` — viewport orientation fix now applies consistently on both pages.
+
+**JS — Security / Robustness**
+- `controls.js`: localStorage values are now sanitized before use. `clk_hours` is parsed as integer and clamped to valid range (-12–14); `clk_countdown_time` is validated against `/^\d{1,2}:\d{2}$/` regex before applying to the input. Prevents stale or corrupted localStorage from breaking the UI.
+- `controls.js`: debounce helper added (250ms) for `hours` and `countdown-time` inputs — prevents excessive localStorage writes on rapid keystrokes or arrow-key stepping.
+
+**CSS — Convention Compliance**
+- `home.css`: hardcoded hex palette (`#292b31`, `#727786`, `#5c6b94`, `#4d5f8c`) extracted to `--side-*` CSS custom properties at the top of the file. Satisfies the "all colours via CSS custom properties" rule.
+- `home.css`: double-semicolon typo (`padding: 0.25rem 0.66rem;;`) fixed.
+- `banner.css`: hardcoded `#ffffff` on `.banner-title` extracted to `--banner-title-color` CSS custom property.
+- `clock.css`: explanatory comment added for `--vw`/`--vh` orientation-change fix.
+
+**Items reviewed and left unchanged**
+- `will-change: transform` on `.hand` — deliberate GPU compositor optimisation per CLAUDE.md performance notes. Not removed.
+- `max-height: 500px` orientation query in `clock.css` — CLAUDE.md prohibits `max-width`, not `max-height`. Valid use.
+- `--ctrl-*` tokens in `controls.css` — intentionally isolated from global token system (controls page is self-contained dark theme).
+- `play.css` box-sizing reset — needed; play.html does not load global.css.
+- `home.css` aside font-family (Gill Sans) — distinct design element, intentional deviation.
+
+**Remaining issues (not fixed — see iteration 2 list)**
+- WCAG contrast: `.side p` text `#727786` on background `#292b31` = ~2.85:1, fails AA (4.5:1 required).
+- `home.css` aside positioning: `right: calc(-50vw + 1.25rem)` and `top: -17rem` are magic-number values fragile to viewport changes.
+- `home.css` `.side p` font-family (Gill Sans) deviates from project's two-font system (Verdana/Arial).
+
+---
+
 ## Code Review — 2026-03-15
 
 Full code review conducted against best-practices docs. Overall verdict: A/A+ across all categories. Specific fixes applied:

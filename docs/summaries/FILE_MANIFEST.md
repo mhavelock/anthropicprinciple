@@ -4,7 +4,7 @@
 
 **index.html** — Full-screen kinetic clock. Loads `styles/clock.css` as the sole stylesheet. Scripts `js/favicon-animator.js` and `js/clock.js` are both loaded with `defer`. Contains the pre-rendered 84 `.mc` cells (6 rows × 14 columns), Open Graph meta, canonical link, theme-color meta, and a JSON-LD `WebApplication` schema block.
 
-**clock-controls.html** — Settings panel for configuring clock mode and countdown. Loads `styles/controls.css`. An inline IIFE script handles form state restoration from localStorage, section visibility toggling via `.is-hidden` / `.is-active` classes, localStorage writes on every input event, and countdown end-time calculation on button click. The status element uses `role="status"` and `aria-live="polite"`. `robots` meta is set to `noindex`.
+**clock-controls.html** — Settings panel for configuring clock mode and countdown. Loads `styles/controls.css`. Scripts `js/main.js` and `js/controls.js` loaded with `defer`. `controls.js` handles form state restoration from localStorage (with validation and range clamping), section visibility toggling via `.is-hidden` / `.is-active` classes, debounced localStorage writes, and countdown end-time calculation on button click. The status element uses `role="status"` and `aria-live="polite"`. `robots` meta is set to `noindex`.
 
 **play.html** — Additional page.
 
@@ -40,7 +40,7 @@
 
 **logger.js** — Development logger. Buffered in memory (`_buf` array) — no storage I/O on `log()` calls. Flushes to `sessionStorage` (`ap_dev_log`) on `beforeunload`; writes a persistent summary to `localStorage` (`ap_dev_log_summary`). Self-tests localStorage and sessionStorage availability on init. Public API: `log(section, message, data)`, `time(name)`, `timeEnd(name)`, `flush()`, `dump()`, `clear()`.
 
-**main.js** — Reserved entry point. Not loaded by any current page.
+**main.js** — Shared application utilities, loaded on all pages with `defer`. Sets `--vw` and `--vh` CSS custom properties from `window.innerWidth`/`Height` on load and on `resize` (rAF-throttled), fixing iOS Safari's failure to re-evaluate `dvh`/`dvw` units after orientation change.
 
 ---
 
@@ -59,13 +59,14 @@
 ```
 index.html
 ├── styles/clock.css          Clock tokens, grid, hand styles, keyframes
+├── js/main.js                Viewport unit fix --vw/--vh (defer)
 ├── js/favicon-animator.js    Animated canvas favicon (defer)
 └── js/clock.js               Clock engine — reads localStorage (defer)
 
 clock-controls.html
 ├── styles/controls.css       Fixed dark panel styles
-├── js/favicon-animator.js    Animated canvas favicon (defer)
-└── [inline script]           Form state, localStorage writes
+├── js/main.js                Viewport unit fix --vw/--vh (defer)
+└── js/controls.js            Form state, debounced localStorage writes (defer)
     └── localStorage          Read by clock.js on load + storage event
 
 Additional pages (non-clock)
