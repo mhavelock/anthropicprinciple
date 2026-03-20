@@ -1,0 +1,17 @@
+hi. the anthropicprinciple.ai site homepage javascript - simple i hope, the html header orientation isnt enough - i think the javascript may need ot be reinitialised on orientation. there may be anothre way but the clock matrix  remains landscape position and doesnt readjust responsively on orientation
+
+---
+
+great. now, As a web dev ninja, & taking into account the best practices docs in the project docs folder, please run a code review on what we have. Look for better organisation of code, clean code review, performance improvements, browser memory usage issues and a security check. Check accessibility but ignore changes needed if they would affect the current design look - raise if important. Ensure correct units and conventions are adhered to & remove unused styles in css files & unnecessary css. 
+
+Before concluding i would like you to consult with Gemini via the mcp. Take on board all gemini findings, it likely has very good insights, but you take responsibility for the final output using your judgement about what to accept from Gemini.
+Ask for insights from gemini mcp via ~/AI/mcp-servers/claude-additional-models-mcp
+
+
+Make corrections necessary and then commit to git. 
+
+
+
+Let’s do this in two iterations - check & fix important issues & then list remaining issues.
+
+Ensure any handoff tasks are moved to the main task list - open or closed. update the md docs and memory file then add & commit to git.
