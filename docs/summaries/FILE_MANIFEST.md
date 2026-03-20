@@ -40,7 +40,7 @@
 
 **logger.js** — Development logger. Buffered in memory (`_buf` array) — no storage I/O on `log()` calls. Flushes to `sessionStorage` (`ap_dev_log`) on `beforeunload`; writes a persistent summary to `localStorage` (`ap_dev_log_summary`). Self-tests localStorage and sessionStorage availability on init. Public API: `log(section, message, data)`, `time(name)`, `timeEnd(name)`, `flush()`, `dump()`, `clear()`.
 
-**main.js** — Shared application utilities, loaded on all pages with `defer`. Sets `--vw` and `--vh` CSS custom properties from `window.innerWidth`/`Height` on load and on `resize` (rAF-throttled), fixing iOS Safari's failure to re-evaluate `dvh`/`dvw` units after orientation change.
+**main.js** — Shared application utilities, loaded on all pages with `defer`. Currently a placeholder for future shared utilities. Grid sizing uses native `svw`/`svh` CSS units directly — no JS viewport tracking required.
 
 ---
 
@@ -59,13 +59,13 @@
 ```
 index.html
 ├── styles/clock.css          Clock tokens, grid, hand styles, keyframes
-├── js/main.js                Viewport unit fix --vw/--vh (defer)
+├── js/main.js                Shared utilities (defer)
 ├── js/favicon-animator.js    Animated canvas favicon (defer)
 └── js/clock.js               Clock engine — reads localStorage (defer)
 
 clock-controls.html
 ├── styles/controls.css       Fixed dark panel styles
-├── js/main.js                Viewport unit fix --vw/--vh (defer)
+├── js/main.js                Shared utilities (defer)
 └── js/controls.js            Form state, debounced localStorage writes (defer)
     └── localStorage          Read by clock.js on load + storage event
 
