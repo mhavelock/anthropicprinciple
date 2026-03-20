@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "809213546aec",
+  "session_id": "4712e562-ed05-4cc8-8301-3b5bce81dd20",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T22:14:38.543867Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/summaries/handoff-2026-03-20-claude-code-auth.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "c7d1d84da18c",
+  "token_usage": {
+    "input_tokens": 44,
+    "cache_creation_tokens": 45526,
+    "cache_read_tokens": 640529,
+    "output_tokens": 5693,
+    "api_call_count": 21
+  },
+  "session_metrics": {
+    "turn_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T22:14:38.395672Z",
+    "agent_lines": 42,
+    "human_added": 9683,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 9725,
+    "agent_percentage": 0.4318766066838046
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "809213546aec",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/summaries/handoff-2026-03-20-claude-code-auth.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/80/9213546aec/0/metadata.json",
+      "transcript": "/80/9213546aec/0/full.jsonl",
+      "content_hash": "/80/9213546aec/0/content_hash.txt",
+      "prompt": "/80/9213546aec/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 44,
+    "cache_creation_tokens": 45526,
+    "cache_read_tokens": 640529,
+    "output_tokens": 5693,
+    "api_call_count": 21
+  }
+}
