@@ -19,17 +19,30 @@
 
     const ls = { get: k => localStorage.getItem(k), set: (k, v) => localStorage.setItem(k, v) };
 
-    // ── Restore saved values ────────────────────────────────────────────
+    // ── Debounce helper — prevents excessive localStorage writes on rapid input ──
+    function debounce(fn, ms) {
+        let timer = null;
+        return function () {
+            clearTimeout(timer);
+            timer = setTimeout(fn.bind(this, ...arguments), ms);
+        };
+    }
+
+    // ── Restore saved values (with sanitization) ────────────────────────────────
     const rawMode    = ls.get('clk_mode');
     const savedMode  = (rawMode === 'clock' || rawMode === 'countdown') ? rawMode : 'clock';
-    const savedHours = ls.get('clk_hours')           || '0';
-    const savedTime  = ls.get('clk_countdown_time')  || '05:00';
+
+    const rawHours   = parseInt(ls.get('clk_hours') ?? '0', 10);
+    const savedHours = isNaN(rawHours) ? 0 : Math.max(-12, Math.min(14, rawHours));
+
+    const rawTime    = ls.get('clk_countdown_time') || '';
+    const savedTime  = /^\d{1,2}:\d{2}$/.test(rawTime) ? rawTime : '05:00';
 
     document.querySelector(`input[value="${savedMode}"]`).checked = true;
     document.getElementById('hours').value          = savedHours;
     document.getElementById('countdown-time').value = savedTime;
 
-    // ── Section visibility ──────────────────────────────────────────────
+    // ── Section visibility ──────────────────────────────────────────────────────
     function updateSections() {
         const mode = document.querySelector('input[name="mode"]:checked').value;
         document.getElementById('section-clock').classList.toggle('is-hidden', mode !== 'clock');
@@ -39,7 +52,7 @@
     }
     updateSections();
 
-    // ── Event listeners ─────────────────────────────────────────────────
+    // ── Event listeners ─────────────────────────────────────────────────────────
     document.querySelectorAll('input[name="mode"]').forEach(r => {
         r.addEventListener('change', () => {
             ls.set('clk_mode', r.value);
@@ -47,15 +60,18 @@
         });
     });
 
-    document.getElementById('hours').addEventListener('input', e => {
-        ls.set('clk_hours', e.target.value);
-    });
+    // Debounced — user may arrow-key through many values rapidly
+    document.getElementById('hours').addEventListener('input', debounce(function (e) {
+        const v = parseInt(e.target.value, 10);
+        if (!isNaN(v)) ls.set('clk_hours', Math.max(-12, Math.min(14, v)));
+    }, 250));
 
-    document.getElementById('countdown-time').addEventListener('input', e => {
+    // Debounced — user types character by character
+    document.getElementById('countdown-time').addEventListener('input', debounce(function (e) {
         ls.set('clk_countdown_time', e.target.value);
-    });
+    }, 250));
 
-    // ── Start / Reset countdown ──────────────────────────────────────────
+    // ── Start / Reset countdown ─────────────────────────────────────────────────
     document.getElementById('start-btn').addEventListener('click', () => {
         const raw   = document.getElementById('countdown-time').value.trim() || '05:00';
         const parts = raw.split(':');

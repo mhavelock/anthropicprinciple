@@ -18,23 +18,26 @@ body.clock {
 
 /* ===== 6×14 CLOCK GRID (7:3 aspect ratio) ===== */
 /* Columns: [3 digit][3 digit][2 colon][3 digit][3 digit] */
+/* --vw / --vh are set by main.js from window.innerWidth/Height on every resize,
+   guaranteeing dvh/dvw values are fresh after orientation change on iOS Safari.
+   The dvw/dvh fallbacks cover the no-JS case. */
 .grid-14x6 {
   display: grid;
   grid-template-columns: repeat(14, 1fr);
-  width: min(90dvw, calc(90dvh * (14/6)), 900px);
+  width: min(calc(var(--vw, 1dvw) * 90), calc(var(--vh, 1dvh) * 90 * (14/6)), 900px);
   aspect-ratio: 14 / 6;
 }
 
 @media (min-width: 540px) {
   .grid-14x6 {
-    width: min(75dvw, calc(90dvh * (14/6)), 900px);
+    width: min(calc(var(--vw, 1dvw) * 75), calc(var(--vh, 1dvh) * 90 * (14/6)), 900px);
   }
 }
 
 /* Landscape small screens (e.g. iPhone in landscape) */
 @media screen and (orientation: landscape) and (max-height: 500px) {
   .grid-14x6 {
-    width: min(95dvw, calc(85dvh * (14/6)), 900px);
+    width: min(calc(var(--vw, 1dvw) * 95), calc(var(--vh, 1dvh) * 85 * (14/6)), 900px);
   }
 }
 

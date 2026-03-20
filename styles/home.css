@@ -6,12 +6,22 @@
  * Load order: page-specific CSS.
  */
 
+/* ===== PAGE-SPECIFIC TOKENS ===== */
+/* The aside.side component has a fixed dark palette deliberately separate
+   from the global color system — it is a small brand accent, not a UI surface. */
+:root {
+  --side-bg:           #292b31;
+  --side-text:         #727786;
+  --side-link:         #5c6b94;
+  --side-link-hover:   #4d5f8c;
+}
+
 /* ===== ASIDE (rotated attribution) ===== */
 aside.side {
-    background-color: #292b31;
+    background-color: var(--side-bg);
     display: block;
     height: auto;
-    padding: 0.25rem 0.66rem;;
+    padding: 0.25rem 0.66rem;
     position: absolute;
     right: calc(-50vw + 1.25rem);
     top: -17rem;
@@ -21,7 +31,7 @@ aside.side {
 
 .side p {
     align-items: center;
-    color: #727786;
+    color: var(--side-text);
     display: flex;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     gap: 0.4em;
@@ -30,7 +40,7 @@ aside.side {
 
 .side a {
     align-items: center;
-    color: #5c6b94;
+    color: var(--side-link);
     display: inline-flex;
     text-decoration: none;
 }
@@ -38,7 +48,7 @@ aside.side {
 .side a:hover,
 .side a:focus,
 .side a:active {
-    color: #4d5f8c;
+    color: var(--side-link-hover);
 }
 
 /* Claude icon in aside — size to match text cap-height */
