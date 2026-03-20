@@ -7,6 +7,12 @@
  * Usage: <div class="banner"><h2 class="banner-title">…</h2></div>
  */
 
+/* ===== PAGE-SPECIFIC TOKEN ===== */
+/* Always white — heading sits on a dark gradient regardless of theme. */
+:root {
+  --banner-title-color: #ffffff;
+}
+
 /* ===== BANNER CONTAINER ===== */
 /* Mobile base */
 .banner {
@@ -26,7 +32,7 @@
 /* ===== BANNER HEADING ===== */
 /* Fluid typography: scales smoothly from min to max via viewport width */
 .banner-title {
-    color: #ffffff; /* forced white — always readable on dark gradient */
+    color: var(--banner-title-color);
     font-family: var(--font-family-heading);
     font-size: clamp(1.4em, 3.5vw, 2.4em);
     font-weight: bold;
