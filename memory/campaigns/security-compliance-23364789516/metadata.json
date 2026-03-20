@@ -1,0 +1,84 @@
+{
+  "campaign_id": "security-compliance-23364789516",
+  "type": "security-compliance",
+  "owner": "repository-owner",
+  "executive_sponsor": "site-maintainer",
+  "audit_deadline": "2026-03-20",
+  "budget_approved": true,
+  "epic_issue": "created-via-safeoutputs",
+  "created_at": "2026-03-20T00:00:00Z",
+  "project_context": {
+    "name": "anthropicprinciple.ai",
+    "type": "zero-dependency-static-site",
+    "tech_stack": "HTML5, CSS3, Vanilla JavaScript ES2020+",
+    "hosting": "GitHub Pages",
+    "domain": "anthropicprinciple.ai",
+    "security_posture": "minimal-attack-surface"
+  },
+  "verification_tasks": {
+    "w3c_validation_index": "aw_val01",
+    "w3c_validation_controls": "aw_val02",
+    "security_headers": "aw_sec01",
+    "wcag_accessibility": "aw_a11y01",
+    "performance_audit": "aw_perf01",
+    "final_report": "aw_doc01"
+  },
+  "compliance_categories": {
+    "dependency_security": {
+      "status": "pass",
+      "findings": "Zero npm dependencies = zero package vulnerabilities",
+      "risk_level": "low"
+    },
+    "w3c_standards": {
+      "status": "pending",
+      "target": "zero errors, zero warnings",
+      "risk_level": "low"
+    },
+    "security_headers": {
+      "status": "pending",
+      "target": "CSP, HSTS, X-Frame-Options, X-Content-Type-Options",
+      "risk_level": "medium",
+      "notes": "GitHub Pages header limitations may apply"
+    },
+    "wcag_accessibility": {
+      "status": "pending",
+      "target": "WCAG 2.1 Level AA compliance",
+      "risk_level": "medium"
+    },
+    "performance": {
+      "status": "pending",
+      "target": "Google PageSpeed >= 95 (mobile & desktop)",
+      "risk_level": "low"
+    },
+    "code_quality": {
+      "status": "pass",
+      "findings": "CLAUDE.md standards followed, separation of concerns enforced",
+      "risk_level": "low"
+    }
+  },
+  "governance": {
+    "approval_status": "campaign-launched",
+    "change_control_ticket": "N/A",
+    "compliance_requirement": "Best Practices & Standards Verification",
+    "review_checkpoints": [
+      "after-all-verifications-complete",
+      "before-audit-deadline"
+    ]
+  },
+  "unique_characteristics": {
+    "zero_dependencies": true,
+    "no_build_step": true,
+    "no_npm": true,
+    "no_bundler": true,
+    "pure_static": true,
+    "system_fonts_only": true,
+    "no_third_party_scripts": true,
+    "supply_chain_risk": "none"
+  },
+  "next_actions": [
+    "Execute verification tasks (W3C, security headers, WCAG, performance)",
+    "Document findings in repo-memory JSON files",
+    "Compile final compliance report",
+    "Deliver audit documentation"
+  ]
+}

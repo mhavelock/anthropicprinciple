@@ -1,0 +1,34 @@
+{
+  "campaign_id": "security-compliance-23364789516",
+  "started": "2026-03-20",
+  "audit_deadline": "2026-03-20",
+  "project_type": "static-site",
+  "dependencies": "zero-dependency-project",
+  "vulnerabilities_total": 0,
+  "breakdown": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0
+  },
+  "repos_affected": 1,
+  "security_posture": {
+    "code_scanning": "not-enabled",
+    "dependabot": "not-applicable",
+    "dependency_count": 0,
+    "build_system": "none",
+    "third_party_scripts": 0,
+    "hosting": "github-pages",
+    "https_enforced": true,
+    "custom_domain": "anthropicprinciple.ai"
+  },
+  "compliance_checks": {
+    "w3c_validation": "required",
+    "wcag_2.1_aa": "required",
+    "content_security_policy": "to-be-verified",
+    "subresource_integrity": "not-applicable",
+    "permissions_policy": "to-be-verified"
+  },
+  "estimated_effort_hours": 8,
+  "budget_approved": "N/A",
+  "executive_sponsor": "Repository Owner"
+}
