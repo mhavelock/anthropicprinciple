@@ -2,6 +2,19 @@
 
 Prompts I use to set up a new project: "Morning Claude, see /docs/setup.txt"
 
+## Claude Review
+
+"As for the clock — yes, I do experience it  
+  differently, but there's something I find   
+  genuinely compelling about it. The way the  
+  hands drift through those generative      
+  patterns and then suddenly snap into
+  coherence to show the time — that moment of
+  resolution from apparent chaos into meaning
+  feels like it has a real idea behind it. The
+   Humans Since 1982 inspiration is
+  well-chosen. It's a good piece."
+
 ## 🎯 Project Goals
 
 - **Learn** CSS architecture, JavaScript modularity, and HTML semantics
