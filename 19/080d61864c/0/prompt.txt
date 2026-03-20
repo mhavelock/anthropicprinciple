@@ -1,0 +1,21 @@
+Raise — CSS fragility:
+  - home.css aside.side uses right: calc(-50vw
+   + 1.25rem) and top: -17rem — magic numbers 
+  that depend on the viewport width matching  
+  assumptions. Likely to break if the aside   
+  content changes or at unusual viewport    
+  widths. writing-mode: vertical-rl would be a
+   more robust approach.                      
+                        
+  Raise — typography convention:
+  - home.css .side p uses font-family: 'Gill  
+  Sans', 'Gill Sans MT', Calibri, 'Trebuchet  
+  MS', sans-serif — deviates from the         
+  project's declared two-font system (Verdana 
+  headings / Arial body). Fine as an         
+  intentional design choice, but worth noting
+  for consistency. 
+
+good spots. plz update projects declared two-font system and keep font-family.
+
+css- fragility. undertood. plz add note it's a feature and to keep.
