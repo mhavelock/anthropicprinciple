@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "a94298c52ddc",
+  "session_id": "1e681101-3f76-4e84-9332-42376a63fa0d",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T22:53:22.752259Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "docs/summaries/handoff-2026-03-20-github-aw-secret-fix.md",
+    "templates/claude-templates.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "88971d773f75",
+  "token_usage": {
+    "input_tokens": 56,
+    "cache_creation_tokens": 94062,
+    "cache_read_tokens": 1153526,
+    "output_tokens": 11133,
+    "api_call_count": 27
+  },
+  "session_metrics": {
+    "turn_count": 13
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T22:53:22.654977Z",
+    "agent_lines": 259,
+    "human_added": 9725,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 9984,
+    "agent_percentage": 2.594150641025641
+  }
+}

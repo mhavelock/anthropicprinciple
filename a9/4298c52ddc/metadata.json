@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "a94298c52ddc",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "docs/summaries/handoff-2026-03-20-github-aw-secret-fix.md",
+    "templates/claude-templates.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a9/4298c52ddc/0/metadata.json",
+      "transcript": "/a9/4298c52ddc/0/full.jsonl",
+      "content_hash": "/a9/4298c52ddc/0/content_hash.txt",
+      "prompt": "/a9/4298c52ddc/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 56,
+    "cache_creation_tokens": 94062,
+    "cache_read_tokens": 1153526,
+    "output_tokens": 11133,
+    "api_call_count": 27
+  }
+}
