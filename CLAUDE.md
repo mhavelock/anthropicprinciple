@@ -189,6 +189,9 @@ anthropicprinciple/
 | Headings h1–h6 | `Verdana, Geneva, sans-serif` | bold |
 | Body, paragraphs | `Arial, Helvetica, sans-serif` | normal |
 | Monospace / code | `'Courier New', Courier, monospace` | normal |
+| Aside attribution | `'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif` | normal |
+
+The aside attribution uses Gill Sans as a deliberate brand accent — it is a distinct design element separate from the main type system. All are system fonts; no external font requests are made.
 
 - Base: `1rem = 16px` (browser default — do not override `font-size` on `html` or `body`).
 - All font sizes in `em`. All spacing distances in `rem`.
