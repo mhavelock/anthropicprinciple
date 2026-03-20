@@ -54,7 +54,7 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 │   ├── clock.js            # ⚠️ Clock animation engine (protected)
 │   ├── favicon-animator.js # Animated canvas favicon (~10fps)
 │   ├── controls.js         # Settings form — localStorage read/write
-│   ├── main.js             # Shared utilities (viewport unit fix)
+│   ├── main.js             # Shared utilities
 │   └── logger.js           # Dev logger — opt-in, not loaded by default
 │
 ├── assets/
@@ -92,7 +92,7 @@ Each JS file is a self-contained IIFE or module — no globals, no shared mutabl
 favicon-animator.js   Canvas favicon, self-initialises, ~10fps rAF loop
 clock.js              30-second cycle: 4 patterns → ease → time display → repeat
 controls.js           localStorage read/write with debounce and validation
-main.js               Sets --vw/--vh CSS vars on resize (iOS Safari orientation fix)
+main.js               Shared utilities (placeholder for future expansion)
 ```
 
 `clock.js` reads settings from `localStorage` on load and on `storage` events, so changes on `clock-controls.html` take effect immediately on the main page.
