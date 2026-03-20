@@ -1,0 +1,21 @@
+hi. looking at the clock piece again
+
+---
+
+great. i just checked phone orientation change (from landscape abck to portrait). it still didnt work, but then it did - maybe 5 seconds later. can you have a check to see if we can make that instanteneous - i guess there a lot of gpu recalculation.
+
+---
+
+i have it on my iphone on my mac local address. it doesnt change orientation at all - i was wrong  - i think it only resized responsively when the live server updated.
+
+---
+
+it just resized
+
+---
+
+Change detected /Users/mat/Claudette/Cowork/projects/anthropicprinciple/.git/entire-sessions/408cb811-985b-4622-ab79-da4483f42ffe.json ,- ?
+
+---
+
+my phone orientation works fine. it still has the clock matrix in landscape. the icons adjust responively on orientation change - its just the matrix thats stuck in the landscape size
