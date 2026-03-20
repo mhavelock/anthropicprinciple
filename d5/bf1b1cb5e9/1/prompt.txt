@@ -1,0 +1,141 @@
+Please create a new page: play.html
+
+Could you visit website:
+https://soundcloud.com/you/sets
+
+This is a Soundcloud playlist page in my logged in account.
+Each playlist has a Title (with link) and a thumbnail image.
+Could you download the images to an /assets/soundcloud folder
+Create a grid layout and add the thumbnail linked to the correct playlist url and the playlist tile. the playlist title is positioned on top of the thumbnail - top left corner with 10px padding.
+Use black background, rgb(153, 153, 153) for text links (no underline - change to white on hover, focus, active. #4c505a for visited. 
+
+I have saved the web page in /docs/discovery - so you should just need to scrape the images.
+
+No title or additional text - show two per column on mobile and six for desktop.
+max width 1240
+min-width 320
+20px X padding 
+60px top padding 
+40px bottom padding.
+
+---
+
+Great. plz add 0.33rem gap between each
+
+---
+
+great. plz ensure em is used everywehre for typograpgy and rem for distance
+
+---
+
+cool. are the other standards in /docs/summaries/setup.txt adhered to?
+
+---
+
+yes plz
+
+---
+
+great. The javascript on the home page is slowing the chrome browser down - dev tools are slow to use. can you look into processes, memory use, and anything that might make it lighter in the browser.
+
+---
+
+excellent - that's better. there's still some slowdown on devtools and general browser interactivity - can you have a further deep dive into thiis
+
+---
+
+That's much better. plz update the docs. would you remove refernce to the work on /play.html - you can refer to changes made in general - 'eg on images' but leave out reference to that section of the site except very basic terms such as site file structure.
+
+---
+
+can you move body styles to global.css except 
+  background: var(--clk-bg);
+  min-height: 100dvh - which remain in clock.css - add these styles to body by attaching class .clock to body tag on index and use .clock
+
+change .grid to .grid-14x6 
+
+Could you add /assets/icons/claude-ai-icon.svg to <a class="u-sr-only" href="https://www.humanssince1982.com/" target="_blank" rel="noopener">
+          Claude
+        </a> so it aligns central with the paragraph it's in.
+
+
+Can you put <ul aria-label="Links"> in fixed position 20px away from bottom & right. This list will display two icons - Bluesky & Soundcloud. Presented vertically, one above the other, with 10px space between the two icons.
+
+For the bluesky icon - can you reproduce whats been done in docs/dicovery/bluesky-flutterby-main - but just the icon, no email text. 
+
+For soundcloud use /assets/icons/soundcloud.svg
+
+---
+
+brilliant. when you hover over the anthropic icon could it rotate anticlockwise 20deg slowly then spin clockwise.
+
+when you hover over the soundcloud icon it has an affect - something like orange concentric circles moving from the center and a glow - but keep the effect within a circle in the 32px
+
+---
+
+perfect. Taking into account the best practices docs in the project docs folder, please run a code review on what we have. Look for better organisation of code, clean code review, performance improvements, browser memory usage issues and a security check.
+update the md docs and memory file then add & commit to git.
+
+---
+
+plz resume
+
+---
+
+are the assets/icons/ being used?
+
+---
+
+ill add to git and commit them
+
+---
+
+pushed. when the site is deployed i see the new favicon added - it doesnt show the favicon-animator.js - can you have it show the favicon-animator instead.
+
+also, it took a shrt while to load. could you add a loader that looks like one of the mini clockfaces
+
+---
+
+great, plz commit & ill test it live
+
+---
+
+looks good - but i still don't see favicon-generator favicon. ive tested on a new browser
+
+---
+
+nope - it deployed 15mins ago and i've cleared storage and cache and hard reloaded and new browser
+
+---
+
+yep, great
+
+---
+
+all pushed, ending session
+
+---
+
+<task-notification>
+<task-id>ab71e418d56900d32</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-mat-Claudette-Cowork-projects-anthropicprinciple/tasks/ab71e418d56900d32.output</output-file>
+<status>completed</status>
+<summary>Agent "Save session handoff memory" completed</summary>
+<result>Done. Here is what was updated:
+
+**File updated:** `/Users/mat/.claude/projects/-Users-mat-Claudette-Cowork-projects-anthropicprinciple/memory/project_state.md`
+
+Four new sections appended after the existing Social icons section:
+
+- **Loader** — documents the `.loader` div pattern and double-rAF dismissal
+- **Favicon animator** — documents the static link removal fix in `init()`
+- **JS extraction / hygiene** — controls.js extraction and `rel="noopener noreferrer"` on blank-target links
+- **Meta / SEO** — records the meta description and OG tag improvements
+- **Recent work (session 2026-03-15)** — full chronological summary of everything done in the session
+- **Git state** — branch/push/live status
+
+**MEMORY.md index:** No changes needed — it already accurately describes project_state.md as the architecture/CSS/JS/constraints reference, which remains correct.</result>
+<usage><total_tokens>17741</total_tokens><tool_uses>5</tool_uses><duration_ms>34668</duration_ms></usage>
+</task-notification>
+Full transcript available at: /private/tmp/claude-501/-Users-mat-Claudette-Cowork-projects-anthropicprinciple/tasks/ab71e418d56900d32.output
