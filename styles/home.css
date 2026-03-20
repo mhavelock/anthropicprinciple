@@ -17,6 +17,12 @@
 }
 
 /* ===== ASIDE (rotated attribution) ===== */
+/* ⚠️ INTENTIONAL DESIGN — do not "fix" the positioning.
+   right: calc(-50vw + 1.25rem) and top: -17rem are magic-number values
+   that place the rotated aside flush against the right edge of the viewport.
+   The positioning is fragile by nature (viewport-anchored absolute transform)
+   and known to be so — this is a feature, not a bug. Do not replace with
+   writing-mode: vertical-rl or similar without explicit design approval. */
 aside.side {
     background-color: var(--side-bg);
     display: block;
