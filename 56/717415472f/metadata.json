@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "56717415472f",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/summaries/handoff-2026-03-21-robots-ai-content.md",
+    "docs/summaries/handoff-2026-03-21-seo-files.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/56/717415472f/0/metadata.json",
+      "transcript": "/56/717415472f/0/full.jsonl",
+      "content_hash": "/56/717415472f/0/content_hash.txt",
+      "prompt": "/56/717415472f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 18,
+    "cache_creation_tokens": 6626,
+    "cache_read_tokens": 442755,
+    "output_tokens": 2645,
+    "api_call_count": 13
+  }
+}
