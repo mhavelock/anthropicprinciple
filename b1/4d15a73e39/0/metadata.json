@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "b14d15a73e39",
+  "session_id": "4772a275-6f08-4104-96a7-d18f0bd22ea9",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-21T11:52:47.82446Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "CLAUDE.md",
+    "README.md",
+    "docs/archive/handoffs/handoff-2026-03-20-claude-code-auth.md",
+    "docs/archive/handoffs/handoff-2026-03-20-github-aw-secret-fix.md",
+    "docs/archive/handoffs/handoff-2026-03-21-ai-robots-meta.md",
+    "docs/archive/handoffs/handoff-2026-03-21-robots-ai-content.md",
+    "docs/context/summaries/.gitkeep",
+    "docs/digit-reference.md",
+    "docs/summaries/FILE_MANIFEST.md",
+    "docs/summaries/IMPROVEMENTS.md",
+    "docs/summaries/NEXT_STEPS.md",
+    "docs/summaries/PROJECT_STATUS.txt",
+    "docs/summaries/REFACTORING_SUMMARY.md",
+    "docs/summaries/handoff-2026-03-20-claude-code-auth.md",
+    "docs/summaries/handoff-2026-03-20-github-aw-secret-fix.md",
+    "docs/summaries/handoff-2026-03-21-ai-robots-meta.md",
+    "docs/summaries/handoff-2026-03-21-gh-aw-portfolio-analyst-fix.md",
+    "docs/summaries/setup.txt"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "72fe335473ee",
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 31487,
+    "cache_read_tokens": 575697,
+    "output_tokens": 3548,
+    "api_call_count": 17
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-21T11:52:47.76581Z",
+    "agent_lines": 0,
+    "human_added": 36,
+    "human_modified": 1537,
+    "human_removed": 0,
+    "total_committed": 52,
+    "agent_percentage": 0
+  }
+}

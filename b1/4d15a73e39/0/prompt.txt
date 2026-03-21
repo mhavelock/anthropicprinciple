@@ -1,0 +1,1 @@
+hi. i've reorganised the docs - so plz find handoff in docs/context/summaries. plz update the docs and the readme to relect this. you can reference ARCHITECTURE.md & FILE_MANIFEST.md from within a doc in context but leave it sitting in docs root.

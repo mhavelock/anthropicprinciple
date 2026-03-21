@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "b14d15a73e39",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "CLAUDE.md",
+    "README.md",
+    "docs/archive/handoffs/handoff-2026-03-20-claude-code-auth.md",
+    "docs/archive/handoffs/handoff-2026-03-20-github-aw-secret-fix.md",
+    "docs/archive/handoffs/handoff-2026-03-21-ai-robots-meta.md",
+    "docs/archive/handoffs/handoff-2026-03-21-robots-ai-content.md",
+    "docs/context/summaries/.gitkeep",
+    "docs/digit-reference.md",
+    "docs/summaries/FILE_MANIFEST.md",
+    "docs/summaries/IMPROVEMENTS.md",
+    "docs/summaries/NEXT_STEPS.md",
+    "docs/summaries/PROJECT_STATUS.txt",
+    "docs/summaries/REFACTORING_SUMMARY.md",
+    "docs/summaries/handoff-2026-03-20-claude-code-auth.md",
+    "docs/summaries/handoff-2026-03-20-github-aw-secret-fix.md",
+    "docs/summaries/handoff-2026-03-21-ai-robots-meta.md",
+    "docs/summaries/handoff-2026-03-21-gh-aw-portfolio-analyst-fix.md",
+    "docs/summaries/setup.txt"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b1/4d15a73e39/0/metadata.json",
+      "transcript": "/b1/4d15a73e39/0/full.jsonl",
+      "content_hash": "/b1/4d15a73e39/0/content_hash.txt",
+      "prompt": "/b1/4d15a73e39/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 31487,
+    "cache_read_tokens": 575697,
+    "output_tokens": 3548,
+    "api_call_count": 17
+  }
+}
