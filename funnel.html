@@ -76,48 +76,32 @@
     <!-- The Mermaid Container -->
     <div class="mermaid">
     flowchart TB
-        M["🌌 <b>THE MULTIVERSE</b>"] --> P["⚛️ Fine-Tuned<br>Physics"]
-        P --> C["🧪 Complex<br>Chemistry"]
-        C --> H["🌍 Habitable<br>Zone"]
-        H --> L["<b>LIFE</b> 🌱"]
-        
-        %% Use backticks for the labels to handle HTML and spaces cleanly
-        L -. `Emergence of Mind` .-> O[`<b>Consciousness / Observer</b>`]
-        O -. `🌪️ Selection Bias` .-> M
-        
-        %% The Shoggoth Node with Image
-        O --- n1@{ label: `<img src="/assets/graphics/the-shoggath-sml.jpg" width="200"><br><b>The Shoggoth</b>`, shape: rect }
+    M["🌌 <b>THE MULTIVERSE</b>"] --> P["⚛️ Fine-Tuned Physics"]
+    P --> C["🧪 Complex Chemistry"]
+    C --> H["🌍 Habitable Zone"]
+    H --> L["<b>LIFE</b> 🌱"]
+    
+    L -. `Emergence of Mind` .-> O[`<b>Consciousness / Observer</b>`]
+    O -. `🌪️ Selection Bias` .-> M
+    
+    %% The Shoggoth Node - using standard brackets for the label
+    O --- n1["<img src='/assets/graphics/the-shoggath-sml.jpg' width='200'><br><b>The Shoggoth</b>"]
 
-        n2["🌌 <b>THE MULTIVERSE</b>"]
-        n3["🌌 <b>THE MULTIVERSE</b>"]
-        n4["🌌 <b>THE MULTIVERSE</b>"]
-        n5["🌌 <b>THE MULTIVERSE</b>"]
-        n6["🌌 <b>THE MULTIVERSE</b>"]
+    %% Explicit Shape Definitions (one per line)
+    P@{ shape: h-cyl }
+    C@{ shape: h-cyl }
+    H@{ shape: h-cyl }
+    L@{ shape: internal-storage }
+    O@{ shape: dbl-circ }
+    n1@{ shape: rect }
 
-        %% Shape Definitions
-        P@{ shape: h-cyl }
-        C@{ shape: h-cyl }
-        H@{ shape: h-cyl }
-        L@{ shape: internal-storage }
-        O@{ shape: dbl-circ }
-        n2@{ shape: rect }
-        n3@{ shape: rect }
-        n4@{ shape: rect }
-        n5@{ shape: rect }
-        n6@{ shape: rect }
-
-        %% Styling
-        style M fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
-        style P fill:#152248,stroke:#3b82f6,color:#fff,stroke-width:2.5px
-        style C fill:#23335e,stroke:#5a9df9,color:#fff,stroke-width:2.5px
-        style H fill:#324475,stroke:#6fa8ff,color:#fff,stroke-width:2px
-        style L fill:#C8E6C9,stroke:#00C853,stroke-width:3px,color:#000
-        style O fill:#ff9500,stroke:#FF6D00,color:#000,stroke-width:3px
-        style n2 fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
-        style n3 fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
-        style n4 fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
-        style n5 fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
-        style n6 fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
+    %% Styles
+    style M fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
+    style P fill:#152248,stroke:#3b82f6,color:#fff,stroke-width:2.5px
+    style C fill:#23335e,stroke:#5a9df9,color:#fff,stroke-width:2.5px
+    style H fill:#324475,stroke:#6fa8ff,color:#fff,stroke-width:2px
+    style L fill:#C8E6C9,stroke:#00C853,stroke-width:3px,color:#000
+    style O fill:#ff9500,stroke:#FF6D00,color:#000,stroke-width:3px
     </div>
 
     <!-- Mermaid Initialization Script -->
