@@ -36,6 +36,8 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 ├── index.html              # Kinetic clock — full-screen art piece
 ├── clock-controls.html     # Settings panel (UTC offset, countdown)
 ├── play.html               # SoundCloud playlist grid
+├── robots.txt              # Crawler directives + sitemap pointer
+├── sitemap.xml             # XML sitemap (homepage only)
 │
 ├── styles/
 │   ├── clock.css           # ⚠️ Clock only — grid, hands, keyframes (protected)
