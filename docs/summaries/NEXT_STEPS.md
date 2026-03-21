@@ -2,6 +2,19 @@
 
 ## ✅ Completed Improvements
 
+### GitHub Agentic Workflows (March 2026)
+- [x] Diagnosed and patched `portfolio-analyst.yml` — two bugs in gh-aw v0.45.4 compiled output
+  - Fixed step ordering: "Download logs" moved to after "Install gh-aw extension"
+  - Fixed binary path: `gh aw logs` → `/opt/gh-aw/gh-aw logs` (extension resolution fails across shell steps)
+  - Added missing `actions: read` permission to agent job (omitted by compiler despite being in source `.md`)
+- [x] Fixed OAuth token expiry — replaced `CLAUDE_CODE_OAUTH_TOKEN` with permanent `ANTHROPIC_API_KEY`
+- [x] Enabled GitHub Discussions so portfolio analyst reports post correctly
+- [x] Filed upstream bug report on [github/gh-aw#22110](https://github.com/github/gh-aw/issues/22110) with three concrete suggestions for maintainers:
+  1. Compiler bug: propagate `actions: read` to agent job when `gh aw logs` is used
+  2. Template fix: use `/opt/gh-aw/gh-aw logs` not `gh aw logs` in portfolio-analyst template
+  3. Docs: clarify the difference between `gh aw` (extension) and `/opt/gh-aw/gh-aw` (direct binary) across shell steps
+- [x] Workflow now runs weekly (Mondays) producing portfolio dashboard discussions and security compliance campaign issues
+
 ### CSS Architecture
 - [x] Split single CSS file into 4 organized files
 - [x] Created critical.css for above-the-fold styles
