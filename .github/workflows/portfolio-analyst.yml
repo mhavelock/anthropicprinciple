@@ -51,6 +51,7 @@ jobs:
   activation:
     runs-on: ubuntu-slim
     permissions:
+      actions: read
       contents: read
     outputs:
       comment_id: ""
@@ -439,7 +440,7 @@ jobs:
         name: Download logs from last 30 days
         run: |-
           mkdir -p /tmp/portfolio-logs
-          gh aw logs --start-date -30d -c 5000 -o /tmp/portfolio-logs --json > /tmp/portfolio-logs/summary.json
+          /opt/gh-aw/gh-aw logs --start-date -30d -c 5000 -o /tmp/portfolio-logs --json > /tmp/portfolio-logs/summary.json
       - name: Write Safe Outputs Config
         run: |
           mkdir -p /opt/gh-aw/safeoutputs
