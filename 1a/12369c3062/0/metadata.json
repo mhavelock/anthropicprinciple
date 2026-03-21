@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1a12369c3062",
+  "session_id": "6a5f4dab-976d-4109-ada0-07b34591d1ad",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-21T08:27:23.309699Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/portfolio-analyst.yml"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "27a7b1dfff00",
+  "checkpoint_transcript_start": 102,
+  "transcript_lines_at_start": 102,
+  "token_usage": {
+    "input_tokens": 47,
+    "cache_creation_tokens": 76448,
+    "cache_read_tokens": 2477024,
+    "output_tokens": 26903,
+    "api_call_count": 29
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-21T08:27:22.875089Z",
+    "agent_lines": 1,
+    "human_added": 1,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2,
+    "agent_percentage": 50
+  }
+}

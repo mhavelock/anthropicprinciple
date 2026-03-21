@@ -1,0 +1,58 @@
+i need to test on github. my main branch needs the updates for me to push & test. plz commit
+
+---
+
+no - so to check you did the git push?
+
+---
+
+cool, plz check your config settings and ensure it's updated to ask permission to push again in future
+
+---
+
+ta. ive just checked the changes were there and re-run all jobs and still get:
+Run mkdir -p /tmp/portfolio-logs
+unknown command "aw" for "gh"
+
+Did you mean this?
+    api
+    co
+    pr
+
+Usage:  gh <command> <subcommand> [flags]
+
+Available commands:
+  agent-task
+  alias
+  api
+  attestation
+  auth
+  browse
+  cache
+  co
+  codespace
+  completion
+  config
+  copilot
+  extension
+  gist
+  gpg-key
+  issue
+  label
+  licenses
+  org
+  pr
+  preview
+  project
+  release
+  repo
+  ruleset
+  run
+  search
+  secret
+  ssh-key
+  status
+  variable
+  workflow
+
+Error: Process completed with exit code 1.

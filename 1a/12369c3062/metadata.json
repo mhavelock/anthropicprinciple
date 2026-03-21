@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1a12369c3062",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/portfolio-analyst.yml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/1a/12369c3062/0/metadata.json",
+      "transcript": "/1a/12369c3062/0/full.jsonl",
+      "content_hash": "/1a/12369c3062/0/content_hash.txt",
+      "prompt": "/1a/12369c3062/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 47,
+    "cache_creation_tokens": 76448,
+    "cache_read_tokens": 2477024,
+    "output_tokens": 26903,
+    "api_call_count": 29
+  }
+}
