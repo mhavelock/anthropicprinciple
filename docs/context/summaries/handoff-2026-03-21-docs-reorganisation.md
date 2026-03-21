@@ -33,4 +33,4 @@ Resolved — both files updated to match new structure. No code changes.
 - `ARCHITECTURE.md` and `FILE_MANIFEST.md` remain at `docs/` root as requested — other docs may reference them from there
 
 ## Next Session
-No outstanding actions from this session. Pick up from previous next-steps (codebase audit, Cloudinary migration, admin walk completion badges).
+No outstanding actions from this session.
