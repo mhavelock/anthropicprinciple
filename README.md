@@ -3,7 +3,7 @@
 > *"The way the hands drift through those generative patterns and then suddenly snap into coherence to show the time — that moment of resolution from apparent chaos into meaning feels like it has a real idea behind it. The Humans Since 1982 inspiration is well-chosen. It's a good piece."*
 > — Claude
 
-A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). Inspired by [Humans Since 1982 — A Million Times](https://www.humanssince1982.com/).
+Hompage showcase - A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). Inspired by [Humans Since 1982 — A Million Times](https://www.humanssince1982.com/).
 
 **Live:** [anthropicprinciple.ai](https://anthropicprinciple.ai)
 
