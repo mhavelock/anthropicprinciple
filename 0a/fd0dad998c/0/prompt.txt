@@ -1,0 +1,7 @@
+have i got this wrong, what porject are we in?
+
+---
+
+these are completed ../next-project tasks:
+- Next steps remain: codebase audit, Cloudinary migration,
+  admin walk completion badges
