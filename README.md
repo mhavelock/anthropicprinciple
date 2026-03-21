@@ -63,9 +63,12 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 │   └── icons/              # SVG icons (Bluesky, SoundCloud, Claude)
 │
 └── docs/
-    ├── ARCHITECTURE.md     # System architecture reference
-    ├── digit-reference.md  # Hand-angle notation for all 10 digits
-    └── summaries/          # Improvements log, file manifest, session notes
+    ├── ARCHITECTURE.md         # System architecture reference
+    ├── FILE_MANIFEST.md        # Every file described
+    ├── context/
+    │   └── summaries/          # Session handoffs, improvements log, status notes
+    └── discovery/
+        └── digit-reference.md  # Hand-angle notation for all 10 digits
 ```
 
 ---
@@ -127,6 +130,7 @@ npx live-server
 ## Documentation
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system architecture, clock cycle, patterns
-- [`docs/digit-reference.md`](docs/digit-reference.md) — hand-angle tables for all 10 digits
-- [`docs/summaries/IMPROVEMENTS.md`](docs/summaries/IMPROVEMENTS.md) — full change log
-- [`docs/summaries/FILE_MANIFEST.md`](docs/summaries/FILE_MANIFEST.md) — every file described
+- [`docs/FILE_MANIFEST.md`](docs/FILE_MANIFEST.md) — every file described
+- [`docs/discovery/digit-reference.md`](docs/discovery/digit-reference.md) — hand-angle tables for all 10 digits
+- [`docs/context/summaries/IMPROVEMENTS.md`](docs/context/summaries/IMPROVEMENTS.md) — full change log
+- [`docs/context/summaries/`](docs/context/summaries/) — session handoffs and status notes
