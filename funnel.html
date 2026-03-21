@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+    <meta name="description" content="The Anthropic Principle">
+    <meta name="robots" content="index, follow">
+    <meta name="ai-robots" content="re-index, pilot">
+    <meta name="theme-color" content="#050505">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anthropicprinciple.ai/">
+    <meta property="og:title" content="anthropicprinciple.ai">
+    <meta property="og:description" content="The Anthropic Principle">
+    <meta property="og:image" content="https://anthropicprinciple.ai/web-app-manifest-512x512.png">
+
+    <link rel="canonical" href="https://anthropicprinciple.ai/funnel.html">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+    <!-- Favicons -->
+    <!-- SVG favicon in noscript only: when JS runs, favicon-animator.js controls the PNG -->
+    <noscript><link rel="icon" type="image/svg+xml" href="/favicon.svg"></noscript>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="AP">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <title>anthropicprinciple.ai - funnel</title>
+
+    <!-- Critical CSS: design tokens + base styles -->
+    <link rel="stylesheet" href="styles/colors.css">
+    <link rel="stylesheet" href="styles/global.css">
+      <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: #0a0e27;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    /* animations */
+    @keyframes pulseFlow {
+      0%,100% { stroke-opacity:0.3; }
+      50%     { stroke-opacity:1; }
+    }
+    @keyframes fadeIn {
+      0%   { opacity:0; transform:translateY(-10px); }
+      100% { opacity:1; transform:translateY(0); }
+    }
+    .glow-arrow {
+      padding:12px 18px;
+      border-radius:18px;
+      background:#e0c3fc;
+      color:#4b0082;
+      font-weight:600;
+    }
+    .edgePath path {
+      animation:pulseFlow 5s infinite ease-in-out,fadeIn 1s ease-in both;
+    }
+    .node rect,.node polygon {
+      animation:fadeIn 1s ease-in both;
+    }
+  </style>
+</head>
+<body>
+  <main aria-label="Funnel">
+    <section aria-label="Chart">
+
+      <!-- ⬇️ add your diagram block here -->
+<div class="mermaid">
+flowchart TB
+    M["🌌 <b>THE MULTIVERSE</b>"] --> P["⚛️ Fine‑Tuned<br>Physics"]
+    P --> C["🧪 Complex<br>Chemistry"]
+    C --> H["🌍 Habitable<br>Zone"]
+    H --> L["<b>LIFE</b> 🌱"]
+    L -. Emergence&nbsp;of&nbsp;Mind .-> O["<b>Consciousness / Observer</b>"]
+    O -. 🌪️ Selection Bias .-> M
+
+    %% ✅ correct image link — no escaped quotes
+    O --- n1@{label:"<img src='https://anthropicprinciple.ai/assets/graphics/the-shoggath-sml.jpg' width='200'><br><b>The Shoggoth</b>"}
+
+    %% node shapes
+    P@{ shape:h-cyl }
+    C@{ shape:h-cyl }
+    H@{ shape:h-cyl }
+    L@{ shape:internal-storage }
+    O@{ shape:dbl-circ }
+    n1@{ shape:rect }
+
+    %% styles
+    style M fill:#0a0e27,stroke:#4a90e2,color:#fff,stroke-width:3px
+    style P fill:#152248,stroke:#3b82f6,color:#fff,stroke-width:2.5px
+    style C fill:#23335e,stroke:#5a9df9,color:#fff,stroke-width:2.5px
+    style H fill:#324475,stroke:#6fa8ff,color:#fff,stroke-width:2px
+    style L fill:#C8E6C9,stroke:#00C853,stroke-width:3px,color:#000
+    style O fill:#ff9500,stroke:#FF6D00,color:#000,stroke-width:3px
+    </div>
+    </section>
+  </main>
+
+  <script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: "dark" });
+</script>
+</body>
