@@ -81,9 +81,12 @@ anthropicprinciple/
 │   └── main.js             # Application entry point (future expansion)
 │
 └── docs/
-    ├── ARCHITECTURE.md     # System architecture overview
-    ├── digit-reference.md  # Hand-angle reference for all 10 digits
-    └── summaries/          # Session handoffs, status reports, change logs
+    ├── ARCHITECTURE.md         # System architecture overview
+    ├── FILE_MANIFEST.md        # Every file described
+    ├── context/
+    │   └── summaries/          # Session handoffs, status reports, change logs
+    └── discovery/
+        └── digit-reference.md  # Hand-angle reference for all 10 digits
 ```
 
 ### ⚠️ Protected files — do not modify clock behaviour
