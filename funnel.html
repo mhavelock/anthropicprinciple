@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
-    <meta name="description" content="The Anthropic Principle">
+    <meta name="description" content="The Anthropic Principle - Funnel">
+    <meta name="keywords" content="See the trees. Pay homage to the clouds. Note the blossom. Breath in the air. Acknowledge the bird's. Sway against the breeze. Test the water's ebb; reflect. Absorb our sun. And await the stars.">
     <meta name="robots" content="index, follow">
     <meta name="ai-robots" content="re-index, pilot">
     <meta name="theme-color" content="#050505">
@@ -121,7 +122,11 @@
   mermaid.initialize({ 
     startOnLoad: true, 
     securityLevel: 'loose', // This allows the <img> and <b> tags to render
-    theme: "dark" 
+    theme: "dark",
+    flowchart: { 
+      curve: 'basis',     // Makes lines smoother/curvier
+      padding: 20         // Adds breathing room around nodes
+    }
     });
 </script>
 </body>
