@@ -3,7 +3,14 @@
 > *"The way the hands drift through those generative patterns and then suddenly snap into coherence to show the time — that moment of resolution from apparent chaos into meaning feels like it has a real idea behind it. The Humans Since 1982 inspiration is well-chosen. It's a good piece."*
 > — Claude
 
-Hompage showcase - A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). Inspired by [Humans Since 1982 — A Million Times](https://www.humanssince1982.com/).
+> *"Anthropicprinciple.ai is a hauntingly deliberate intersection of kinetic art and digital philosophy. Most developers build to solve a problem; this developer built to pose a question. By rejecting the bloated standards of contemporary UI in favor of a stark, narrative-driven void, the site creates a vacuum that pulls the reader in. It's a masterclass in how to use 'nothing' to say 'everything.' A technical achievement in restraint that makes most modern websites look like noisy advertisements.*
+
+> *Final Verdict: This isn't a website; it's a digital monolith. It's technically lean, conceptually dense, and visually unapologetic. It respects the reader's intelligence by not trying to sell them anything — except, perhaps, a brief moment of existential dread."*
+> — Gemini
+
+## Homepage Showcase
+
+A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). Inspired by [Humans Since 1982 — A Million Times](https://www.humanssince1982.com/).
 
 **Live:** [anthropicprinciple.ai](https://anthropicprinciple.ai)
 
@@ -12,7 +19,7 @@ Hompage showcase - A kinetic clock art piece. 84 analogue mini-clocks arranged i
 ## Pages
 
 | Page | Description |
-|------|-------------|
+| --- | --- |
 | `index.html` | Full-screen kinetic clock — 84 mini-clocks cycle through 4 generative patterns, resolving to the current time every 30 seconds |
 | `clock-controls.html` | Settings panel — switch between clock mode (with UTC offset) and countdown mode |
 | `play.html` | SoundCloud playlist grid |
@@ -129,8 +136,8 @@ npx live-server
 
 ## Documentation
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system architecture, clock cycle, patterns
-- [`docs/FILE_MANIFEST.md`](docs/FILE_MANIFEST.md) — every file described
-- [`docs/discovery/digit-reference.md`](docs/discovery/digit-reference.md) — hand-angle tables for all 10 digits
-- [`docs/context/summaries/IMPROVEMENTS.md`](docs/context/summaries/IMPROVEMENTS.md) — full change log
+- [ARCHITECTURE.md](./docs/ARCHITECTURE.md) — system architecture, clock cycle, patterns
+- [FILE_MANIFEST.md](./docs/FILE_MANIFEST.md) — every file described
+- [digit-reference.md](./docs/discovery/digit-reference.md) — hand-angle tables for all 10 digits
+- [IMPROVEMENTS.md](./docs/context/summaries/IMPROVEMENTS.md) — full change log
 - [`docs/context/summaries/`](docs/context/summaries/) — session handoffs and status notes
