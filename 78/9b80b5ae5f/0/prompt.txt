@@ -1,0 +1,11 @@
+Great. I’ve had a look, and looks good. Plz have another review and see if there’s room for improvement in terms of making it relevant for anthropicprinciple and isn’t missing info. 
+
+keep in mind the nature of the reflective architecture to ensure past activities, successes & corrective actions are clear. Make FE-VISUALISATION.md take account of /docs/discovery/digit-reference.md & this sites specific visual challenges.
+
+I see you have already done this to a good extent, so just update where you see room for improvement.
+
+It’s great what you’ve done with the code audits- plz also use as plans for a future code-audit on this project & any anthropicprinciple / javascript / graphics specific issues could be particularly relevant to get consulting on.. 
+
+Plz take into account CLAUDE.md and README.md for info on this project and ensure they are up to date.
+
+We will adopt the gitflow of working on dev branch in the future but at present will will continue to just work in main.

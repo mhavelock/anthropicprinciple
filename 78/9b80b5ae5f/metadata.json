@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "789b80b5ae5f",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "CLAUDE.md",
+    "README.md",
+    "docs/architecture/CODEBASE-AUDIT.md",
+    "docs/architecture/FE-VISUALISATION.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/78/9b80b5ae5f/0/metadata.json",
+      "transcript": "/78/9b80b5ae5f/0/full.jsonl",
+      "content_hash": "/78/9b80b5ae5f/0/content_hash.txt",
+      "prompt": "/78/9b80b5ae5f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2080,
+    "cache_creation_tokens": 38846,
+    "cache_read_tokens": 1311456,
+    "output_tokens": 14982,
+    "api_call_count": 18
+  }
+}
