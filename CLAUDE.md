@@ -35,7 +35,7 @@ The project is an example of a high-quality, zero-dependency HTML/CSS/JS site bu
 |------|-------|
 | GitHub | https://github.com/mhavelock/anthropicprinciple |
 | Live site | https://anthropicprinciple.ai/ |
-| Branches | `dev` → development · `main` → production (GitHub Pages) |
+| Branches | `main` → production (GitHub Pages) · `dev` branch planned for future gitflow |
 | Git workflow | See [Git Workflow](#git-workflow) below |
 
 ---
@@ -46,9 +46,12 @@ The project is an example of a high-quality, zero-dependency HTML/CSS/JS site bu
 anthropicprinciple/
 ├── index.html              # Main clock page — full-screen art piece
 ├── clock-controls.html     # Settings panel — mode, timezone, countdown
+├── play.html               # SoundCloud playlist grid
 ├── CLAUDE.md               # This file — Claude Code instructions
 ├── CNAME                   # GitHub Pages custom domain
 ├── README.md               # Public-facing project readme
+├── robots.txt              # Crawler directives + sitemap pointer
+├── sitemap.xml             # XML sitemap
 ├── favicon.ico             # Legacy favicon fallback
 ├── favicon.svg             # Modern SVG favicon (animated by JS)
 ├── favicon-96x96.png       # PNG favicon
@@ -56,11 +59,9 @@ anthropicprinciple/
 └── site.webmanifest        # PWA manifest
 │
 ├── assets/
-│   ├── audio/              # Sound files (future)
+│   ├── icons/              # SVG icons (Bluesky, SoundCloud, Claude)
 │   ├── bgs/                # Background images
-│   ├── components/         # Component-level assets (icons in situ, etc.)
 │   ├── graphics/           # Illustrations, SVG artwork
-│   ├── icons/              # Standalone UI icon SVGs
 │   └── photos/             # Photography
 │
 ├── styles/
@@ -69,24 +70,38 @@ anthropicprinciple/
 │   ├── fonts.css           # Font family declarations and heading/body assignments
 │   ├── global.css          # Base element defaults, links, buttons, forms, 12-col grid
 │   ├── components.css      # Reusable UI components — header, logo, etc.
-│   ├── controls.css        # Page-specific styles for clock-controls.html
+│   ├── home.css            # Homepage — aside, social links, hover animations
+│   ├── controls.css        # Self-contained dark theme for clock-controls.html
+│   ├── play.css            # Self-contained styles for play.html
 │   ├── utilities.css       # Helper classes — u-sr-only, u-flex-center, etc.
 │   ├── banner.css          # Banner section component
 │   └── border-effect.css   # Animated conic-gradient border component
 │
 ├── js/
 │   ├── clock.js            # ⚠️ Clock animation engine — do not modify structure
-│   ├── favicon-animator.js # Animated canvas favicon — runs on all pages
-│   ├── logger.js           # Dev logger — localStorage/sessionStorage; separate from app code
-│   └── main.js             # Application entry point (future expansion)
+│   ├── favicon-animator.js # Animated canvas favicon — ~10fps rAF loop
+│   ├── controls.js         # Settings form — localStorage read/write with debounce
+│   ├── logger.js           # Dev logger — not loaded by default in production
+│   └── main.js             # Shared utilities (placeholder)
 │
 └── docs/
-    ├── ARCHITECTURE.md         # System architecture overview
-    ├── FILE_MANIFEST.md        # Every file described
-    ├── context/
-    │   └── summaries/          # Session handoffs, status reports, change logs
-    └── discovery/
-        └── digit-reference.md  # Hand-angle reference for all 10 digits
+    ├── architecture/           # All architecture docs — ADRs, patterns, feedback loops
+    │   ├── ARCHITECTURE.md     # System overview and core structural decisions
+    │   ├── CORE_PATTERNS.md    # G1–G13 constraints + code patterns (prompt prefix)
+    │   ├── DECISIONS.md        # ADR-001 to ADR-011
+    │   ├── FEEDBACK-LOOPS.md   # FL-01 to FL-10: wins, limits, hard rules
+    │   ├── BREAKTHROUGHS.md    # B-01 to B-05: key problem-solving records
+    │   ├── CODEBASE-AUDIT.md   # Audit chunks, G1–G13 table, future audit plan
+    │   ├── CHECKPOINTS.md      # Auto-checkpoint triggers and format
+    │   ├── FE-VISUALISATION.md # Visual debugging approach for this site
+    │   ├── GEMINI-CONSULTANCY.md # Gemini audit patterns and consulting protocol
+    │   └── .ai/                # Sprint memory — roadmap, active sprint, history
+    └── plan/
+        ├── plan-rules.md       # Session operating rules
+        ├── tasklist.md         # Open and completed tasks
+        ├── discovery/          # Reference docs — digit-reference.md, system-architecture
+        ├── archive/            # Closed handoffs, legacy summaries
+        └── handoff_[date].md   # Active session handoff
 ```
 
 ### ⚠️ Protected files — do not modify clock behaviour
@@ -353,12 +368,14 @@ git commit -m "style(css): mobile-first refactor and brand colour update"
 
 ## Git Workflow
 
-- **Branches:** `dev` for development → `main` for production (auto-deployed via GitHub Pages).
+- **Current workflow:** All work committed directly to `main`. `main` auto-deploys to GitHub Pages on push.
+- **Future gitflow:** `dev` → `main` PR workflow to be adopted when ready. Not yet active.
 - **Commit messages:** Conventional Commits — `type(scope): description`
   - Types: `feat` `fix` `style` `refactor` `docs` `perf` `test` `chore`
   - Examples: `feat(clock): add pattern 5` · `fix(controls): persist UTC offset` · `style(css): mobile-first refactor`
 - **Always `git diff` before committing** — review every change.
 - **Stop and show `git diff` after each task** — confirm with user before proceeding.
+- **`git push` requires explicit user confirmation** — push deploys immediately to production.
 - Use the `git-commit-messaging` skill for all commit messages.
 
 ---
