@@ -1,6 +1,6 @@
 # Kinetic Grid Clock — Reference
 
-**Project**: erudit0rum — 84 mini-clocks (6 rows × 14 columns), inspired by Humans Since 1982 *A Million Times*.
+**Project**: anthropicprinciple.ai — 84 mini-clocks (6 rows × 14 columns), inspired by Humans Since 1982 *A Million Times*.
 
 ---
 
