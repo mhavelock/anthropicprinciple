@@ -20,6 +20,10 @@ Nothing currently in flight.
 | `docs/plan/` restructured: plan-rules.md, tasklist.md, archive structure | 2026-04-05 |
 | Wrong files deleted: pedant-responsiveness.md, pipeline-listening.md, pipeline-roasting.md | 2026-04-05 |
 | digit-reference.md header fixed (was "erudit0rum", now "anthropicprinciple.ai") | 2026-04-05 |
+| FE-VISUALISATION.md rewritten — clock-specific visual debugging; digit-reference.md integration; viewport matrix | 2026-04-05 |
+| CODEBASE-AUDIT.md extended — §6 Future Audit Plan + 6 Gemini consulting prompts | 2026-04-05 |
+| CLAUDE.md corrected — file structure, git workflow (main-only current, dev future) | 2026-04-05 |
+| README.md corrected — docs links, file structure tree | 2026-04-05 |
 
 ---
 
