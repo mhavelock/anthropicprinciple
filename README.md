@@ -44,7 +44,7 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 ├── clock-controls.html     # Settings panel (UTC offset, countdown)
 ├── play.html               # SoundCloud playlist grid
 ├── robots.txt              # Crawler directives + sitemap pointer
-├── sitemap.xml             # XML sitemap (homepage only)
+├── sitemap.xml             # XML sitemap
 │
 ├── styles/
 │   ├── clock.css           # ⚠️ Clock only — grid, hands, keyframes (protected)
@@ -52,8 +52,8 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 │   ├── fonts.css           # Font family declarations
 │   ├── global.css          # Base resets, body, buttons, forms, 12-col grid
 │   ├── components.css      # Reusable UI components
-│   ├── controls.css        # Clock controls page — self-contained dark theme
 │   ├── home.css            # Homepage — aside, social links, hover animations
+│   ├── controls.css        # Clock controls page — self-contained dark theme
 │   ├── play.css            # Playlist page — self-contained
 │   ├── utilities.css       # u-* helper classes
 │   ├── banner.css          # Banner component
@@ -70,12 +70,12 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 │   └── icons/              # SVG icons (Bluesky, SoundCloud, Claude)
 │
 └── docs/
-    ├── ARCHITECTURE.md         # System architecture reference
-    ├── FILE_MANIFEST.md        # Every file described
-    ├── context/
-    │   └── summaries/          # Session handoffs, improvements log, status notes
-    └── discovery/
-        └── digit-reference.md  # Hand-angle notation for all 10 digits
+    ├── architecture/           # Architecture docs — ADRs, patterns, feedback loops
+    └── plan/
+        ├── tasklist.md         # Open and completed tasks
+        ├── discovery/
+        │   └── digit-reference.md  # Hand-angle notation for all 10 digits
+        └── archive/            # Legacy session summaries
 ```
 
 ---
@@ -136,8 +136,7 @@ npx live-server
 
 ## Documentation
 
-- [ARCHITECTURE.md](./docs/ARCHITECTURE.md) — system architecture, clock cycle, patterns
-- [FILE_MANIFEST.md](./docs/FILE_MANIFEST.md) — every file described
-- [digit-reference.md](./docs/discovery/digit-reference.md) — hand-angle tables for all 10 digits
-- [IMPROVEMENTS.md](./docs/context/summaries/IMPROVEMENTS.md) — full change log
-- [`docs/context/summaries/`](docs/context/summaries/) — session handoffs and status notes
+- [ARCHITECTURE.md](./docs/architecture/ARCHITECTURE.md) — system architecture, clock cycle, patterns
+- [CORE_PATTERNS.md](./docs/architecture/CORE_PATTERNS.md) — G1–G13 constraints and code patterns
+- [DECISIONS.md](./docs/architecture/DECISIONS.md) — architecture decision records
+- [digit-reference.md](./docs/plan/discovery/digit-reference.md) — hand-angle tables for all 10 digits
