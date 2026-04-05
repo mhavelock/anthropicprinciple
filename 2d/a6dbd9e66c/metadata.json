@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "2da6dbd9e66c",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/architecture/.ai/memory/active_sprint.md",
+    "docs/architecture/.ai/memory/context.md",
+    "docs/architecture/.ai/memory/sprint-history.md",
+    "docs/architecture/.ai/roadmap.md",
+    "docs/architecture/ARCHITECTURE.md",
+    "docs/architecture/ARCHITECTURE_EXTENSION.md",
+    "docs/architecture/BREAKTHROUGHS.md",
+    "docs/architecture/CHECKPOINTS.md",
+    "docs/architecture/CLAUDE_ARCHITECTURE.md",
+    "docs/architecture/CODEBASE-AUDIT.md",
+    "docs/architecture/CORE_PATTERNS.md",
+    "docs/architecture/DECISIONS.md",
+    "docs/architecture/FEEDBACK-LOOPS.md",
+    "docs/architecture/GEMINI-CONSULTANCY.md",
+    "docs/architecture/REFLECTIVE-SYNC.md",
+    "docs/architecture/STANDARDS.md",
+    "docs/architecture/SYSTEM.md",
+    "docs/architecture/deployment.md",
+    "docs/architecture/infrastructure.md",
+    "docs/architecture/security.md",
+    "docs/architecture/system-design-tasks.md",
+    "docs/plan/archive/README.md",
+    "docs/plan/discovery/digit-reference.md",
+    "docs/plan/handoff_2026-04-05.md",
+    "docs/plan/plan-rules.md",
+    "docs/plan/tasklist.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/2d/a6dbd9e66c/0/metadata.json",
+      "transcript": "/2d/a6dbd9e66c/0/full.jsonl",
+      "content_hash": "/2d/a6dbd9e66c/0/content_hash.txt",
+      "prompt": "/2d/a6dbd9e66c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3492,
+    "cache_creation_tokens": 208724,
+    "cache_read_tokens": 6549458,
+    "output_tokens": 70134,
+    "api_call_count": 56
+  }
+}
