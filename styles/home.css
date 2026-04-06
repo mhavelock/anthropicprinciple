@@ -92,6 +92,18 @@ ul.links a {
     width: 2rem;
 }
 
+/* Controls icon — filtered to white */
+.links-controls .links-icon {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: opacity 200ms;
+}
+
+.links-controls:hover .links-icon,
+.links-controls:focus .links-icon {
+    opacity: 1;
+}
+
 /* ===== BLUESKY FLUTTER ANIMATION ===== */
 /* Adapted from https://github.com/nicholasgasior/bluesky-flutterby (MIT) */
 .bsky-flutter {
