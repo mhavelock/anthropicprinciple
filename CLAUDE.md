@@ -6,7 +6,7 @@
 
 ## Summary
 
-**anthropicprinciple.ai** is a kinetic clock art piece inspired by Humans Since 1982's "A million times" installation. 84 mini analogue clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). A companion page (`/clock-controls.html`) lets visitors set a timezone offset or run a countdown timer, with settings persisted in `localStorage`.
+**anthropicprinciple.ai** is a kinetic clock art piece inspired by Humans Since 1982's "A million times" installation. 84 mini analogue clocks arranged in a 6 × 14 grid perform choreographed animations that periodically resolve into a digital time display (HH:MM). The clock defaults to the visitor's local time (including DST/BST). A companion page (`/clock-controls.html`) lets visitors switch to a manual UTC offset or run a countdown timer, with settings persisted in `localStorage`.
 
 The project is an example of a high-quality, zero-dependency HTML/CSS/JS site built to W3C standards with a 100/100 Google PageSpeed target.
 
@@ -124,7 +124,7 @@ anthropicprinciple/
 - **CSS custom properties.** All colours, spacing, and timing values are defined as `--custom-properties` in `colors.css`. Never hard-code values in component CSS.
 - **Mobile-first CSS.** Base styles target the smallest screen. Use `min-width` media queries to layer on complexity for larger screens. Never use `max-width` for responsive breakpoints.
 - **`requestAnimationFrame` loop.** `clock.js` and `favicon-animator.js` use `rAF` — no `setInterval`. Both pause via `visibilitychange` when the tab is hidden.
-- **`localStorage` persistence.** Clock settings (mode, UTC offset, countdown end time) survive page reloads.
+- **`localStorage` persistence.** Clock settings (mode, local/manual time source, UTC offset, countdown end time) survive page reloads.
 - **Flex for layout, Grid for components.** Use Flexbox for page-level flow. CSS Grid for components where a two-dimensional structure is semantically correct (e.g. the clock grid, the 12-column page grid).
 - **Chained classes.** Separate structural and presentational concerns using chained classes where it improves clarity.
 
@@ -187,7 +187,7 @@ anthropicprinciple/
 | Page | Content |
 |------|---------|
 | `index.html` | Full-screen kinetic clock. 84 mini analogue clocks animate through 4 choreographed patterns, then resolve to display the current time (HH:MM). Cycles every 30 seconds. |
-| `clock-controls.html` | Settings panel. Toggle between clock mode (UTC offset ±12h) and countdown mode (MM:SS). Settings persist in `localStorage` and take effect on `index.html` immediately. |
+| `clock-controls.html` | Settings panel. Clock mode defaults to local time; manual UTC offset (±12–14h) available. Countdown mode (MM:SS). Settings persist in `localStorage` and take effect on `index.html` immediately. |
 
 ---
 

@@ -1,7 +1,7 @@
 # anthropicprinciple.ai — Task Register
 
 Canonical task list. All tasks live here — open and completed. Never delete; mark done instead.
-Last updated: 2026-04-06
+Last updated: 2026-04-06 (session 2)
 
 ---
 
@@ -145,3 +145,18 @@ JavaScript's `Date` object is always in the visitor's local timezone. `new Date(
 |---|------|--------|-------|
 | DOC1 | Architecture documentation system | ✅ Done 2026-04-05 | Full `docs/architecture/` rewrite matching that-guy project structure. All files project-specific. |
 | DOC2 | Plan system setup | ✅ Done 2026-04-05 | `docs/plan/` restructured: plan-rules.md, tasklist.md, archive/ |
+
+### Features & UI (2026-04-06)
+
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| C1 | Default clock to visitor local time | ✅ Done 2026-04-06 | `clk_use_local` key; `new Date()` path in `clock.js`; Local/Manual radio in controls. DST/BST handled automatically. |
+| UI1 | Controls icon link in links panel | ✅ Done 2026-04-06 | `controls.svg` added above Bluesky; filtered to white via `brightness(0) invert(1)`; uses `--opacity-dim` + `--transition-fast` tokens. |
+
+### Architecture & Tooling (2026-04-06)
+
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| ARCH1 | `six-hats.md` rewrite for anthropicprinciple | ✅ Done 2026-04-06 | All iOS/that-guy content replaced. Strategy A/B rewritten for clock. Slow Connection UX Strategy added. |
+| ARCH2 | Gemini MCP server wired | ✅ Done 2026-04-06 | `.mcp.json` configured; API key in `~/Claudette/Cowork/projects/.env` via `~/.zshrc` source. |
+| ARCH3 | First Gemini MCP audit | ✅ Done 2026-04-06 | Pattern 1 audit run post-feature. Caught two violations: CSS token drift + undocumented localStorage key. Both fixed. B-06 written. |

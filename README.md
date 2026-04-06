@@ -67,7 +67,7 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 │   └── logger.js           # Dev logger — opt-in, not loaded by default
 │
 ├── assets/
-│   └── icons/              # SVG icons (Bluesky, SoundCloud, Claude)
+│   └── icons/              # SVG icons (controls, Bluesky, SoundCloud, Claude)
 │
 └── docs/
     ├── architecture/           # Architecture docs — ADRs, patterns, feedback loops

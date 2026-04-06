@@ -74,6 +74,23 @@ Organised as: what the situation was → what we were tempted to do → what we 
 
 ---
 
+## B-06: First In-Session Gemini MCP Audit
+
+**Date:** 2026-04-06
+**Session type:** Architecture audit
+
+**Situation:** After implementing two features (local time default, controls icon link), a Gemini architectural audit was run via the project's `.mcp.json` MCP server — no manual copy-paste. First live use of Gemini MCP on this project.
+
+**What Gemini caught:** Two constraint violations that had been merged without notice:
+1. `home.css` hard-coded `opacity: 0.8` and `transition: opacity 200ms` — violating the CSS custom properties constraint (ARCHITECTURE.md §2).
+2. The new `clk_use_local` localStorage key was not documented in `ARCHITECTURE.md §8`.
+
+**What we actually did:** Ran Pattern 1 (Architecture Audit) from `GEMINI-CONSULTANCY.md`. Adjudicated findings — one false positive dismissed (internal API consistency), two genuine findings fixed: added `--opacity-dim` token to `colors.css`, updated references in `home.css`, documented `clk_use_local` in `ARCHITECTURE.md`.
+
+**Lesson:** The Gemini MCP audit works. The constraint it most reliably catches is CSS token drift — hardcoded values that look correct but break the single source of truth. Run Pattern 1 after every feature session.
+
+---
+
 ## B-05: Debouncing localStorage Writes
 
 **Date:** 2026-03-20
