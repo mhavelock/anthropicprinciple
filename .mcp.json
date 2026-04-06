@@ -1,3 +1,13 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "gemini": {
+      "command": "node",
+      "args": [
+        "mcps/claude-add-models-mcp/index.js"
+      ],
+      "env": {
+        "GOOGLE_API_KEY": "${GOOGLE_API_KEY}"
+      }
+    },
+  }
 }
