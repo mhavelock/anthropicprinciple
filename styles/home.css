@@ -95,8 +95,8 @@ ul.links a {
 /* Controls icon — filtered to white */
 .links-controls .links-icon {
     filter: brightness(0) invert(1);
-    opacity: 0.8;
-    transition: opacity 200ms;
+    opacity: var(--opacity-dim);
+    transition: opacity var(--transition-fast);
 }
 
 .links-controls:hover .links-icon,

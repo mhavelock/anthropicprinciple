@@ -51,7 +51,7 @@ Both `clock.js` and `favicon-animator.js` use `requestAnimationFrame` — never 
 `will-change: transform` on `.hand` promotes all 168 hand elements to individual GPU compositor layers. `contain: layout style paint` on `.mc` scopes style recalculation to each clock cell. Together, a transform write on one hand cannot cascade to the full document.
 
 ### 8. localStorage-only settings persistence
-Clock settings survive page reloads and cross-tab via `localStorage`. Four keys: `clk_mode`, `clk_hours`, `clk_countdown_time`, `clk_countdown_end`. `clock.js` reads on load and re-reads on the `storage` event (other-tab changes apply immediately).
+Clock settings survive page reloads and cross-tab via `localStorage`. Five keys: `clk_mode`, `clk_use_local`, `clk_hours`, `clk_countdown_time`, `clk_countdown_end`. `clock.js` reads on load and re-reads on the `storage` event (other-tab changes apply immediately).
 
 ---
 
@@ -142,7 +142,8 @@ localStorage keys:
 | Key | Value |
 |-----|-------|
 | `clk_mode` | `"clock"` or `"countdown"` |
-| `clk_hours` | Integer UTC offset string (e.g. `"1"` for UTC+1) |
+| `clk_use_local` | `"true"` or `"false"` — absent = `true` (default: local time) |
+| `clk_hours` | Integer UTC offset string (e.g. `"1"` for UTC+1) — only used when `clk_use_local` is `"false"` |
 | `clk_countdown_time` | Duration string `"MM:SS"` |
 | `clk_countdown_end` | Unix timestamp ms (absolute countdown end time) |
 

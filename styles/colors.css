@@ -104,6 +104,9 @@
 
     /* ===== ANIMATION ===== */
     --animation-duration: 4s;
+
+    /* ===== OPACITY ===== */
+    --opacity-dim: 0.8;   /* resting state for icon/UI elements with hover-to-full */
 }
 
 /* ===== DARK MODE (system preference) ===== */
