@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "83fd477bed7a",
+  "session_id": "ff59ee3a-9865-4175-b8c4-d2202bee688c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-06T15:46:18.563533Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/SYSTEM.md",
+    "docs/architecture/ARCHITECTURE.md",
+    "docs/architecture/CLAUDE_ARCHITECTURE.md",
+    "docs/architecture/CODEBASE-AUDIT.md",
+    "docs/architecture/REFLECTIVE-SYNC.md",
+    "docs/architecture/SYSTEM.md",
+    "docs/architecture/six-hats.md",
+    "docs/plan/plan-rules.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "0949ae92d70c",
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 42721,
+    "cache_read_tokens": 752699,
+    "output_tokens": 10873,
+    "api_call_count": 17
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-06T15:46:18.373262Z",
+    "agent_lines": 331,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 331,
+    "agent_percentage": 100
+  }
+}

@@ -1,0 +1,5 @@
+Hi. A task not on the tasklist - we have a file /docs/architecture/ARCHITECTURE.md and /docs/ARCHITECTURE.md - merge /docs/architecture/ARCHITECTURE.md into /docs/ARCHITECTURE.md then delete /docs/architecture/ARCHITECTURE.md
+
+move /docs/architecture/SYSTEM.md to /docs/SYSTEM.md
+
+update any docs referencng their location plz

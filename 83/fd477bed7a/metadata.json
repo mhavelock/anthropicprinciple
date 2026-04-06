@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "83fd477bed7a",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/SYSTEM.md",
+    "docs/architecture/ARCHITECTURE.md",
+    "docs/architecture/CLAUDE_ARCHITECTURE.md",
+    "docs/architecture/CODEBASE-AUDIT.md",
+    "docs/architecture/REFLECTIVE-SYNC.md",
+    "docs/architecture/SYSTEM.md",
+    "docs/architecture/six-hats.md",
+    "docs/plan/plan-rules.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/83/fd477bed7a/0/metadata.json",
+      "transcript": "/83/fd477bed7a/0/full.jsonl",
+      "content_hash": "/83/fd477bed7a/0/content_hash.txt",
+      "prompt": "/83/fd477bed7a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 42721,
+    "cache_read_tokens": 752699,
+    "output_tokens": 10873,
+    "api_call_count": 17
+  }
+}
