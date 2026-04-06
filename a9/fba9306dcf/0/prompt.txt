@@ -1,0 +1,3 @@
+ta. A new task plz - to add a new default to clock-controls.html - local time - using - new Date() or best approach to show all site visitors their local time (including changes such as BST)
+
+Keep the exiting options, but site will default otherwise show local time for users.
