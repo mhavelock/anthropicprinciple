@@ -32,6 +32,9 @@
     const rawMode    = ls.get('clk_mode');
     const savedMode  = (rawMode === 'clock' || rawMode === 'countdown') ? rawMode : 'clock';
 
+    const rawLocal   = ls.get('clk_use_local');
+    const savedLocal = rawLocal !== 'false'; // absent = true (default)
+
     const rawHours   = parseInt(ls.get('clk_hours') ?? '0', 10);
     const savedHours = isNaN(rawHours) ? 0 : Math.max(-12, Math.min(14, rawHours));
 
@@ -39,6 +42,7 @@
     const savedTime  = /^\d{1,2}:\d{2}$/.test(rawTime) ? rawTime : '05:00';
 
     document.querySelector(`input[value="${savedMode}"]`).checked = true;
+    document.querySelector(`input[name="time-source"][value="${savedLocal ? 'local' : 'manual'}"]`).checked = true;
     document.getElementById('hours').value          = savedHours;
     document.getElementById('countdown-time').value = savedTime;
 
@@ -52,11 +56,27 @@
     }
     updateSections();
 
+    // ── Local time vs manual UTC offset ────────────────────────────────────────
+    function updateTimeSource() {
+        const isLocal = document.querySelector('input[name="time-source"]:checked').value === 'local';
+        document.getElementById('section-utc-offset').classList.toggle('is-hidden', isLocal);
+        document.getElementById('lbl-local').classList.toggle('is-active', isLocal);
+        document.getElementById('lbl-manual').classList.toggle('is-active', !isLocal);
+    }
+    updateTimeSource();
+
     // ── Event listeners ─────────────────────────────────────────────────────────
     document.querySelectorAll('input[name="mode"]').forEach(r => {
         r.addEventListener('change', () => {
             ls.set('clk_mode', r.value);
             updateSections();
+        });
+    });
+
+    document.querySelectorAll('input[name="time-source"]').forEach(r => {
+        r.addEventListener('change', () => {
+            ls.set('clk_use_local', r.value === 'local' ? 'true' : 'false');
+            updateTimeSource();
         });
     });
 
