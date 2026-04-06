@@ -11,6 +11,7 @@
   // ── Default config (override via /clock-controls.html + localStorage) ──────
   const DEFAULTS = {
     mode:          'clock',     // 'clock' | 'countdown'
+    useLocal:      true,        // true = local time via Date(); false = UTC + offset
     hours:         0,           // UTC offset for clock mode (e.g. +1 = UTC+1)
     countdownTime: '00:30',     // initial countdown time MM:SS
   };
@@ -23,6 +24,7 @@
     const ls = k => localStorage.getItem(k);
     return {
       mode:         ls('clk_mode')           || DEFAULTS.mode,
+      useLocal:     ls('clk_use_local')      !== 'false',  // absent = true (default)
       hours:        +(ls('clk_hours')        ?? DEFAULTS.hours),
       countdownTime:ls('clk_countdown_time') || DEFAULTS.countdownTime,
       countdownEnd: +(ls('clk_countdown_end')|| 0),
@@ -157,11 +159,19 @@
       d0 = Math.floor(mins / 10); d1 = mins % 10;
       d2 = Math.floor(secs / 10); d3 = secs % 10;
 
+    } else if (cfg.useLocal) {
+      // Local time — Date() handles DST/BST automatically
+      const d  = new Date();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      d0 = +hh[0]; d1 = +hh[1]; d2 = +mm[0]; d3 = +mm[1];
+
     } else {
-      const d   = new Date();
+      // Manual UTC offset
+      const d    = new Date();
       const utcH = d.getUTCHours() + cfg.hours;
-      const hh  = (((utcH % 24) + 24) % 24).toString().padStart(2, '0');
-      const mm  = d.getUTCMinutes().toString().padStart(2, '0');
+      const hh   = (((utcH % 24) + 24) % 24).toString().padStart(2, '0');
+      const mm   = d.getUTCMinutes().toString().padStart(2, '0');
       d0 = +hh[0]; d1 = +hh[1]; d2 = +mm[0]; d3 = +mm[1];
     }
 

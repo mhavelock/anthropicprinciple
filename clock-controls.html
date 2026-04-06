@@ -49,11 +49,22 @@
         <section class="ctrl-section" id="section-clock" aria-labelledby="clock-heading">
             <h2 class="section-title" id="clock-heading">Clock Settings</h2>
 
-            <div class="ctrl-field">
-                <label class="ctrl-field-label" for="hours">UTC offset (hours)</label>
-                <input type="number" id="hours" min="-12" max="14" step="1" value="0">
+            <label class="ctrl-radio-label" id="lbl-local">
+                <input type="radio" name="time-source" value="local">
+                Local time
+            </label>
+            <label class="ctrl-radio-label" id="lbl-manual">
+                <input type="radio" name="time-source" value="manual">
+                Manual UTC offset
+            </label>
+
+            <div id="section-utc-offset">
+                <div class="ctrl-field">
+                    <label class="ctrl-field-label" for="hours">UTC offset (hours)</label>
+                    <input type="number" id="hours" min="-12" max="14" step="1" value="0">
+                </div>
+                <p class="ctrl-note">0 = Universal Time &nbsp;&middot;&nbsp; +1 = UTC+1 &nbsp;&middot;&nbsp; +9 = Tokyo &nbsp;&middot;&nbsp; &minus;5 = New York EST</p>
             </div>
-            <p class="ctrl-note">0 = Universal Time &nbsp;&middot;&nbsp; +1 = UTC+1 &nbsp;&middot;&nbsp; +9 = Tokyo &nbsp;&middot;&nbsp; &minus;5 = New York EST</p>
         </section>
 
         <!-- Countdown settings -->
