@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "1c75f6e66ed3",
+  "session_id": "3a7ca7e1-19ed-4758-b82e-65156a7af822",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-06T11:24:14.412364Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "docs/architecture/six-hats.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "587fbd5ff87b",
+  "token_usage": {
+    "input_tokens": 40,
+    "cache_creation_tokens": 72261,
+    "cache_read_tokens": 1465491,
+    "output_tokens": 16847,
+    "api_call_count": 30
+  },
+  "session_metrics": {
+    "turn_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-06T11:24:14.076346Z",
+    "agent_lines": 84,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 1,
+    "total_committed": 84,
+    "agent_percentage": 100
+  }
+}
