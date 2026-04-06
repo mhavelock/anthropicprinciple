@@ -1,0 +1,38 @@
+hi. plz see /docs/plan/ for last sessions work
+
+---
+
+I'd like to continue with some more changes to the /architecture folder update
+
+---
+
+Plz examine six-hats.md and ideate some innovative approaches to optimising the ‘homepage ‘clock’ piece’. 
+
+
+Make following specific to specific to the clock display / controls / browser performance / vanilla JS & CSS & use of GPU & other tech.
+
+## Inversion (Munger's Mental Model) 
+### Anchoring Prompt Templates (for this project) 
+
+Change ## Chunking and MapReduce - to straining the browser / user device.
+Also create an approach - take inspiration from any methodology, to give the best UX for slow download speeds. 
+
+Rewrite ### Strategy A — By Code Function Area & ### Strategy B — By Feature/UX Area for anthropicprinciple. (Clock only) UX is purely the experience of the clock (on all devices) (note, includes issues such as mobile device orientation, device slowdown or excessive effect on battery. 
+
+Plz check no other area is too that-guy / iOS listening app specific.
+
+---
+
+great. plz commit.
+
+---
+
+that's great - plz would you reference the google api key from my .env file
+
+---
+
+I've added a .env file in the Cowork/projects/ folder. Plz move it / reference from there
+
+---
+
+1 plz
