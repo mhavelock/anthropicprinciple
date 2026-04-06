@@ -1,0 +1,9 @@
+great. plz commit
+
+---
+
+great. I'd like to test the projects .mcp.json / claude-add-models-mcp 'gemini' mcp server. plz run a general gemini audit using /architecture/GEMINI-CONSULTANCY.md
+
+---
+
+great. yes
