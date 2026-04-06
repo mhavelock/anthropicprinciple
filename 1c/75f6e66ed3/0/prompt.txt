@@ -20,3 +20,7 @@ Also create an approach - take inspiration from any methodology, to give the bes
 Rewrite ### Strategy A — By Code Function Area & ### Strategy B — By Feature/UX Area for anthropicprinciple. (Clock only) UX is purely the experience of the clock (on all devices) (note, includes issues such as mobile device orientation, device slowdown or excessive effect on battery. 
 
 Plz check no other area is too that-guy / iOS listening app specific.
+
+---
+
+great. plz commit.
