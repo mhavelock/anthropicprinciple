@@ -1,7 +1,7 @@
 # anthropicprinciple.ai — Task Register
 
 Canonical task list. All tasks live here — open and completed. Never delete; mark done instead.
-Last updated: 2026-04-05
+Last updated: 2026-04-06
 
 ---
 
@@ -11,9 +11,53 @@ Last updated: 2026-04-05
 
 | # | Task | Type | Status | Notes |
 |---|------|------|--------|-------|
+| C1 | Default clock to visitor local time | CODE | ⚠️ TODO | See full spec below. |
 | S1 | Fix WCAG contrast: `.side p` text | STYLE | ⚠️ TODO | `#727786` on `#292b31` ≈ 2.85:1 — fails AA (4.5:1 required). Update `--side-text-muted` token in `home.css`. |
 | S2 | Fix `home.css` aside positioning magic numbers | STYLE | ⚠️ TODO | `right: calc(-50vw + 1.25rem)` and `top: -17rem` are fragile. Audit at multiple viewports before fixing. |
 | S3 | Audit `.side p` font-family deviation | STYLE | ⚠️ TODO | Uses Gill Sans — deliberate deviation from Verdana/Arial system. Decide: keep as documented exception or bring into system. Document either way in `DECISIONS.md`. |
+
+---
+
+### C1 — Default clock to visitor local time (full spec)
+
+**Goal:** All visitors see their own local time by default, including automatic DST/BST changes. The manual UTC offset option remains available for users who want to display a different timezone.
+
+**Why `new Date()` not a fixed offset:**
+JavaScript's `Date` object is always in the visitor's local timezone. `new Date().getHours()` and `new Date().getMinutes()` automatically reflect DST/BST changes without any extra logic. A stored UTC offset (e.g. `+1`) would silently show the wrong time when clocks change.
+
+**New localStorage key:**
+- `clk_use_local` — `"true"` or `"false"` (string). Default (key absent) = treat as `"true"`.
+
+**Behaviour matrix:**
+
+| `clk_use_local` | `clk_hours` | What clock.js displays |
+|-----------------|-------------|------------------------|
+| absent (new visitor) | any | Local time via `new Date()` |
+| `"true"` | any | Local time via `new Date()` |
+| `"false"` | e.g. `"1"` | UTC + offset (existing behaviour) |
+
+**Files to change:**
+
+| File | Change |
+|------|--------|
+| `js/clock.js` | In the time-reading logic: check `clk_use_local`. If `true` or absent, use `new Date().getHours()` / `.getMinutes()`. If `false`, use existing UTC+offset calculation. |
+| `js/controls.js` | On load: restore `clk_use_local` (default `true`). Show/hide `#section-utc-offset` based on value. Write `clk_use_local` on toggle change. |
+| `clock-controls.html` | Add a "Local time" toggle (radio or checkbox) above the UTC offset field. When "Local time" selected: UTC offset input visually disabled/hidden. When "Manual offset" selected: UTC offset input shown. |
+
+**UX detail:**
+- New visitor arrives → local time shown immediately, no configuration needed
+- Controls page: "Local time" selected by default
+- User can switch to "Manual UTC offset" → UTC offset input appears → they set it → `clk_use_local` = `false`
+- Switching back to "Local time" → `clk_use_local` = `true`, UTC offset input hidden again
+- The stored `clk_hours` value is preserved when toggling back to local (so it's still there if they switch back to manual)
+
+**Regression checks after implementation:**
+- `visibilitychange` pause still intact
+- Countdown mode unaffected — `clk_use_local` only applies when `clk_mode === "clock"`
+- UTC offset extreme values (−12, +14) still work when manual mode selected
+- `clk_use_local` absent (first visit) correctly defaults to local time
+
+---
 
 ### HTML Tasks
 
