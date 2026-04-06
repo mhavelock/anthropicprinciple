@@ -1,0 +1,1 @@
+brill. plz update task record, and any reflective architecture docs in /architecture (Claude.md & readme.md if needed) and end session
