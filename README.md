@@ -136,7 +136,7 @@ npx live-server
 
 ## Documentation
 
-- [ARCHITECTURE.md](./docs/architecture/ARCHITECTURE.md) — system architecture, clock cycle, patterns
+- [ARCHITECTURE.md](./docs/ARCHITECTURE.md) — system architecture, clock cycle, patterns
 - [CORE_PATTERNS.md](./docs/architecture/CORE_PATTERNS.md) — G1–G13 constraints and code patterns
 - [DECISIONS.md](./docs/architecture/DECISIONS.md) — architecture decision records
 - [digit-reference.md](./docs/plan/discovery/digit-reference.md) — hand-angle tables for all 10 digits
