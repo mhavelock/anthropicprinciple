@@ -33,7 +33,9 @@ The project is an example of a high-quality, zero-dependency HTML/CSS/JS site bu
 
 | Item | Value |
 |------|-------|
+| Working Directory | `~/Claudette/Cowork/projects/anthropicprinciple` |
 | GitHub | https://github.com/mhavelock/anthropicprinciple |
+| Local Development | http://127.0.0.1:8080/ (using live-server) |
 | Live site | https://anthropicprinciple.ai/ |
 | Branches | `main` → production (GitHub Pages) · `dev` branch planned for future gitflow |
 | Git workflow | See [Git Workflow](#git-workflow) below |
