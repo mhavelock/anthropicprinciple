@@ -80,7 +80,7 @@ anthropicprinciple/
 
 Load minimum context:
 ```
-Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, and docs/architecture/ARCHITECTURE.md.
+Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, and docs/ARCHITECTURE.md.
 The task is: [task description].
 ```
 
@@ -98,7 +98,7 @@ I'm about to [describe change]. Does this violate any of G1–G13?
 
 Check if docs need updating:
 ```
-I changed [file]. Does docs/architecture/ARCHITECTURE.md or SYSTEM.md need updating?
+I changed [file]. Does docs/ARCHITECTURE.md or docs/SYSTEM.md need updating?
 ```
 
 ### Session End

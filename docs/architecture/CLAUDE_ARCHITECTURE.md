@@ -16,8 +16,8 @@ This is documentation work — not site code. The deliverables are `.md` files. 
 ## Reading Order for Architecture Sessions
 
 1. `docs/architecture/.ai/memory/active_sprint.md` — current sprint state
-2. `docs/architecture/ARCHITECTURE.md` — project blueprint (start here for context)
-3. `docs/architecture/SYSTEM.md` — developer rules
+2. `docs/ARCHITECTURE.md` — project blueprint (start here for context)
+3. `docs/SYSTEM.md` — developer rules
 4. `docs/plan/handoff_[latest].md` — what happened last session
 5. The specific file being worked on
 

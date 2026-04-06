@@ -98,7 +98,7 @@ Apply when: a feature has been iterated many times and keeps breaking, OR a patt
 
 **How to use:**
 1. Start a new session (fresh context — no previous conversation loaded)
-2. Load only: `docs/architecture/ARCHITECTURE.md`, `docs/architecture/SYSTEM.md`, `docs/architecture/FEEDBACK-LOOPS.md`
+2. Load only: `docs/ARCHITECTURE.md`, `docs/SYSTEM.md`, `docs/architecture/FEEDBACK-LOOPS.md`
 3. Do NOT load the code in question yet
 4. Ask: *"You are a senior web performance engineer reviewing this project for the first time. Here is the architecture. Here is the problem we're trying to solve: [description]. How would you approach it?"*
 5. Compare the fresh answer to the current approach. Differences = things worth interrogating.

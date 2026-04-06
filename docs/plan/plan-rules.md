@@ -132,17 +132,17 @@ Three session styles exist. Before starting work, decide which one fits the task
 
 **Engineered Hybrid (default):**
 ```
-Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, and docs/architecture/ARCHITECTURE.md. The task is: [task description].
+Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, and docs/ARCHITECTURE.md. The task is: [task description].
 ```
 
 **Fresh (Red Team):**
 ```
-Read docs/architecture/ARCHITECTURE.md and CORE_PATTERNS.md. The task is: [task description]. Do not read any handoffs or session history. Approach this as if you have never seen this code before.
+Read docs/ARCHITECTURE.md and docs/architecture/CORE_PATTERNS.md. The task is: [task description]. Do not read any handoffs or session history. Approach this as if you have never seen this code before.
 ```
 
 **Deep (Bloated):**
 ```
-Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, docs/architecture/ARCHITECTURE.md, docs/architecture/CORE_PATTERNS.md, and docs/architecture/ARCHITECTURE_EXTENSION.md. The issue is: [bug description]. Include browser console output below.
+Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, docs/ARCHITECTURE.md, docs/architecture/CORE_PATTERNS.md, and docs/architecture/ARCHITECTURE_EXTENSION.md. The issue is: [bug description]. Include browser console output below.
 ```
 
 ---
@@ -151,8 +151,8 @@ Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, docs/architecture/ARC
 
 | File | Purpose |
 |------|---------|
-| `docs/architecture/ARCHITECTURE.md` | What the site is, structural decisions, data flow |
-| `docs/architecture/SYSTEM.md` | Developer rules, naming conventions, never-do constraints |
+| `docs/ARCHITECTURE.md` | What the site is, structural decisions, data flow |
+| `docs/SYSTEM.md` | Developer rules, naming conventions, never-do constraints |
 | `docs/architecture/DECISIONS.md` | Why specific technical choices were made (ADRs) |
 | `docs/architecture/CORE_PATTERNS.md` | Compact do-not-break checklist — read before code changes |
 | `CLAUDE.md` (project root) | Full project context for AI sessions |

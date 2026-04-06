@@ -40,7 +40,7 @@ Break the codebase into chunks that fit within a single context load. Each chunk
 | **A3 — Feature CSS** | `clock.css`, `home.css`, `components.css` | Clock grid, compositor hints, component patterns |
 | **A4 — Page CSS** | `controls.css`, `banner.css`, `border-effect.css` | Namespace isolation, page-specific patterns |
 | **A5 — JS** | `clock.js`, `favicon-animator.js`, `controls.js` | rAF patterns, buffers, localStorage handling |
-| **A6 — Docs** | `docs/architecture/ARCHITECTURE.md`, `SYSTEM.md`, `CORE_PATTERNS.md` | Accuracy of docs vs actual code |
+| **A6 — Docs** | `docs/ARCHITECTURE.md`, `docs/SYSTEM.md`, `docs/architecture/CORE_PATTERNS.md` | Accuracy of docs vs actual code |
 
 ---
 
