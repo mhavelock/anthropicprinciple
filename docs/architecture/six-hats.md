@@ -29,7 +29,7 @@ Apply when: you want a quality gate before a major release, after a documentatio
 **Rule:** No hypothesis. Don't tell Gemini what you think the contradiction is. Let it find its own.
 
 **When to run:**
-- Before any App Store submission
+- Before any production deploy (push to `main`)
 - After a documentation sprint that touched multiple architecture files
 - When the codebase has grown enough that you can't hold all constraints in working memory
 
@@ -100,7 +100,7 @@ Apply when: a feature has been iterated many times and keeps breaking, OR a patt
 1. Start a new session (fresh context — no previous conversation loaded)
 2. Load only: `docs/architecture/ARCHITECTURE.md`, `docs/architecture/SYSTEM.md`, `docs/architecture/FEEDBACK-LOOPS.md`
 3. Do NOT load the code in question yet
-4. Ask: *"You are a senior iOS architect reviewing this project for the first time. Here is the architecture. Here is the problem we're trying to solve: [description]. How would you approach it?"*
+4. Ask: *"You are a senior web performance engineer reviewing this project for the first time. Here is the architecture. Here is the problem we're trying to solve: [description]. How would you approach it?"*
 5. Compare the fresh answer to the current approach. Differences = things worth interrogating.
 
 **Trigger conditions:**
@@ -129,9 +129,9 @@ Apply when: optimising for success and not seeing clearly.
 Instead of "how do we make this work?" ask "what would guarantee this fails?"
 
 Examples applied to this project:
-- "What would guarantee the pipeline fires false corrections constantly?" → Reveals the MIN_WORD_COUNT and trimTrailingFragments constraints
-- "What would guarantee the API key leaks?" → Reveals the SecureStore-only rule and the `__DEV__` log guard requirement
-- "What would guarantee users abandon the app in the first 30 seconds?" → Revealed the warmup mode requirement
+- "What would guarantee the clock hands animate jankily on a mid-range Android phone?" → Reveals GPU compositor requirements: `will-change: transform` on `.hand`, `contain: layout style paint` on `.mc`, and the Float64Array cache that skips DOM writes when the angle hasn't changed
+- "What would guarantee the digit pattern is unreadable when the clock resolves to time?" → Reveals the hand-angle precision requirements, the digit-reference.md spec as visual ground truth, and why rounding errors in clock.js hand positions are a critical failure
+- "What would guarantee a visitor leaves before the animation completes one cycle?" → Reveals the 30-second cycle constraint (long enough to delight, short enough to hold attention), the zero-spinner requirement (animation must play immediately on load), and why system fonts are non-negotiable
 
 **Usage prompt:**
 > "Invert this: instead of asking how to make [X] work well, tell me the top 3 ways to guarantee it fails."
@@ -166,13 +166,13 @@ Use Claude for drafting; use Gemini (or Claude in a fresh session) for auditing.
 2. Export to Gemini: *"Claude just made this change. Based on [ARCHITECTURE.md + SYSTEM.md + FEEDBACK-LOOPS.md], did this introduce any regressions or pattern violations?"*
 3. Adjudicate any conflicts before committing
 
-**This worked in practice:** The 15s fallback removal, GARBLED smart trim, and extracted_claim CoT were all confirmed or improved via Gemini consultation (see `docs/architecture/BREAKTHROUGHS.md`).
+**This worked in practice:** GPU compositor promotion (`will-change` + `contain`), the Float64Array angle cache, and the pattern throttle strategy were all validated via Gemini consultation (see `docs/architecture/BREAKTHROUGHS.md`).
 
 ---
 
 ## Contextual Anchoring
 
-Apply when: starting work on any file in `hooks/` or `services/`, before adding a component, before any LLM/API change, or before committing a significant diff.
+Apply when: starting work on `js/clock.js` or any CSS file, before adding a new page or component, before any change touching the rAF loop or localStorage, or before committing a significant diff.
 
 **The premise:** Don't just say "Fix the login bug." Anchor the task within the wider system before Claude begins. An unanchored prompt produces code that works in isolation but regresses something established. An anchored prompt produces code that works AND preserves existing wins.
 
@@ -182,20 +182,20 @@ Apply when: starting work on any file in `hooks/` or `services/`, before adding 
 
 ### Anchoring Prompt Templates (for this project)
 
-**Before any pipeline change:**
-> "Read `CORE_PATTERNS.md`. Then read `hooks/useListeningPipeline.ts`. I need to [task]. Ensure your solution does not regress: P2 governance (isInterrupting as first check), AVAudioSession release on all 3 stop paths, or the setTimeout chain for the recording loop."
+**Before any clock animation or JS change:**
+> "Read `CORE_PATTERNS.md`. Then read `js/clock.js`. I need to [task]. Ensure your solution does not regress: the 30-second cycle, the digit hand-angle tables, the pattern timing (30fps pattern phase, 60fps ease windows, 1fps static display), the pre-allocated angle buffers, or the Float64Array cache that skips DOM writes when angles are unchanged."
 
-**Before any LLM/API change:**
-> "Read `CORE_PATTERNS.md §LLM Rules`. I need to [task]. Ensure: XHR not fetch, getActiveModel() used not hardcoded model name, extracted_claim is still first in the JSON response schema, and sanitiseInput + trimTrailingFragments applied before dispatch."
+**Before any CSS change:**
+> "Read `CORE_PATTERNS.md §CSS Rules`. I need to [task]. Ensure: no inline styles, no `!important`, no `max-width` breakpoints (mobile-first `min-width` only), all colours and spacing via CSS custom properties from `colors.css`, and `will-change: transform` plus `contain: layout style paint` preserved on clock elements."
 
-**Before any store or state change:**
-> "Read `CORE_PATTERNS.md §State Rules`. I need to [task]. Ensure: API key is not stored in Zustand (hasApiKey boolean only), any cross-session data goes to SecureStore not Zustand, and clearAllData() covers any new SecureStore keys you add."
+**Before any performance change:**
+> "Read `ARCHITECTURE.md §Performance Features`. I need to [task]. Ensure: the rAF loop is preserved (no setInterval introduced), `visibilitychange` pause is intact in both `clock.js` and `favicon-animator.js`, the Float64Array angle cache is not removed, and GPU compositor promotion (`will-change` + `contain`) is not broken."
 
-**Before adding a new UI component:**
-> "Read `SYSTEM.md §Component Patterns`. I need to add [component]. Ensure: BlurView glass pattern used correctly (overflow:hidden on borderRadius), no Alert.alert in any error path (in-character card instead), and no high-frequency values passed via Zustand."
+**Before any HTML change:**
+> "Read `CORE_PATTERNS.md §HTML Rules`. I need to [task]. Ensure: HTML validates W3C clean, all `<img>` have `alt`, `width`, and `height`, all `<input>` have an associated `<label for>`, `defer` on all `<script>` tags, no inline event handlers, and `lang=\"en\"` on `<html>`."
 
-**Before adding a new dependency:**
-> "Read `ARCHITECTURE.md §What We Never Do`. I want to add [library] for [reason]. Run Black Hat: what does this dependency cost in terms of app size, native rebuild requirement, and long-term maintenance? What is the minimum implementation without this library?"
+**Before adding any external resource or dependency:**
+> "Read `ARCHITECTURE.md §What We Never Do`. I want to add [resource/library] for [reason]. Run Black Hat: what does this cost in terms of additional HTTP requests, render-blocking risk, third-party dependency maintenance, and violation of the zero-dependency principle? What is the minimum implementation without it?"
 
 ---
 
@@ -205,11 +205,11 @@ Run this after completing any significant change — before writing the commit m
 
 > "Before we commit: read `CORE_PATTERNS.md §Quick Regression Checklist`. Walk through each item against the code we just changed. Report any item that is uncertain or potentially violated."
 
-For pipeline changes, also check:
-> "Verify the three AVAudioSession stop paths are still complete. Verify P2 (`if (isInterrupting) return`) is still the first check in `scheduleAnalysis`. Verify `segmentIdRef` and `epochIdRef` are reset on all stop paths."
+For clock animation changes, also check:
+> "Verify the rAF loop and `visibilitychange` pause are both intact. Verify the Float64Array cache (`_lastAngles`) is still doing a value comparison before writing to the DOM. Verify the pre-allocated buffers (`_bufOut`, `_bufFrom`, `_bufTo`, `_bufTime`, `_bufInterp`) are still used and not replaced with per-frame allocations."
 
-For LLM prompt changes, also check:
-> "Verify `extracted_claim` is still the first field in the JSON schema. Verify the COMPLETE/INCOMPLETE/GARBLED definitions are intact and not contradicted by any new instruction."
+For CSS changes, also check:
+> "Verify `will-change: transform` is still on `.hand` and `contain: layout style paint` is still on `.mc`. Verify no new `max-width` breakpoints have been introduced. Verify all new colour or spacing values use CSS custom properties and are not hard-coded."
 
 ---
 
@@ -231,60 +231,64 @@ For significant refactors, run this before closing the session:
 
 ---
 
-## Chunking and MapReduce
+## Straining the Browser / User Device
 
-Apply when: running a full codebase audit, doing a deep architectural review, or handing work to sub-agents where loading everything at once would cause "lost in the middle" degradation.
+Apply when: running a full codebase audit, doing a deep performance review, auditing for mobile/low-end device degradation, or handing work to sub-agents where loading everything at once would cause "lost in the middle" degradation.
 
-**The principle:** An AI reading 36 files sequentially in one context will give progressively worse attention to the later files. Chunking splits the codebase into cohesive, independently-auditable units. Each chunk is read and analysed on its own. Findings are then aggregated (the Reduce step).
+**The principle:** An AI reading all files sequentially in one context gives progressively worse attention to later files. Chunking splits the codebase into cohesive, independently-auditable units. Each chunk is audited in isolation for its specific failure modes. Findings are then aggregated (the Reduce step).
 
-**Two decomposition strategies are available for this project.** Choose the one that matches the audit goal.
+**The clock site has one primary user experience and a single animation engine.** Chunk audits should focus on where the browser or device is most likely to feel strain — jank, battery drain, excessive memory, slow first paint, or device-specific breakdowns.
 
-> **Execution-slice note:** Bugs at seams, not centres. When diagnosing a fault, prioritise the interfaces between chunks (e.g. the boundary between useListeningPipeline and llmClient) over the internal logic of any single chunk. Functional areas rarely fail in their own territory — they fail where they hand off to another. Strategy B (feature/UX chunks) is better than Strategy A for catching seam bugs because each chunk includes the full hand-off chain.
+> **Seam note:** Bugs at seams, not centres. When diagnosing a fault, prioritise the interfaces between chunks (e.g. where `clock.js` reads `localStorage` and where `controls.js` writes it) over the internal logic of any single chunk. Strategy B (UX chunks) is better than Strategy A for catching seam bugs because each chunk follows the full rendering chain.
+
+**Two decomposition strategies are available.** Choose based on audit goal.
 
 ---
 
 ### Strategy A — By Code Function Area
 
-Use when: auditing implementation patterns, checking for constraint violations, reviewing a specific technical concern (e.g. "are all API calls using XHR?", "are all stop paths releasing AVAudioSession?").
+Use when: auditing browser performance constraints, checking for GPU/CPU misuse, reviewing a specific technical concern (e.g. "are all animations compositor-only?", "are both rAF loops paused on tab hide?").
 
-**6 chunks — selected for this project's size and Sonnet's working context.**
+**6 chunks — matches this project's file structure and Sonnet's working context.**
 
 | Chunk | Name | Files | Audit Focus |
 |-------|------|-------|-------------|
-| **A1** | Audio Pipeline | `hooks/useListeningPipeline.ts`, `services/audioLevel.ts`, `services/rateLimit.ts`, `services/snipes.ts` | Chunked recording loop (setTimeout chain), P1/P2/G3 guards, warmup mode, first-minute mode, all 3 stop paths, AVAudioSession release, metering poll 200ms floor |
-| **A2** | LLM & AI Engine | `services/llmClient.ts`, `services/pedantEngine.ts`, `services/remoteConfig.ts`, `services/parseUtils.ts`, `services/contentFilter.ts` | XHR not fetch, no hardcoded model names, getActiveModel() usage, extracted_claim first field, trimTrailingFragments, content filter applied before TTS |
-| **A3** | Roasting & TTS Output | `hooks/useRoastingPipeline.ts`, `services/roastEngine.ts`, `services/ttsOutput.ts` | Roasting loop timing, isFetching guard, TTS routing (speaker vs earpiece), speakWithFullVolume path, roast fallback, stopAll completeness |
-| **A4** | State, Config & IAP | `store/useAppStore.ts`, `constants.ts`, `types.ts`, `services/iapService.ts`, `services/responsePacks.ts` | API key never in Zustand (hasApiKey boolean only), SecureStore key names in constants.ts, discriminated union correctness, clearAllData() completeness, IAP non-consumable setup |
-| **A5** | Home Screen UI | `components/ListenButton.tsx`, `components/WaveGridBackground.tsx`, `components/FloatingBubbles.tsx`, `components/CorrectionCard.tsx`, `components/HistoryCards.tsx`, `styles/glassEffects.ts` | No Animated.Value in Zustand, audioLevel subscription pattern, BlurView pattern (overflow:hidden on borderRadius), no Alert.alert (in-character cards only), spring animations |
-| **A6** | App Shell, Settings & Onboarding | `App.tsx`, `index.ts`, `components/BottomNav.tsx`, `components/ErrorBoundary.tsx`, `components/LoadingScreen.tsx`, `components/SettingsModal.tsx`, `components/OnboardingModal.tsx`, `components/ApiKeyPanel.tsx`, `components/ApiKeyFAQ.tsx`, `components/RoastingScreen.tsx`, `components/RoastVictimSheet.tsx`, `components/FlameBackground.tsx`, `components/RelayKillSwitchModal.tsx` | URL scheme handler, mid-session access recovery useEffect, in-tree sheet (not Modal) for settings, in-character ErrorBoundary copy, all __DEV__ guards on console calls |
+| **A1** | Clock Animation Engine | `js/clock.js` | rAF loop (no `setInterval`), `visibilitychange` pause, pre-allocated buffers (`_bufOut`, `_bufFrom`, `_bufTo`, `_bufTime`, `_bufInterp`), `Float64Array` angle cache (skip DOM write if unchanged), digit hand-angle table correctness, pattern throttle (30fps/60fps/1fps), 30-second cycle, angle rounding to 2dp |
+| **A2** | CSS Architecture & GPU | `styles/clock.css`, `styles/colors.css`, `styles/global.css`, `styles/components.css`, `styles/home.css`, `styles/controls.css` | `will-change: transform` on `.hand`, `contain: layout style paint` on `.mc`, `transform` and `opacity` only in keyframes (no layout-triggering properties), `aspect-ratio` to prevent CLS, `box-sizing: border-box` in every reset, mobile-first breakpoints (`min-width` only), all values via CSS custom properties |
+| **A3** | Controls & localStorage | `js/controls.js`, `clock-controls.html` | `localStorage` sanitisation (`clk_hours` clamped −12–14, `clk_countdown_time` regex-validated), 250ms debounce on text inputs (no excessive write bursts), no XSS via unvalidated `localStorage` reads, settings round-trip to clock page |
+| **A4** | Favicon Animator | `js/favicon-animator.js` | 100ms minimum interval (~10fps throttle), `canvas.toDataURL()` suspended when `document.hidden`, no layout reads in the rAF callback, canvas dimensions correct for pixel-ratio |
+| **A5** | HTML, SEO & Accessibility | `index.html`, `clock-controls.html`, `play.html` | W3C valid, OG meta tags, JSON-LD structured data, `<link rel="canonical">`, all `<img>` have `alt`/`width`/`height`, all `<input>` have `<label for>`, `defer` on all `<script>`, `lang="en"` on `<html>`, no inline styles, no inline event handlers |
+| **A6** | Assets & Manifest | `site.webmanifest`, `robots.txt`, `sitemap.xml`, `favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png` | Manifest valid and complete, all icon sizes present, sitemap URLs match live pages, `robots.txt` points to sitemap, `CNAME` matches live domain |
 
 **Audit per chunk (Map step):**
-> "Audit this chunk against the hard rules. Files: [list]. Hard rules: [FEEDBACK-LOOPS.md §Hard Rules]. Report: violations, drift, and anything that looks like a previously-solved problem. Do not suggest new features."
+> "Audit this chunk for browser/device strain and constraint violations. Files: [list]. Hard rules: [FEEDBACK-LOOPS.md §Hard Rules]. Focus on: GPU strain, CPU strain, memory pressure, layout-triggering code, and any previously-solved problem recurring. Do not suggest new features."
 
 **Aggregate (Reduce step):**
-> "Here are the findings from 6 independent chunk audits: [paste all]. Identify: any cross-chunk concerns, the highest-priority violation, and whether any finding contradicts another."
+> "Here are the findings from 6 independent chunk audits: [paste all]. Identify: any cross-chunk concerns, the highest-priority performance or constraint violation, and whether any finding contradicts another."
 
 ---
 
 ### Strategy B — By Feature/UX Area
 
-Use when: diagnosing a user-reported bug, reviewing the end-to-end behaviour of a specific flow, or checking that a feature is consistent across all its code paths (hooks + services + components).
+Use when: diagnosing a device-specific experience problem, reviewing the end-to-end rendering chain for a specific user experience, or checking that the clock behaves consistently across the device/orientation matrix.
 
-**5 chunks — covers all user-facing journeys.**
+**UX is the experience of the clock on all devices** — including mobile orientation changes, low-end device slowdown, and battery impact.
+
+**5 chunks — covers all user-facing states.**
 
 | Chunk | Name | Files | Audit Focus |
 |-------|------|-------|-------------|
-| **B1** | Activate & Listen | `App.tsx`, `hooks/useListeningPipeline.ts`, `components/ListenButton.tsx`, `components/FloatingBubbles.tsx`, `components/WaveGridBackground.tsx` | API key check → intro TTS → isActivating guard → warmup mode start → recording begins → audio-reactive UI. Cancel-during-activation path. Background AppState stop. |
-| **B2** | Correct & Interrupt | `hooks/useListeningPipeline.ts` (scheduleAnalysis + correction fire sections), `services/pedantEngine.ts`, `services/llmClient.ts`, `services/ttsOutput.ts`, `components/CorrectionCard.tsx`, `components/HistoryCards.tsx` | P1/P2/G3 stale guards, in-character correction card (not Alert), correction fires TTS then resumes recording, AVAudioSession re-assert before resume, history card logged |
-| **B3** | Roast Mode | `hooks/useRoastingPipeline.ts`, `services/roastEngine.ts`, `services/ttsOutput.ts`, `components/RoastingScreen.tsx`, `components/RoastVictimSheet.tsx`, `components/FlameBackground.tsx`, `store/useAppStore.ts` (victimName) | Victim name flow, isFetching guard, roast TTS loop, stopAll on tab switch, flame animation state, in-character failure cards |
-| **B4** | Settings, Onboarding & IAP | `components/SettingsModal.tsx`, `components/OnboardingModal.tsx`, `components/ApiKeyPanel.tsx`, `components/ApiKeyFAQ.tsx`, `services/iapService.ts`, `services/responsePacks.ts`, `store/useAppStore.ts` | Disclosure step on first launch, secureTextEntry on key input, key written to SecureStore (not Zustand), isPro gate on response packs, IAP restore path |
-| **B5** | Error, Relay & Character Voice | `services/llmClient.ts` (error types), `components/RelayKillSwitchModal.tsx`, `App.tsx` (mid-session recovery useEffect), `components/ErrorBoundary.tsx` | RelayDisabledError/RelayTransientError handling, HAS_USED_RELAY check, kill switch modal for returning users, in-character ErrorBoundary copy, no raw system dialogs anywhere |
+| **B1** | Clock Loads & Animates | `index.html`, `js/clock.js`, `styles/clock.css` | Animation plays immediately on load (no spinner, no blank frame), correct pattern cycle, hands reach correct digit positions, no Cumulative Layout Shift (`aspect-ratio` + explicit dimensions), CSS renders statically before JS loads (hands at 0° is acceptable) |
+| **B2** | Time Resolves Correctly | `js/clock.js` (digit tables + time display logic), `js/controls.js` (UTC offset read) | Correct HH:MM digit shapes at time resolution moment, UTC offset applied from `localStorage`, digit shapes match `digit-reference.md`, no visible rounding error in hand positions, countdown mode counts to zero and pulses red |
+| **B3** | Controls & Persistence | `js/controls.js`, `clock-controls.html`, `js/clock.js` (localStorage reads) | Settings save on every input change (no Save button needed), values survive page reload, clock page picks up settings without requiring a full refresh, countdown timer runs correctly, UTC offset range −12h to +14h works at extremes |
+| **B4** | Mobile & Orientation | `styles/clock.css`, `index.html` | Clock grid fills viewport in portrait and landscape at 320px, 480px, 568px widths, no horizontal scroll in landscape, reduced-motion respected (`prefers-reduced-motion: reduce` pauses or minimises animation), touch targets on controls page ≥ 44×44px |
+| **B5** | Performance & Battery | `js/clock.js`, `js/favicon-animator.js`, `styles/clock.css` | `visibilitychange` pauses both rAF loops (tab hidden = zero CPU), `will-change` promotes 168 hand elements to GPU compositor layers, `contain` scopes style recalculation to each clock cell, favicon loop suspended when hidden, no layout-triggering properties animated (transform/opacity only) |
 
 **Audit per chunk (Map step):**
-> "Audit this user journey end-to-end. Files: [list]. Report: any broken step in the flow, any constraint violation, any place where the in-character voice is broken, any missing error path. Do not suggest new features."
+> "Audit this experience end-to-end. Files: [list]. Focus on: device strain, any broken step in the experience, any constraint violation, and any scenario where a low-end device or slow network would degrade the experience. Do not suggest new features."
 
 **Aggregate (Reduce step):**
-> "Here are 5 journey audits: [paste]. What is the weakest journey? Are there any cross-journey inconsistencies (e.g. error handling works differently in roast vs listen mode)?"
+> "Here are 5 experience audits: [paste]. What is the weakest experience? Are there any cross-experience inconsistencies — for example, does the controls page behave differently from the clock page in reduced-motion mode?"
 
 ---
 
@@ -292,11 +296,38 @@ Use when: diagnosing a user-reported bug, reviewing the end-to-end behaviour of 
 
 | Goal | Use |
 |------|-----|
-| Technical constraint check ("are all XHR calls using abort correctly?") | Strategy A |
-| Bug report ("user says the app crashes after roasting") | Strategy B |
-| Pre-release audit (all constraints + all journeys) | Run both: A first for constraints, B for journeys |
+| Technical constraint check ("are all animations compositor-only?") | Strategy A |
+| Device/experience report ("clock stutters on iPhone SE in landscape") | Strategy B |
+| Pre-deploy audit (all constraints + all experiences) | Run both: A first for constraints, B for experiences |
 | Regression check after a specific file change | Strategy A — only the affected chunk |
-| New developer onboarding | Strategy B — journey chunks read like a feature spec |
+| New contributor onboarding | Strategy B — experience chunks read like a spec |
+
+---
+
+### Slow Connection UX Strategy
+
+Apply when: auditing the experience on slow or unreliable connections (3G, throttled mobile, intermittent WiFi). Inspired by **Progressive Enhancement** and **Theory of Constraints** — identify the first thing that breaks under bandwidth pressure, not the average case.
+
+**The constraint for this site:** The clock renders as a CSS grid of `<div>` elements. JS animates the hands. System fonts load instantly. There are no external assets on `index.html`. This site is exceptionally resilient to slow connections by design — but there are still failure modes worth auditing.
+
+**The three tiers of degradation (order of impact):**
+
+| Tier | What breaks | At what speed | Recovery |
+|------|-------------|--------------|---------|
+| **1 — Partial JS** | `clock.js` arrives late. CSS renders correctly; hands sit at 0°. Animation plays once JS arrives. | Below ~50 KB/s | Progressive enhancement holds — static grid is acceptable. No intervention needed. |
+| **2 — Deferred JS blocked** | `defer` scripts load after HTML parse but the page is visually correct immediately. | Any speed | This is the designed path. `defer` is the constraint that makes it work. Never remove `defer`. |
+| **3 — Asset-heavy pages** | `play.html` or `clock-controls.html` have additional assets. | Very slow | Ensure `loading="lazy"` on all below-fold images, explicit `width`/`height` on all `<img>` to prevent CLS, no render-blocking scripts. |
+
+**Audit prompt:**
+> "Simulate a slow connection audit. Files: [index.html, clock-controls.html, play.html]. For each page, identify: the critical render path (what blocks first paint?), any non-deferred scripts, any missing lazy-load attributes on below-fold images, and any external resource that adds an HTTP round-trip. Report what a visitor on 3G sees in the first 3 seconds."
+
+**Design constraints that defend slow-connection UX (never violate):**
+- System fonts only — zero font-load requests on `index.html`
+- No third-party scripts or stylesheets on `index.html`
+- `defer` on all `<script>` tags
+- `aspect-ratio` on clock grid — no layout shift waiting for JS
+- CSS renders a static (unanimated) clock grid before JS arrives — the page is not blank
+- `clock.css` is the only stylesheet on `index.html` — single HTTP request for all clock styles
 
 ---
 
@@ -314,20 +345,7 @@ Apply when: debugging visual layout, implementing animations, working on imagery
 | Specific viewport / mobile width | Playwright MCP | 75% scale, PNG. Only when snap is insufficient. |
 | User reports device-specific bug | Human screenshot | Their view is ground truth. Ask for it. |
 | Deployed page / live URL inspection | Playwright → live URL | No local window needed. |
-| Competitor / external data extraction | Apify | Escalation from Playwright when blocked or at scale. |
-| Code → design file | Penpot MCP | `/penpot-html-to-design` skill. One component per call. |
-| Design → code | Figma MCP | `get_design_context` with nodeId from URL. |
-| Image asset management | Cloudinary MCP | Search, transform, upload from within Claude. |
 | Verbal description | Triage only | Never a diagnosis. Snap immediately after triage. |
-
-### Penpot session checklist (before starting any Penpot work)
-
-1. Penpot desktop app open + MCP plugin active?
-2. Smoke-test: `penpotUtils.getPages()` returns?
-3. Job sequence planned: Audit → Components → Frame → Compose → Verify
-4. One component per `execute_code` call (30s bridge timeout)
-5. Use `board.appendChild(shape)` — NEVER `board.flex.appendChild`
-6. Brand tokens read from codebase — not guessed
 
 Full reference: `docs/architecture/FE-VISUALISATION.md`
 
@@ -795,12 +813,13 @@ A deck of abstract provocations designed to break habitual thinking. Originally 
 | Pre-release quality gate | Fresh Contributor Test + Freshness Audit |
 | Architecture system feels over-engineered | Context Window Budget + SCAMPER Eliminate |
 | Reviewing whether the system itself is working | Architecture Audit Mode — Green Hat + Blue Hat |
-| Full codebase audit or pre-release check | Chunking and MapReduce — Strategy A then B |
-| Bug spans multiple files / unclear which layer | Chunking and MapReduce — Strategy B (feature/UX) |
-| Passing codebase context to Gemini | Chunking and MapReduce — one chunk per Gemini call |
+| Full codebase audit or pre-deploy check | Straining the Browser — Strategy A then B |
+| Bug spans multiple files / unclear which layer | Straining the Browser — Strategy B (feature/UX) |
+| Passing codebase context to Gemini | Straining the Browser — one chunk per Gemini call |
+| Slow connection / progressive enhancement audit | Straining the Browser — Slow Connection UX Strategy |
 | **Visual and design** | |
 | Visual / layout bug or UI work | FE Visualisation Protocol |
-| Working with design tools (Penpot / Figma) | FE Visualisation Protocol → Penpot checklist |
+| Viewport or orientation-specific rendering check | FE Visualisation Protocol → Playwright at target width |
 | **System health** | |
 | Incentive system not working (wins not captured) | Incentive Architecture — Learning Loop audit |
 | Same constraint violated repeatedly | Five Whys + Anti-Regress Rule → FEEDBACK-LOOPS.md |
