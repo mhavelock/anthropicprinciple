@@ -11,7 +11,7 @@ Last updated: 2026-04-06
 
 | # | Task | Type | Status | Notes |
 |---|------|------|--------|-------|
-| C1 | Default clock to visitor local time | CODE | ⚠️ TODO | See full spec below. |
+| C1 | Default clock to visitor local time | CODE | ✅ Done 2026-04-06 | See full spec below. |
 | S1 | Fix WCAG contrast: `.side p` text | STYLE | ⚠️ TODO | `#727786` on `#292b31` ≈ 2.85:1 — fails AA (4.5:1 required). Update `--side-text-muted` token in `home.css`. |
 | S2 | Fix `home.css` aside positioning magic numbers | STYLE | ⚠️ TODO | `right: calc(-50vw + 1.25rem)` and `top: -17rem` are fragile. Audit at multiple viewports before fixing. |
 | S3 | Audit `.side p` font-family deviation | STYLE | ⚠️ TODO | Uses Gill Sans — deliberate deviation from Verdana/Arial system. Decide: keep as documented exception or bring into system. Document either way in `DECISIONS.md`. |
