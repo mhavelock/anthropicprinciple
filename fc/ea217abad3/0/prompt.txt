@@ -1,0 +1,8 @@
+Hi. Last session we set up the whole white label site. Now it is complete (and looking great) plz review this reflective architecture setup & plan structure -   the idea is to have a good starting point with info to help organise new project - limited to the tech scope outlined in /docs/init/setup.txt - while being flexible and not restricting options / approaches more applicable to a specific project or bloating memory / context at the outset before info is helpful.
+
+
+I’d like to text out the project gemini mcp Cowork/projects/white-hat-label/mcps/claude-add-models-mcp  - plz consult with Gemini specifically on this reflective architecture setup & plan structure -  focusing on the above points.
+
+---
+
+y plz
