@@ -1,0 +1,12 @@
+Plz recreate / reconstruct the project, plan & architecture in the project Cowork/projects/white-hat-label :
+
+Plz reconstruct the entire /architecture folder system setup and the /plan folder system - with templates, info and examples appropriate for an empty ‘white label’ starter project that can be shared on GitHub. Plz also take the Claude.md file and README.md file as inspiration for the templates.
+
+Also create a /docs/ARCHITECTURE.md & /docs/SYSTEM.md
+
+
+The aim is to use this (or for others to use it) as a starting point on a new project to be co-work developed with Claude. 
+
+Plz see Cowork/projects/white-hat-label/docs/init/setup.txt for further instructions.
+
+Plz remove references to athropicprinciple & related tech.
