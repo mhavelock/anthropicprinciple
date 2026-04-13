@@ -2,6 +2,7 @@
 
 
 For maximum productivity, combine these techniques by providing detailed plans to agent teams, which can be managed directly in the Claude Code environment to ensure high-quality code and project continuity
+
 ---
 
 ## Codebase Audit Optimisation
@@ -46,6 +47,7 @@ Reduce: Aggregate the findings into a high-level summary.
 **5. Summary of Recommended Guidelines**
 If you're updating your claude.md or a similar config file, consider adding these rules:
 | Category | Guideline |
+| --- | --- |
 | Timeouts | Set `network_timeout` and `process_timeout` to at least 300s for large repos |
 | Scope | Always use `.gitignore` or custom exclude patterns |
 | Verbosity | Request streaming progress or incremental logs |
@@ -59,7 +61,7 @@ That is the "Golden Thread" problem of AI development: how do you keep the AI fo
 
 When you’re deep in a specific build, Claude (or any LLM) tends to suffer from Recency Bias. It optimizes for the immediate "fix" and ignores the "foundational" constraints.
 
-To balance this in a Claude IDE or agentic workflow, you need to implement** Architectural Guardrails**. Here is how to maintain that synergy:
+To balance this in a Claude IDE or agentic workflow, you need to implement **Architectural Guardrails**. Here is how to maintain that synergy:
 
 **1. The "Rule of Three" Documentation**
 Don't just rely on the codebase. Large models need a "Source of Truth" that sits outside the active chat context. Maintain a SYSTEM.md or ARCHITECTURE.md file in your root and explicitly tell Claude to read it before every major change.
@@ -178,7 +180,9 @@ Anthropic and Google now heavily support Prompt Caching.
 3. **Recursive Test:** "Read these two files. Based only on them, tell me how you would implement [Feature X]. If your answer differs from the current build, we need to update the docs."
 
 ### What Goes Where
+
 | Feature | ARCHITECTURE.md | SYSTEM.md |
+| --- | --- | --- |
 | Focus | Structural integrity & data flow | Development rules & tooling |
 | Example | "We use Repository Pattern for API calls" | "All API calls must have a 30s timeout" |
 | Next.js | Choice of middleware for auth | ESLint rules and pre-commit hooks |
@@ -190,7 +194,7 @@ This prevents the documentation from cementing your technical debt as "intended 
 **Between the "Consultation" and the "Caching" strategies, which one do you think would fit your current daily dev loop more naturally?**
 
 
-# The Context-Innovation Paradox
+## The Context-Innovation Paradox
 
 Where breakthroughs happen at the "bloated" end of a session and again at the "fresh" start of the next—is the Context-Innovation Paradox.
 At the end of a long session, the AI has high **"associative depth"** (it sees the messy connections); at the start of a fresh session, it has high **"architectural clarity"** (it isn't distracted by your three-hour-old debugging rabbit holes).
@@ -218,11 +222,15 @@ If you use Claude Desktop or Claude Code, install an MCP (Model Context Protocol
 Keep `SYSTEM.md` and `ARCHITECTURE.md` as a prefix in API calls. Only pay full price once — subsequent messages get up to 90% discount.
 
 ### Comparing the "Session Styles"
+
 | **Session State** | **Pro** | **Con** | **Best For...** |
+| --- | --- | --- | --- |
 | **Fresh (Clean)** | High logic, no "distractions." | Doesn't know the "why" behind hacks. | Starting new features/Refactoring. |
 | **Bloated (Deep)** | High context, sees "hidden" links. | Hallucinates, gets "lazy," costs more. | Bug hunting in complex systems. |
-| **Engineered (Hybrid)** | Best of both. High clarity + specific memory. | Requires a 2-minute "synthesis" step. | **Day-to-day high-level development.**\n |
+| **Engineered (Hybrid)** | Best of both. High clarity + specific memory. | Requires a 2-minute "synthesis" step. | **Day-to-day high-level development.** |
+
 | Tool/Strategy | Purpose | Token Saving |
+| --- | --- | --- |
 | Claude + Gemini Consult | High-fidelity auditing & edge-case detection | Moderate |
 | MCP Tool Search | Lazy-loads tool definitions when needed | High (85% reduction) |
 | Local RAG (index1/QMD) | Search via local index, not raw context | Very High |
@@ -246,11 +254,7 @@ Keep SYSTEM.md and ARCHITECTURE.md as a prefix in API calls. Only pay full price
 
 ---
 
-
-
-———
-
-# Memory & Skills
+## Memory & Skills
 
 Focusing on Memory and Skills is the most sustainable way to scale your development because they solve the "Goldfish Problem" (the AI forgetting your preferences) and the "Generalist Problem" (the AI giving generic advice instead of expert-level Next.js/macOS auditing).
 Here is a breakdown of how to implement these as a "system" that saves tokens while maximizing your learning.
@@ -283,11 +287,11 @@ This is the fastest way to learn. You set up a "Junior Agent" to write the code 
 - **The "Context Chimera": Be careful not to give an agent two conflicting skills at once (e.g., "Be as concise as possible" vs "Explain everything in detail"). It will result in "mushy" logic.**
 
 **Next Step:**
-Look at your current project and "Draft a PROJECT_CONSTRAINTS.md file based on the last 3 breakthroughs we had." 
+Look at your current project and "Draft a PROJECT_CONSTRAINTS.md file based on the last 3 breakthroughs we had."
 
-——
+---
 
-# Integrating **Persistent Memory** & **Specialized Skills**
+## Integrating **Persistent Memory** & **Specialized Skills**
 
 Integrating both Persistent Memory (the AI’s diary) and Specialized Skills (the AI’s manual) creates a "Self-Correcting Flywheel." The manual tells the agent how to behave, and the diary records what it actually learned while behaving that way.
 To do this without drowning in tokens or complexity, you can set up a "Reflective Architecture." Here is how to structure that combination for your Next.js and macOS projects:
@@ -324,10 +328,13 @@ To really "level up" your own understanding, have the agents debate your code. T
 **5. Token-Saving Checklist**
 
 | **Strategy** | **Why it saves tokens** |
+| --- | --- |
 | **Snippet Injection** | Instead of "Read the whole repo," tell the agent "Use the grep tool to find where we use useEffect." |
 | **State Compression** | Every 50 messages, ask the AI to "Summarize this entire chat into 10 bullet points" and start a fresh session with those points. |
 | **Binary Skills** | Keep your Skill files as Markdown lists. AI parses lists much faster (and cheaper) than dense prose. |
+
 | Concept | Bloated Way | Optimised Way |
+| --- | --- | --- |
 | Context | Attach all files to every prompt | Local RAG / MCP Indexing for relevant snippets |
 | Agents | One big agent doing everything | Sub-agents with restricted file access |
 | Memory | Scroll back through chat history | Central `MEM.md` or Knowledge Graph |

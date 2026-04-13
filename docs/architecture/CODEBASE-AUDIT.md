@@ -10,7 +10,7 @@ These paths should not be loaded into AI context for audits. They are either bin
 
 ### Hard exclusions (never load)
 
-```
+```text
 .git/                           # version history — use git log/diff instead
 assets/photos/                  # photos — binary files
 assets/graphics/                # illustrations, SVG artwork — visual assets
@@ -21,7 +21,7 @@ CNAME                           # single-line domain file
 
 ### Soft exclusions (load only if specifically relevant)
 
-```
+```text
 docs/plan/archive/              # historical session summaries
 docs/architecture/.ai/memory/sprint-history.md  # completed sprint log
 js/logger.js                    # dev utility, not application logic
@@ -84,7 +84,8 @@ Read the file. Then audit.
 Run periodically to keep the architecture docs accurate as the code evolves.
 
 Prompt pattern:
-```
+
+```text
 Read [file]. Then read docs/architecture/ARCHITECTURE.md §[relevant section].
 Are there any discrepancies between the code and the documentation?
 List divergences — do not invent ones that aren't there.
@@ -125,7 +126,7 @@ The following are ready-to-use Gemini Pro consulting prompts for the specific te
 
 **When to use:** After any change to `clock.js` or `favicon-animator.js`, or when performance anomalies appear.
 
-```
+```text
 CONSTRAINTS:
 - G3: requestAnimationFrame only — no setInterval
 - G4: visibilitychange pause/resume on every rAF loop
@@ -153,7 +154,7 @@ Output: Confirmed solid / Potential drift / Regression to check
 
 **When to use:** If digit rendering appears wrong, or after any change touching the hand-angle tables in `clock.js`.
 
-```
+```text
 CONTEXT:
 The clock displays digits by positioning 84 analogue clock hands at specific angles.
 Each digit uses a 3×6 grid of clock faces. The angle notation is:
@@ -182,7 +183,7 @@ Do not invent discrepancies — if they match, say so.
 
 **When to use:** Before any change to the 4 generative pattern functions, or when a pattern "looks wrong" and the cause isn't clear.
 
-```
+```text
 CONTEXT:
 Four generative patterns cycle in clock.js:
 0 — Concentric ripple (elliptical atan2, rotating phase)
@@ -211,7 +212,7 @@ Flag any pattern that allocates new arrays per frame — this violates G6.
 
 **When to use:** After any change to `controls.js` or the localStorage read logic in `clock.js`.
 
-```
+```text
 CONSTRAINTS:
 - G12: All localStorage values must be parsed, type-checked, range-clamped, and validated before use
 - localStorage keys: clk_mode (string enum), clk_hours (integer -12 to 14),
@@ -236,7 +237,7 @@ Flag any key where the validation is incomplete or missing.
 
 **When to use:** After any CSS change, or as a quarterly health check.
 
-```
+```text
 CONSTRAINTS:
 - G1: No hardcoded colour or spacing values — CSS custom properties only
 - G2: Mobile-first min-width only — no max-width breakpoints
@@ -264,7 +265,7 @@ Output: pass / warning / violation with specific line reference.
 
 **When to use:** After any change to `favicon-animator.js`, or when CPU usage is unexpectedly high.
 
-```
+```text
 CONTEXT:
 favicon-animator.js renders an animated canvas favicon at ~10fps.
 Key constraints:

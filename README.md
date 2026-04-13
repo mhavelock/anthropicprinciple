@@ -39,7 +39,7 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 
 ## Project Structure
 
-```
+```text
 ├── index.html              # Kinetic clock — full-screen art piece
 ├── clock-controls.html     # Settings panel (UTC offset, countdown)
 ├── play.html               # SoundCloud playlist grid
@@ -84,7 +84,7 @@ A kinetic clock art piece. 84 analogue mini-clocks arranged in a 6 × 14 grid pe
 
 `index.html` loads five stylesheets in order:
 
-```
+```text
 colors.css → global.css → clock.css → utilities.css → home.css
 ```
 
@@ -100,7 +100,7 @@ All colours and spacing are defined as CSS custom properties in `colors.css`. No
 
 Each JS file is a self-contained IIFE or module — no globals, no shared mutable state across files.
 
-```
+```text
 favicon-animator.js   Canvas favicon, self-initialises, ~10fps rAF loop
 clock.js              30-second cycle: 4 patterns → ease → time display → repeat
 controls.js           localStorage read/write with debounce and validation

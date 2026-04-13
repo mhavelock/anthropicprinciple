@@ -386,7 +386,8 @@ Repeatable techniques for keeping the system alive and self-improving. These com
 **When:** Before any major release. After significant refactors. When a session feels like the docs and code are diverging.
 
 **How:**
-```
+
+```text
 For each architecture doc:
   1. Identify 3 specific claims (e.g. "audioLevel is a module-level Animated.Value")
   2. Run grep to confirm each claim is still true
@@ -408,7 +409,8 @@ For each architecture doc:
 **When:** After a third occurrence of the same issue. When a Hard Rule (FEEDBACK-LOOPS.md) keeps getting violated despite being documented.
 
 **How:**
-```
+
+```text
 Start with: "This [bug/pattern/violation] happened again."
 Why 1: What caused it this session?
 Why 2: What caused that cause?
@@ -564,7 +566,7 @@ Good completing condition: *"Done when: all new feature code has a corresponding
 
 **Apply when:** Planning a major architecture iteration, a new feature from scratch, or any significant scope definition.
 
-```
+```text
 ◇ DISCOVER (diverge)     → ◆ DEFINE (converge)     → ◇ DEVELOP (diverge)     → ◆ DELIVER (converge)
   What are all options?       What exactly are we         Multiple approaches        Which version ships?
   All constraints?            building? Not building?     tried and compared         What gets cut?
@@ -588,7 +590,8 @@ Good completing condition: *"Done when: all new feature code has a corresponding
 **Apply when:** The same problem recurs. A constraint keeps getting violated. Something breaks in production that "shouldn't have been possible."
 
 **How:**
-```
+
+```text
 State the problem clearly.
 Why 1: What directly caused it?
 Why 2: What caused that cause?
@@ -667,7 +670,8 @@ If all three are no: don't remove. Add a code comment explaining you don't know 
 **Apply when:** Evaluating architecture changes with cascading effects. Dependency additions. UX changes that touch multiple flows. Anything with the word "refactor" in it.
 
 **How:** Write it out explicitly:
-```
+
+```text
 Decision: [what we're doing]
 1st order: [the direct effect]
 2nd order: and then what?
@@ -746,7 +750,7 @@ Every system has exactly ONE bottleneck that limits its overall throughput. Impr
 
 Four-quadrant model of shared knowledge between two parties. Applied to developer + AI sessions:
 
-```
+```text
                     Known to YOU    Unknown to YOU
 Known to Claude  │  Open (load     │  Blind spot
                  │  efficiently)   │  (ask for it)

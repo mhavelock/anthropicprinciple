@@ -10,7 +10,7 @@ Same format as FEEDBACK-LOOPS.md: what happened → what we extracted → how to
 
 Start here before reaching for any tool. Pick the **lowest-friction option that answers the question**.
 
-```
+```text
 Is there already a screenshot in the conversation?
   └─ YES → Use it. Don't re-capture.
   └─ NO ↓
@@ -84,7 +84,8 @@ The grid is 6 rows × 14 columns of mini-clocks. Layout is CSS Grid inside a ful
 | CLS on load | Layout jumps when JS loads | `clock.css` `aspect-ratio` on `.clock-grid` |
 
 **Viewport testing matrix for this site:**
-```
+
+```text
 320px  — minimum supported width
 568px  — iPhone SE landscape (critical — clock must fit without scroll)
 768px  — tablet portrait
@@ -165,7 +166,8 @@ For contrast checking, Python snap shows the current rendered state. Compare vis
 - Deployed/live site screenshots without local server
 
 **Clock-specific Playwright pattern:**
-```
+
+```text
 Navigate → wait 28 seconds (let one cycle complete) → screenshot during static window
 ```
 Or: pause via devtools → screenshot at a known phase.
@@ -279,7 +281,7 @@ Or: pause via devtools → screenshot at a known phase.
 
 ## Hard Rules Extracted
 
-```
+```text
 FE VISUALISATION HARD RULES — anthropicprinciple.ai
 
 1. Never fix a visual bug without looking first — snap or screenshot before proposing

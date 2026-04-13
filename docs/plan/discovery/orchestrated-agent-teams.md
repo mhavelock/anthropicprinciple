@@ -33,7 +33,9 @@ To learn and improve without wasting your own time, set up an automated "Judge" 
 - **Why this saves tokens:** You stop reading (and paying for) "bad" attempts. You only interact with the "Gold Standard" results.
 
 **The "Token-Efficient" Innovation Stack (2026)**
+
 | Session State | Pro | Con | Best For |
+| --- | --- | --- | --- |
 | **Fresh (Clean)** | High logic, no distractions | Doesn't know the "why" behind hacks | New features / refactoring |
 | **Bloated (Deep)** | High context, sees hidden links | Hallucinates, gets lazy, costs more | Bug hunting in complex systems |
 | **Engineered (Hybrid)** | Best of both | Requires a 2-minute synthesis step | Day-to-day development |
@@ -73,7 +75,3 @@ Claude uses agentic workflows to optimize tasks by breaking complex goals into 
 1. Agent A writes a fix
 2. Agent B (Judge) runs tests and checks against `SYSTEM.md`
 3. If score < 90, Agent A refactors before you ever see the code
-
-
---
-

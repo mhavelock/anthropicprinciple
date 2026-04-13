@@ -261,7 +261,7 @@ All tokens defined in `styles/colors.css`. All dark-mode overrides via `@media (
 ## CSS Conventions
 
 - **File per concern.** One responsibility per stylesheet. Never mix concerns.
-- **Load order for non-clock pages:** `colors.css` → `fonts.css` → `global.css` → `components.css` → `[page].css` → `utilities.css`.
+- **Load order for non-clock pages:** `global.css` → `colors.css` → `fonts.css` → `components.css` → `utilities.css` → `[page].css`.
 - **Clock page only:** `clock.css` (self-contained — contains its own reset, tokens, grid, and animation styles).
 - **Component naming pattern:**
   - `.component` — root: `.card`
