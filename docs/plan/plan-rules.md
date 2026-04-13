@@ -6,7 +6,7 @@ Working rules for the `docs/plan/` session management system. These exist so any
 
 ## The System
 
-```
+```text
 docs/plan/
 ├── plan-rules.md           This file — read first
 ├── tasklist.md             Canonical task register (all tasks, open + completed)
@@ -58,7 +58,7 @@ Tasks are grouped by type:
 
 If a question arises mid-session and cannot be definitively answered, write it explicitly:
 
-```
+```text
 OPEN: Does the float64 cache handle the countdown edge case?
 ASSUMED: Yes, based on the equality check — needs browser confirmation.
 ```
@@ -94,7 +94,8 @@ If context has clearly degraded (AI references old state, gives contradictory an
 Do not wait until session end to write state. After any Write or Edit to a file in `js/`, `styles/`, or `index.html`, append a mini-checkpoint to the active `handoff_[date].md`.
 
 **Mini-checkpoint format:**
-```
+
+```markdown
 ### Checkpoint [HH:MM]
 **Changed:** `[filename]`
 **What:** [one sentence]
@@ -131,17 +132,20 @@ Three session styles exist. Before starting work, decide which one fits the task
 ## Entry Prompts for New Sessions
 
 **Engineered Hybrid (default):**
-```
+
+```text
 Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, and docs/ARCHITECTURE.md. The task is: [task description].
 ```
 
 **Fresh (Red Team):**
-```
+
+```text
 Read docs/ARCHITECTURE.md and docs/architecture/CORE_PATTERNS.md. The task is: [task description]. Do not read any handoffs or session history. Approach this as if you have never seen this code before.
 ```
 
 **Deep (Bloated):**
-```
+
+```text
 Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, docs/ARCHITECTURE.md, docs/architecture/CORE_PATTERNS.md, and docs/architecture/ARCHITECTURE_EXTENSION.md. The issue is: [bug description]. Include browser console output below.
 ```
 

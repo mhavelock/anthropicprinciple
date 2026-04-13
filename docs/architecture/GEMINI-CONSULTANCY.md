@@ -40,7 +40,7 @@ Use after significant changes, before committing a major refactor, or when `FEED
 
 **Prompt structure:**
 
-```
+```text
 system_prompt: "You are performing a cross-session architectural audit of a static website called 'anthropicprinciple.ai'. You are the AUDITOR, not the author. Claude Code wrote this code. Your job is to find drift, regressions, and constraint violations — not to suggest new features."
 
 prompt: """
@@ -81,7 +81,7 @@ Use when the same bug has been fixed 3+ times without finding root cause, or whe
 
 **Prompt structure:**
 
-```
+```text
 system_prompt: "You are a senior iOS architect reviewing a problem cold, with no prior history. You have not seen this code before."
 
 prompt: """
@@ -115,7 +115,7 @@ Use before committing to a dependency, architecture choice, or constraint that i
 
 **Prompt structure:**
 
-```
+```text
 system_prompt: "You are a devil's advocate auditor. Your job is to find what can go wrong with this decision."
 
 prompt: """
@@ -144,7 +144,7 @@ Use when: you want to verify that your architecture docs actually reflect the co
 
 **Prompt structure:**
 
-```
+```text
 system_prompt: "You are a new developer joining this project. You have read only the two documents provided. You have not seen the codebase."
 
 prompt: """
@@ -181,7 +181,7 @@ This pattern has two modes — run either or both:
 
 **Prompt structure:**
 
-```
+```text
 system_prompt: "You are a senior architect reviewing a codebase for removal candidates and value drift. You are not looking for bugs. You are asking: what should not exist, and has recent work made this project less coherent?"
 
 prompt: """
@@ -217,20 +217,23 @@ Output format:
 Use when evaluating a library, investigating an API behaviour, or checking how others have solved a class of problem.
 
 **Web search:**
-```
+
+```text
 search_query: "expo-audio AVAudioSession setAudioModeAsync allowsRecording after TTS ios"
 search_recency_filter: "oneYear"  // or "oneMonth" for fast-moving areas
 count: 10
 ```
 
 **Read a specific page:**
-```
+
+```text
 url: "https://docs.expo.dev/versions/latest/sdk/audio/"
 return_format: "markdown"
 ```
 
 **Parse a PDF** (e.g. patent office filing, API spec):
-```
+
+```text
 file_url: "https://[publicly accessible PDF URL]"
 parse_mode: "auto"
 ```
@@ -248,7 +251,8 @@ Use when: the question is complex enough to warrant Pro, but you're not sure whi
 **Two-step structure:**
 
 **Step 1 — Flash as router:**
-```
+
+```text
 tool: ask_gemini (Flash)
 
 system_prompt: "You are a context triage assistant. Your job is to identify the minimum information a senior architect needs to answer the question below. Do not answer the question yourself."
@@ -266,7 +270,8 @@ List the specific sections, constraints, and code snippets that are directly rel
 ```
 
 **Step 2 — Pro with filtered payload:**
-```
+
+```text
 tool: ask_gemini_pro (Pro)
 
 system_prompt: [persona for the actual question — audit, decision, root cause, etc.]

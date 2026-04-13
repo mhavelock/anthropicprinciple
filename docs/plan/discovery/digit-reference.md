@@ -7,7 +7,8 @@
 ## Architecture
 
 ### Grid layout (14 cols)
-```
+
+```text
 [digit H-tens 3 cols][digit H-units 3 cols][colon 2 cols][digit M-tens 3 cols][digit M-units 3 cols]
 ```
 
@@ -73,7 +74,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 0
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 │ · │   V,   I_D, V
 │ │ │   V,   V,   V
@@ -86,7 +87,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 1
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 └ ┐ │   BL,  TR,  V
 ╱ │ │   SW,  V,   V
@@ -99,7 +100,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 2
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 └ ┐ │   BL,  TR,  V
 ┌ ┘ │   TL,  BR,  V
@@ -112,7 +113,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 3
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 └ ┐ │   BL,  TR,  V
 ┌ ┘ │   TL,  BR,  V
@@ -125,7 +126,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 4
 
-```
+```text
 ┌ ┐ ┐   TL,  TR,  TR
 │ │ │   V,   V,   V
 │ · │   V,   I_U, V
@@ -138,7 +139,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 5  *(digit 2 mirrored horizontally)*
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 │ ┌ ┘   V,   TL,  BR
 │ └ ┐   V,   BL,  TR
@@ -151,7 +152,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 6  *(digit 9 mirrored vertically + horizontally)*
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 │ ┌ ┘   V,   TL,  BR
 │ └ ┐   V,   BL,  TR
@@ -164,7 +165,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 7
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 └ ╱ │   BL,  NE,  V
 ╲ ╱ ╱   NW,  NE,  SW
@@ -177,7 +178,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 8
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 │ · │   V,   I_D, V
 ╲ · ╱   SE,  I_U, SW
@@ -190,7 +191,7 @@ Position notation: `H:M` where hour hand = H×30° and minute hand = M×6°.
 
 ## Digit 9
 
-```
+```text
 ┌ ─ ┐   TL,  H,   TR
 │ · │   V,   I_D, V
 │ · │   V,   I_U, V

@@ -32,19 +32,17 @@ The Sprint Method (Google Ventures): A five-day process for answering critical b
 
 
 
-Methodology,Best For...,Core Philosophy
-Six Thinking Hats,Group alignment & logic,Parallel Thinking
-Disney Strategy,Refining raw ideas,Role-based evaluation
-SCAMPER,Product/Process evolution,Systematic modification
-Double Diamond,Full-scale innovation,Diverge/Converge cycles
-Five Whys,Efficiency & Troubleshooting,Root Cause Analysis
-
+| Methodology | Best For... | Core Philosophy |
+| --- | --- | --- |
+| Six Thinking Hats | Group alignment & logic | Parallel Thinking |
+| Disney Strategy | Refining raw ideas | Role-based evaluation |
+| SCAMPER | Product/Process evolution | Systematic modification |
+| Double Diamond | Full-scale innovation | Diverge/Converge cycles |
+| Five Whys | Efficiency & Troubleshooting | Root Cause Analysis |
 
 ---
 
-
-
-# **The Full-Spectrum Architect: Auditing Code with Claude and the Six Thinking Hats**
+## The Full-Spectrum Architect: Auditing Code with Claude and the Six Thinking Hats
 In the high-stakes environment of a large-scale Next.js or macOS codebase audit, "brute force" AI interaction—simply dumping code and asking for "improvements"—is a recipe for token bloat and architectural drift. To achieve a truly synergistic, innovative, and cost-effective audit, we can apply Edward de Bono’s Six Thinking Hats.
 By consciously switching between these cognitive "modes," you transform Claude from a simple chatbot into a multidimensional engineering team.
 
@@ -65,7 +63,7 @@ AI is often viewed as purely logical, but your human intuition is a vital sensor
 
 ### The Reflective Architecture
 
-```
+```text
 .ai/
 ├── skills/
 │   ├── nextjs-perf.md       # "The Manual": How to audit for speed
@@ -83,20 +81,20 @@ This is the most critical hat for a code audit. It prevents you from losing "pas
 - **Stale Memory:** Update memory/skill files when you change libraries
 - **The Pitfall: Don't let the Black Hat run in the same session as the Green Hat (see below), or it will kill innovation before it starts.**
 
-🟡** The Yellow Hat: The Optimist & Value-Hunter**
+🟡 **The Yellow Hat: The Optimist & Value-Hunter**
 **Objective:** Benefits, feasibility, and "best-case" outcomes.
 While the Black Hat looks for holes, the Yellow Hat looks for hidden gold in the existing mess.
 - **The Advice:** Ask Claude to perform a "Value Audit." "What are the hidden benefits of our current state management? How can we amplify these strengths in the next build?"
 - **Synergy:** This hat ensures that when you refactor, you don't just "fix" things—you evolve them.
 
-🟢** The Green Hat: The Creative Innovator**
+🟢 **The Green Hat: The Creative Innovator**
 **Objective: Creativity, possibilities, and new ideas.**
 This is where the "breakthroughs" happen. This hat should be worn in fresh sessions to avoid being weighed down by the "bloat" of previous errors.
 - **The Advice: Use Agent Teams. Let a "Green Hat" Claude propose three radical ways to restructure the Next.js API layer.**
 - **Persistent Memory: When the Green Hat finds a win, immediately record it in your breakthroughs.json diary before the context window closes.**
 - **Auditor:** Fresh session reads worker output to check for regressions.
 
-🔵** The Blue Hat: The Process Controller**
+🔵 **The Blue Hat: The Process Controller**
 **Objective:** Metacognition, organization, and the "Big Picture."
 You, the developer, are the permanent Blue Hat. You manage the other hats and the "Agentic Workflow."
 - **The Advice: Use the Blue Hat to manage Agent Skills. You decide when it’s time to stop "Green Hat" ideation and start "Black Hat" auditing.**

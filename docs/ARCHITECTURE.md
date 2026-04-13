@@ -57,7 +57,7 @@ Clock settings survive page reloads and cross-tab via `localStorage`. Five keys:
 
 ## File Structure
 
-```
+```text
 anthropicprinciple/
 ├── index.html              # Clock page — full-screen art piece
 ├── clock-controls.html     # Settings panel — mode, timezone, countdown
@@ -100,7 +100,7 @@ anthropicprinciple/
 
 ## Page / Script Dependency Diagram
 
-```
+```text
 index.html
 ├── styles/colors.css         (design tokens)
 ├── styles/global.css         (base styles, flex centring)
@@ -191,7 +191,7 @@ The rAF loop is started with `requestAnimationFrame(tick)`. A `visibilitychange`
 
 ## Data Flow — Controls → Clock
 
-```
+```text
 [User changes a control]
     ↓
 controls.js → localStorage write (debounced 250ms for text inputs)

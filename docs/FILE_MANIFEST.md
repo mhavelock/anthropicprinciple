@@ -56,7 +56,7 @@
 
 ## File Relationships
 
-```
+```text
 index.html
 ├── styles/clock.css          Clock tokens, grid, hand styles, keyframes
 ├── js/main.js                Shared utilities (defer)

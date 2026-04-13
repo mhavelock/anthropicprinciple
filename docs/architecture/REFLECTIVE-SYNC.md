@@ -18,7 +18,7 @@ The Reflective Architecture system solves this with three mechanisms: **live doc
 
 ## Folder Map
 
-```
+```text
 anthropicprinciple/
 │
 ├── CLAUDE.md                           ← Full project context (read on every session)
@@ -79,7 +79,8 @@ anthropicprinciple/
 ### Session Start
 
 Load minimum context:
-```
+
+```text
 Read docs/plan/handoff_[latest].md, docs/plan/tasklist.md, and docs/ARCHITECTURE.md.
 The task is: [task description].
 ```
@@ -89,7 +90,8 @@ For architecture work, also load `active_sprint.md`.
 ### Before a Significant Code Change
 
 Check against constraints:
-```
+
+```text
 Read docs/architecture/CORE_PATTERNS.md.
 I'm about to [describe change]. Does this violate any of G1–G13?
 ```
@@ -97,7 +99,8 @@ I'm about to [describe change]. Does this violate any of G1–G13?
 ### After Completing Code Changes
 
 Check if docs need updating:
-```
+
+```text
 I changed [file]. Does docs/ARCHITECTURE.md or docs/SYSTEM.md need updating?
 ```
 
@@ -134,7 +137,7 @@ Write handoff per `docs/plan/plan-rules.md` Rule 1.
 
 ## The Three-Layer Memory Stack
 
-```
+```text
 Layer 1 — PERSISTENT (always loaded)
   CLAUDE.md                      Project identity, constraints, terminology
   MEMORY.md (auto-memory)        Cross-session facts

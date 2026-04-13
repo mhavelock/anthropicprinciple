@@ -1,4 +1,6 @@
-# Benefits
+# De Bono Code Book 2000
+
+## Benefits
 Benefit 1: International
 Benefit 2: Perception
 Benefit 3: Complex Concepts
@@ -12,7 +14,7 @@ Benefit 10: Uniformity
 Benefit 11: Calm
 Benefit 12: Locus
 
-# Codes
+## Codes
 
 ## De Bono Code
 

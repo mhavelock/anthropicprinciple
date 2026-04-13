@@ -8,7 +8,7 @@ Prompt templates and document templates for use with Claude Code on this project
 
 Use after any significant change. Paste this prompt directly into Claude Code.
 
-```
+```text
 Taking into account the best practices docs in the project docs/ folder, please run a code review on what we have. Look for:
 - Better code organisation
 - Clean code improvements
@@ -25,13 +25,13 @@ Update the md docs and memory file, then add and commit to git. Suggest any addi
 
 Invoke the skill instead of writing manually:
 
-```
+```text
 /git-commit-messaging
 ```
 
 Or describe the change and ask:
 
-```
+```text
 Write a commit message for: [describe what changed]
 ```
 
@@ -49,7 +49,7 @@ Examples:
 
 Use when a gh-aw workflow fails in GitHub Actions.
 
-```
+```text
 The workflow [workflow-name] is failing. Here are the logs: [paste logs]
 
 Please identify the root cause and suggest a fix.
@@ -175,7 +175,7 @@ File path: `docs/summaries/handoff-YYYY-MM-DD-[topic].md`
 
 Use to kick off a new feature implementation cleanly.
 
-```
+```text
 I want to add [feature name] to anthropicprinciple.ai.
 
 Context:
@@ -193,7 +193,7 @@ Before writing any code, please:
 
 ## Template 6 — PageSpeed Audit
 
-```
+```text
 Please run a PageSpeed / performance audit on the current state of the project.
 
 Check against the criteria in CLAUDE.md (Performance Features section) and identify anything that would drop the score below 95 on mobile or desktop. List issues by priority.
