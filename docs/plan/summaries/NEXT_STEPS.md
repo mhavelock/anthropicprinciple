@@ -54,6 +54,7 @@
 ## 🎯 Immediate Action Items (This Week)
 
 ### 1. Test Your Changes
+
 ```bash
 # Open in browser
 open index.html  # macOS
@@ -165,7 +166,8 @@ start index.html  # Windows
 - [ ] Modal dialog
 
 **Structure:**
-```
+
+```text
 styles/components/
 ├── button.css         (already have)
 ├── navbar.css         (create)
@@ -245,6 +247,7 @@ js/modules/
 - Works offline
 
 **Better way:** Use a local server
+
 ```bash
 # Using Python 3
 python -m http.server 8000
@@ -261,6 +264,7 @@ npx http-server
 **Why:** Fixes CORS issues, more realistic testing
 
 ### Debugging Tips
+
 ```javascript
 // Check if module exists
 console.log(FaviconAnimator);
