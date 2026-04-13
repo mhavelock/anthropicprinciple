@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.5.4",
+  "checkpoint_id": "373c5c5639bc",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "CLAUDE.md",
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/FILE_MANIFEST.md",
+    "docs/architecture/CHECKPOINTS.md",
+    "docs/architecture/CODEBASE-AUDIT.md",
+    "docs/architecture/FE-VISUALISATION.md",
+    "docs/architecture/GEMINI-CONSULTANCY.md",
+    "docs/architecture/REFLECTIVE-SYNC.md",
+    "docs/architecture/six-hats.md",
+    "docs/plan/discovery/code-book-2000.md",
+    "docs/plan/discovery/digit-reference.md",
+    "docs/plan/discovery/orchestrated-agent-teams.md",
+    "docs/plan/discovery/parallel-thinking.md",
+    "docs/plan/discovery/system-architecture.md",
+    "docs/plan/plan-rules.md",
+    "templates/claude-templates.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/37/3c5c5639bc/0/metadata.json",
+      "transcript": "/37/3c5c5639bc/0/full.jsonl",
+      "content_hash": "/37/3c5c5639bc/0/content_hash.txt",
+      "prompt": "/37/3c5c5639bc/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 25,
+    "cache_creation_tokens": 82691,
+    "cache_read_tokens": 636817,
+    "output_tokens": 8541,
+    "api_call_count": 17
+  }
+}
