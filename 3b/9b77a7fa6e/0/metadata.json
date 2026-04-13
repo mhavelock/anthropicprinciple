@@ -1,0 +1,132 @@
+{
+  "cli_version": "0.5.4",
+  "checkpoint_id": "3b9b77a7fa6e",
+  "session_id": "cc200072-47a5-4db2-b2f7-2569021995c1",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-13T00:23:42.011273Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "docs/architecture/.ai/README.md",
+    "docs/architecture/.ai/memory/active_sprint.md",
+    "docs/architecture/.ai/memory/context.md",
+    "docs/architecture/.ai/memory/sprint-history.md",
+    "docs/architecture/.ai/roadmap.md",
+    "docs/plan/context/.gitkeep",
+    "docs/plan/context/summaries/IMPROVEMENTS.md",
+    "docs/plan/context/summaries/NEXT_STEPS.md",
+    "docs/plan/context/summaries/PROJECT_STATUS.txt",
+    "docs/plan/context/summaries/REFACTORING_SUMMARY.md",
+    "docs/plan/context/summaries/handoff-2026-03-21-docs-reorganisation.md",
+    "docs/plan/context/summaries/handoff-2026-03-21-gh-aw-portfolio-analyst-fix.md",
+    "docs/plan/context/summaries/handoffs/handoff-2026-03-20-claude-code-auth.md",
+    "docs/plan/context/summaries/handoffs/handoff-2026-03-20-github-aw-secret-fix.md",
+    "docs/plan/context/summaries/handoffs/handoff-2026-03-21-ai-robots-meta.md",
+    "docs/plan/context/summaries/handoffs/handoff-2026-03-21-robots-ai-content.md",
+    "docs/plan/context/summaries/setup.txt",
+    "docs/plan/handoff_2026-04-02c.md",
+    "docs/plan/handoff_2026-04-05.md",
+    "docs/plan/handoff_2026-04-06.md",
+    "docs/plan/handoff_2026-04-07.md",
+    "docs/plan/summaries/NEXT_STEPS.md",
+    "docs/plan/summaries/handoffs/handoff_2026-04-05.md",
+    "docs/plan/summaries/handoffs/handoff_2026-04-06.md",
+    "docs/plan/summaries/handoffs/handoff_2026-04-07.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "f4d3f2a50fef",
+  "token_usage": {
+    "input_tokens": 24,
+    "cache_creation_tokens": 81890,
+    "cache_read_tokens": 584983,
+    "output_tokens": 8222,
+    "api_call_count": 16
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-13T00:23:41.847387Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 1915,
+    "total_committed": 6,
+    "total_lines_changed": 1915,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 1614,
+      "user_lines_removed": 1916,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".github/aw/logs/.gitignore": 5,
+        "CLAUDE.md": 1,
+        "docs/plan/summaries/IMPROVEMENTS.md": 152,
+        "docs/plan/summaries/NEXT_STEPS.md": 400,
+        "docs/plan/summaries/PROJECT_STATUS.txt": 329,
+        "docs/plan/summaries/REFACTORING_SUMMARY.md": 67,
+        "docs/plan/summaries/handoff-2026-03-21-docs-reorganisation.md": 36,
+        "docs/plan/summaries/handoff-2026-03-21-gh-aw-portfolio-analyst-fix.md": 73,
+        "docs/plan/summaries/handoffs/handoff-2026-03-20-claude-code-auth.md": 42,
+        "docs/plan/summaries/handoffs/handoff-2026-03-20-github-aw-secret-fix.md": 59,
+        "docs/plan/summaries/handoffs/handoff-2026-03-21-ai-robots-meta.md": 35,
+        "docs/plan/summaries/handoffs/handoff-2026-03-21-robots-ai-content.md": 33,
+        "docs/plan/summaries/handoffs/handoff_2026-04-02c.md": 36,
+        "docs/plan/summaries/handoffs/handoff_2026-04-05.md": 113,
+        "docs/plan/summaries/handoffs/handoff_2026-04-06.md": 110,
+        "docs/plan/summaries/handoffs/handoff_2026-04-07.md": 55,
+        "docs/plan/summaries/setup.txt": 68
+      },
+      "user_removed_per_file": {
+        "CLAUDE.md": 1,
+        "docs/architecture/.ai/README.md": 79,
+        "docs/architecture/.ai/memory/active_sprint.md": 57,
+        "docs/architecture/.ai/memory/context.md": 55,
+        "docs/architecture/.ai/memory/sprint-history.md": 35,
+        "docs/architecture/.ai/roadmap.md": 81,
+        "docs/plan/context/summaries/IMPROVEMENTS.md": 152,
+        "docs/plan/context/summaries/NEXT_STEPS.md": 400,
+        "docs/plan/context/summaries/PROJECT_STATUS.txt": 329,
+        "docs/plan/context/summaries/REFACTORING_SUMMARY.md": 67,
+        "docs/plan/context/summaries/handoff-2026-03-21-docs-reorganisation.md": 36,
+        "docs/plan/context/summaries/handoff-2026-03-21-gh-aw-portfolio-analyst-fix.md": 73,
+        "docs/plan/context/summaries/handoffs/handoff-2026-03-20-claude-code-auth.md": 42,
+        "docs/plan/context/summaries/handoffs/handoff-2026-03-20-github-aw-secret-fix.md": 59,
+        "docs/plan/context/summaries/handoffs/handoff-2026-03-21-ai-robots-meta.md": 35,
+        "docs/plan/context/summaries/handoffs/handoff-2026-03-21-robots-ai-content.md": 33,
+        "docs/plan/context/summaries/setup.txt": 68,
+        "docs/plan/handoff_2026-04-02c.md": 36,
+        "docs/plan/handoff_2026-04-05.md": 113,
+        "docs/plan/handoff_2026-04-06.md": 110,
+        "docs/plan/handoff_2026-04-07.md": 55
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 5,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1609,
+      "agent_lines_removed": 1916,
+      "user_added_per_file": {
+        ".github/aw/logs/.gitignore": 5
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 5,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1743,
+      "agent_lines_removed": 2015,
+      "user_added_per_file": {
+        ".github/aw/logs/.gitignore": 5
+      }
+    }
+  ]
+}
