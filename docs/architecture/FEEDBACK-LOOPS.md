@@ -107,3 +107,23 @@ Inline styles bypass the design token system, create specificity issues, and are
 ### FL-10: No !important
 
 `!important` is specificity debt. Find the correct specificity-ordered solution. One exception allowed: `!important` in `prefers-reduced-motion` blocks to ensure accessibility overrides work — but only there.
+
+---
+
+### FL-11: Update all references when a fact changes → Grep for the OLD value across the project before declaring doc work complete
+
+**What happened:** Originated on the sister `hardy-succulents` project (2026-05-03). An AI image-generation model was swapped end-to-end. A thorough handoff was written. The user explicitly prompted: "ensure the correct model we are using is correct in docs". A project-wide grep surfaced stale references in `README.md`, the task tracker, and a phase plan — all needing manual reconciliation. Without that prompt, those would have created conflicting memories for future sessions.
+
+**Win locked in:** Treat fact-changes as cross-document operations. The handoff is one of N references, not the canonical home. Discovery / research docs are the exception — they get a top-of-doc correction note rather than a retcon, since the original reasoning is itself part of their value.
+
+**Rule extracted:** Whenever a fact changes (token name, namespace prefix, file path, ADR number, animation timing, localStorage key, threshold), grep the entire project for the OLD value before declaring the doc work complete. Update every current-state reference; annotate every research/discovery reference as historical. Handoffs are not magic — they don't reach back into other files.
+
+**How to apply:**
+
+1. After any fact change: `grep -rln "old_value" --include="*.md" --include="*.css" --include="*.js" .` (this project's facts often live in CSS custom properties and JS constants too — extend the grep accordingly).
+2. For each match, decide: current-state (update inline) or research/discovery (top-of-doc "Status update" callout pointing at the new canonical source).
+3. Only then consider the doc work complete.
+
+**Particularly relevant for anthropicprinciple:** This project has tight namespace conventions (`--clk-*`, `--ctrl-*`, `--color-*`) and protected files (`clock.js`, `clock.css`) referenced across `ARCHITECTURE.md §2/§8`, `CORE_PATTERNS.md`, and per-feature ADRs. localStorage keys (`clk_use_local`, etc.) are documented in multiple places by design. A renamed token, relaxed protected-file boundary, or new storage key fixed in only one place becomes a future-session contradiction.
+
+**Cross-reference:** B-07 in `BREAKTHROUGHS.md`. Originating incident documented in `hardy-succulents/docs/architecture/BREAKTHROUGHS.md` BD-06.

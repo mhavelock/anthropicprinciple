@@ -105,3 +105,24 @@ Organised as: what the situation was → what we were tempted to do → what we 
 **Lesson:** The frequency of side effects (storage events triggering clock reprocessing) matters even when the visible output looks fine. Debouncing at the input level is cleaner than debouncing at the clock's storage event handler. Keep the fix at the source of the excess.
 
 **ADR reference:** ADR-010
+
+---
+
+## B-07: Update all references when a fact changes — not just the most recent handoff
+
+**Date:** 2026-05-03
+**Session type:** Documentation discipline (cross-project lesson)
+
+**Situation:** Originated on the sister `hardy-succulents` project. An AI image-generation model was swapped (FLUX Pro v1.1 Redux → FLUX Kontext Pro) after the first iteration produced "lovely AI rendering but no text" (Redux is image-variation, ignores prompts). A thorough handoff was written capturing execution data, version IDs, and the iteration narrative. The doc work was considered complete. The model name was also referenced in three other places: the project README (stack table), the tasklist (active task description with stale endpoint and parameters), and the relevant phase plan. None of those were touched.
+
+**Temptation:** Treat the handoff as the canonical record of changes. New facts go in the handoff; if anyone needs to know later, they read the handoff. Move on.
+
+**What we actually did:** Only after the user prompted ("ensure the correct model we are using is correct in docs") a project-wide grep surfaced the stale references. Each was updated — current-state docs in place, research/discovery docs annotated with a top-of-doc "Status update" callout pointing at the new canonical source rather than retconned (the original reasoning is part of their value).
+
+**Lesson:** When a fact changes — token name, namespace prefix, file path, ADR number, animation timing value, localStorage key — the handoff is one place to record it, but **not the only place to update**. `ARCHITECTURE.md`, `DECISIONS.md`, `CORE_PATTERNS.md`, qref files, and per-component docs often duplicate the same fact for different audiences. Leaving the old fact in those files creates conflicting "memories" that future sessions and humans pick up at random — exactly the kind of drift that erodes trust in the doc system.
+
+**Rule extracted:** After changing a fact, `grep -rln "OLD_VALUE" --include="*.md" .` across the project and either update each reference or explicitly annotate it as historical. Writing the handoff is the *start* of the doc work, not the end. Discovery / research docs are the exception — they get a top-of-doc correction note rather than a retcon.
+
+**Particularly relevant for anthropicprinciple:** This project has tight namespace conventions (`--clk-*`, `--ctrl-*`, `--color-*`) and protected files (`clock.js`, `clock.css`) referenced across `ARCHITECTURE.md §2/§8`, `CORE_PATTERNS.md`, and per-feature ADRs. A renamed token or relaxed protected-file boundary that gets fixed in only one place becomes a future-session contradiction. Same applies to localStorage keys (`clk_use_local`, etc.) — documented in multiple places by design.
+
+**ADR reference:** none
