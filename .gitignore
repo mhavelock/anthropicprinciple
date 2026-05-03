@@ -1,7 +1,23 @@
-.claude
-dist/
-logs/
-.env
-coverage/
-node_modules/
+# OS / editor
+.DS_Store
+Thumbs.db
 .vscode/
+.idea/
+
+# Build / deps / runtime artefacts
+dist/
+node_modules/
+coverage/
+logs/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# AI session-tracker artefacts (transcripts, prompts, checkpoints — never commit)
+.claude
+.entire/
+[0-9a-f][0-9a-f]/
+.aider*
+.cursor/
