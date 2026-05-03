@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+
+      "WebSearch",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:developer.mozilla.org)",
+      "WebFetch(domain:docs.github.com)",
+      "WebFetch(domain:validator.w3.org)",
+      "WebFetch(domain:web.dev)",
+      "WebFetch(domain:caniuse.com)",
+
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(cat README.md)",
+      "Bash(cat CLAUDE.md)",
+
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch)",
+      "Bash(git remote -v)",
+
+      "Bash(npx live-server*)",
+      "Bash(npx http-server*)",
+      "Bash(npx html-validate *)",
+      "Bash(open *localhost:8080*)",
+      "Bash(open *127.0.0.1:8080*)",
+
+      "Bash(npm info *)",
+      "Bash(npm list:*)",
+
+      "mcp__ide__getDiagnostics"
+    ],
+    "deny": [
+      "Bash(curl * | bash)",
+      "Bash(curl * | sh)",
+      "Bash(curl * > *.sh)",
+      "Bash(curl * > *.py)",
+      "Bash(wget * | bash)",
+      "Bash(wget * | sh)",
+
+      "Bash(rm -rf *)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/*)",
+      "Bash(sudo *)",
+
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(*> .env*)",
+      "Bash(*>> .env*)",
+      "Bash(cat .env*)",
+
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "Bash(git clean -fd*)",
+      "Bash(git filter-repo*)",
+      "Bash(git filter-branch*)",
+      "Bash(git update-ref -d *)",
+
+      "Bash(npx wrangler*)",
+      "Bash(vercel deploy*)",
+      "Bash(vercel --prod*)",
+      "Bash(gh repo delete*)",
+      "Bash(gh release delete*)"
+    ],
+    "ask": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase:*)",
+      "Bash(git branch -D *)",
+      "Bash(git tag:*)",
+
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm update:*)",
+
+      "Edit(CLAUDE.md)",
+      "Edit(.gitignore)",
+      "Edit(*settings.json)",
+      "Edit(*settings.local.json)",
+      "Edit(CNAME)",
+      "Edit(robots.txt)",
+      "Edit(sitemap.xml)",
+
+      "Edit(js/clock.js)",
+      "Edit(styles/clock.css)",
+      "Edit(js/favicon-animator.js)"
+    ]
+  }
+}
