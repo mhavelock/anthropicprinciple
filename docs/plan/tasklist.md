@@ -163,9 +163,18 @@ JavaScript's `Date` object is always in the visitor's local timezone. `new Date(
 
 ### Architecture & Tooling (2026-05-03)
 
+> SHAs below are post–filter-repo rewrite (Phase E sweep on the same date). Pre-rewrite SHAs are dead pointers.
+
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| ARCH4 | Architecture redux — Phase A (MAINDOCS_INDEX + qref/) | ✅ Done 2026-05-03 | Per `plan-architecture-redux-2026-05-03.md`. Created `docs/architecture/CLAUDE_MAINDOCS_INDEX.md` (project-scoped live state-of-play) + `qref/README.md` + three worked-example qrefs (clock-animation-engine, github-pages-static, claude-code-hooks). Phases B–E pending. Commit `dd0d4f5`. |
-| ARCH5 | Beginner-safe `settings.local.json` baseline | ✅ Done 2026-05-03 | Repo-root Claude Code permissions baseline for forks. Aggressive deny on foot-guns (curl\|sh, rm -rf, sudo, .env reads, all push/force-push/history-rewrite ops, cross-platform deploys). Ask gates on every write-side git op, npm install/uninstall, edits to config + protected clock files. Commit `c53201f`. |
-| DOC3 | Plans + handoff committed | ✅ Done 2026-05-03 | `plan-architecture-redux-2026-05-03.md`, `plan-security-playbook-update-2026-05-03.md`, `security-sweep-playbook.md`, `handoff-2026-05-03-architecture-redux-plan.md`. Commit `8f2365f`. |
-| DOC4 | `og:title` ASCII-art preservation note | ✅ Done 2026-05-03 | HTML comment at meta tag in `index.html` + bullet in MAINDOCS_INDEX § Known Constraints. Documents intentional kinetic-clock glyph art so future sessions don't "fix" it. |
+| ARCH4 | Architecture redux — Phase A (MAINDOCS_INDEX + qref/) | ✅ Done 2026-05-03 | Per `plan-architecture-redux-2026-05-03.md`. Created `docs/architecture/CLAUDE_MAINDOCS_INDEX.md` (project-scoped live state-of-play) + `qref/README.md` + three worked-example qrefs (clock-animation-engine, github-pages-static, claude-code-hooks). Phases B–D pending. Commit `9619657`. |
+| ARCH5 | Beginner-safe `settings.local.json` baseline | ✅ Done 2026-05-03 | Repo-root Claude Code permissions baseline for forks. Aggressive deny on foot-guns (curl\|sh, rm -rf, sudo, .env reads, all push/force-push/history-rewrite ops, cross-platform deploys). Ask gates on every write-side git op, npm install/uninstall, edits to config + protected clock files. Commit `74c21ec`. |
+| DOC3 | Plans + handoff committed | ✅ Done 2026-05-03 | `plan-architecture-redux-2026-05-03.md`, `plan-security-playbook-update-2026-05-03.md`, `security-sweep-playbook.md`, `handoff-2026-05-03-architecture-redux-plan.md`. Commit `4f5e0eb`. |
+| DOC4 | `og:title` ASCII-art preservation note | ✅ Done 2026-05-03 | HTML comment at meta tag in `index.html` + bullet in MAINDOCS_INDEX § Known Constraints. Documents intentional kinetic-clock glyph art so future sessions don't "fix" it. Commit `2486ab1`. |
+| SEC1 | `.gitignore` expanded for AI session-tracker artefacts | ✅ Done 2026-05-03 | Added `.entire/`, `[0-9a-f][0-9a-f]/`, `.env.*`, `.aider*`, `.cursor/`, `.DS_Store`, `.idea/`, `Thumbs.db`. Pre-emptive: prevents future entire/aider/cursor sessions from re-introducing the leak. Commit `9948a9d`. |
+| SEC2 | `entire enable --skip-push-sessions` configured | ✅ Done 2026-05-03 | `.entire/settings.json` now has `push_sessions: false`. Local entire.io functionality preserved; future `git push` will not auto-push session payloads. |
+| SEC3 | Phase E security sweep — entire.io strip + force-push | ✅ Done 2026-05-03 | Phase 0 clean (no secrets to rotate). `git filter-repo --refs main --invert-paths --path .entire/ --path-glob '[0-9a-f][0-9a-f]/'` + message-callback stripping `Entire-Checkpoint:` trailers from 54 commits. Force-pushed rewritten `main` (81→80 commits), deleted `origin/entire/checkpoints/v1`. Local `entire/*` rewind branches preserved. Full record: `docs/plan/security-phase1-2026-05-03.md`. |
+| SEC4 | Branch protection on `main` | ⚠️ TODO | `gh api .../protection` returned 404 — currently unprotected. Enable with `allow_force_pushes:false`, `allow_deletions:false`, admin bypass on. |
+| SEC5 | Pre-commit token-scan hook + CI secret scanner | ⚠️ TODO | `gitleaks` or `trufflehog` on PR; staged-diff regex pre-commit hook. Listed in playbook's "lock the door" section. |
+| SEC6 | `SECURITY.md` + `.well-known/security.txt` | ⚠️ TODO | Public-repo disclosure contact. |
+| SEC7 | Stale remote branches review | ⚠️ TODO | `assets/automated-portfolio-analyst`, `fix/portfolio-analyst-gh-aw-step-order`, `memory/campaigns`, `memory/testify-expert`. None contain leaked content; hygiene-only. |

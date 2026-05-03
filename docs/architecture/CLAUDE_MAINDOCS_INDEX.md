@@ -157,9 +157,10 @@ git log --oneline -- js/clock.js styles/clock.css     # clock-engine history
 | 1 — Performance optimisation (rAF, Float64Array, GPU compositor, throttling) | Complete (2026-03-15 → 2026-03-21) |
 | 2 — Architecture documentation (17 docs, ADRs, FL, breakthroughs) | Complete (2026-04-05 → 2026-04-06) |
 | 3 — Local-time default + Gemini MCP audit | Complete (2026-04-06) |
-| 4 — Architecture redux: MAINDOCS_INDEX + qref/ | In progress (Phase A landing 2026-05-03) |
+| 4 — Architecture redux: Phase A (MAINDOCS_INDEX + qref/) | Complete (2026-05-03) |
 | 5 — G14/G15 + security-sweep ADRs (Phase B of redux) | Pending |
-| 6 — Run security playbook on this project (Phase E of redux) | Pending |
+| 6 — Run security playbook on this project (Phase E of redux) | Complete (2026-05-03) — see `docs/plan/security-phase1-2026-05-03.md` |
+| 7 — Lock-the-door (branch protection, pre-commit token-scan hook, CI secret scanner, SECURITY.md) | Pending |
 
 ---
 
@@ -173,9 +174,9 @@ git log --oneline -- js/clock.js styles/clock.css     # clock-engine history
 
 ### Open work (sequential / blocking)
 
-1. **Phase B of architecture redux** (next session) — add G14/G15 to `CORE_PATTERNS.md`, ADR-012/013/014 to `DECISIONS.md`, FL-11 to `FEEDBACK-LOOPS.md`, Trigger 10 to `CHECKPOINTS.md`, and run the `G1–G13` → `G1–G15` grep sweep across all `.md` files.
+1. **Phase B of architecture redux** (next session) — add G14/G15 to `CORE_PATTERNS.md`, ADR-012/013/014 to `DECISIONS.md`, FL-11 to `FEEDBACK-LOOPS.md`, Trigger 10 to `CHECKPOINTS.md`, and run the `G1–G13` → `G1–G15` grep sweep across all `.md` files. **Phase E is now complete** (security sweep ran 2026-05-03 — `docs/plan/security-phase1-2026-05-03.md`); next available breakthrough number is **B-07**.
 2. **Phase D markdown sweep** — annotate fenced code blocks across `docs/`; modelled on the white-hat-label sweep.
-3. **Phase E security playbook** — run Phase 0 triage; defer the breakthrough entry until findings are real (next available is **B-07**, not B-06 — B-06 already exists as "First In-Session Gemini MCP Audit").
+3. **Lock-the-door (post-security-sweep follow-ups)** — branch protection on `main` (currently OFF; needs `gh api -X PUT`), pre-commit token-scan hook, CI secret scanner (`gitleaks`), `SECURITY.md` + `.well-known/security.txt`. See `docs/plan/security-phase1-2026-05-03.md` § Outstanding items.
 
 ### Pre-launch checklist (orthogonal)
 
