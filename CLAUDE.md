@@ -88,6 +88,8 @@ anthropicprinciple/
 │
 └── docs/
     ├── architecture/           # All architecture docs — ADRs, patterns, feedback loops
+    │   ├── CLAUDE_MAINDOCS_INDEX.md # Live state-of-play (project-scoped) — loaded every session
+    │   ├── qref/               # Surgical quick-references — clock engine, GH Pages, Claude Code hooks
     │   ├── ARCHITECTURE.md     # System overview and core structural decisions
     │   ├── CORE_PATTERNS.md    # G1–G13 constraints + code patterns (prompt prefix)
     │   ├── DECISIONS.md        # ADR-001 to ADR-011

@@ -63,6 +63,7 @@
 - **`logger.js` is dev-only.** Remove `<script src="js/logger.js">` from HTML before production deploy if not actively diagnosing.
 - **Conventional Commits enforced.** Use the `git-commit-messaging` skill — never freehand a commit subject.
 - **`git push` requires explicit user confirmation.** `main` auto-deploys; pushing is a production release.
+- **`index.html` `og:title` is intentional ASCII art** — quadrant-block glyphs + zero-width joiners rendering a tiny clock grid. Some social platforms render it as garbled text; that is by design, not a bug. Do not "fix" it without explicit sign-off. See the HTML comment at the meta tag in `index.html`.
 
 ---
 

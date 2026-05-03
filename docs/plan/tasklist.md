@@ -160,3 +160,12 @@ JavaScript's `Date` object is always in the visitor's local timezone. `new Date(
 | ARCH1 | `six-hats.md` rewrite for anthropicprinciple | ✅ Done 2026-04-06 | All iOS/that-guy content replaced. Strategy A/B rewritten for clock. Slow Connection UX Strategy added. |
 | ARCH2 | Gemini MCP server wired | ✅ Done 2026-04-06 | `.mcp.json` configured; API key in `~/Claudette/Cowork/projects/.env` via `~/.zshrc` source. |
 | ARCH3 | First Gemini MCP audit | ✅ Done 2026-04-06 | Pattern 1 audit run post-feature. Caught two violations: CSS token drift + undocumented localStorage key. Both fixed. B-06 written. |
+
+### Architecture & Tooling (2026-05-03)
+
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| ARCH4 | Architecture redux — Phase A (MAINDOCS_INDEX + qref/) | ✅ Done 2026-05-03 | Per `plan-architecture-redux-2026-05-03.md`. Created `docs/architecture/CLAUDE_MAINDOCS_INDEX.md` (project-scoped live state-of-play) + `qref/README.md` + three worked-example qrefs (clock-animation-engine, github-pages-static, claude-code-hooks). Phases B–E pending. Commit `dd0d4f5`. |
+| ARCH5 | Beginner-safe `settings.local.json` baseline | ✅ Done 2026-05-03 | Repo-root Claude Code permissions baseline for forks. Aggressive deny on foot-guns (curl\|sh, rm -rf, sudo, .env reads, all push/force-push/history-rewrite ops, cross-platform deploys). Ask gates on every write-side git op, npm install/uninstall, edits to config + protected clock files. Commit `c53201f`. |
+| DOC3 | Plans + handoff committed | ✅ Done 2026-05-03 | `plan-architecture-redux-2026-05-03.md`, `plan-security-playbook-update-2026-05-03.md`, `security-sweep-playbook.md`, `handoff-2026-05-03-architecture-redux-plan.md`. Commit `8f2365f`. |
+| DOC4 | `og:title` ASCII-art preservation note | ✅ Done 2026-05-03 | HTML comment at meta tag in `index.html` + bullet in MAINDOCS_INDEX § Known Constraints. Documents intentional kinetic-clock glyph art so future sessions don't "fix" it. |
